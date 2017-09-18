@@ -37,45 +37,45 @@ import com.daotangbill.dt_ext.exlib.commons.toast.ToastConfig.tintIcon
  */
 @CheckResult
 fun Context?.TToast(message: CharSequence?): Toast? =
-        this?.normal(message, Toast.LENGTH_SHORT, null, false)
+        this?.Tnormal(message, Toast.LENGTH_SHORT, null, false)
 
 @CheckResult
 fun Context?.TToast(message: CharSequence?, icon: Drawable): Toast? =
-        this?.normal(message, Toast.LENGTH_SHORT, icon, true)
+        this?.Tnormal(message, Toast.LENGTH_SHORT, icon, true)
 
 
 @CheckResult
 fun Context?.TToast(message: CharSequence?, duration: Int): Toast? =
-        this?.normal(message, duration, null, false)
+        this?.Tnormal(message, duration, null, false)
 
 @CheckResult
 fun Context?.TToast(message: CharSequence?, duration: Int,
                     icon: Drawable): Toast? =
-        this?.normal(message, duration, icon, true)
+        this?.Tnormal(message, duration, icon, true)
 
 @CheckResult
-fun Context?.normal(message: CharSequence?, duration: Int,
-                    icon: Drawable?, withIcon: Boolean): Toast? =
+fun Context?.Tnormal(message: CharSequence?, duration: Int,
+                     icon: Drawable?, withIcon: Boolean): Toast? =
         this?.custom(message, icon, ToastConfig.NORMAL_COLOR, duration, withIcon, true)
 
 @CheckResult
-fun Context?.warning(message: CharSequence?): Toast? =
-        this?.warning(message, Toast.LENGTH_SHORT, true)
+fun Context?.Twarning(message: CharSequence?): Toast? =
+        this?.Twarning(message, Toast.LENGTH_SHORT, true)
 
 @CheckResult
-fun Context?.warning(message: CharSequence?, duration: Int): Toast? =
-        this?.warning(message, duration, true)
+fun Context?.Twarning(message: CharSequence?, duration: Int): Toast? =
+        this?.Twarning(message, duration, true)
 
 @CheckResult
-fun Context?.warning(message: CharSequence??,
-                     duration: Int,
-                     withIcon: Boolean): Toast?
+fun Context?.Twarning(message: CharSequence??,
+                      duration: Int,
+                      withIcon: Boolean): Toast?
         = this?.custom(message, this.getDrawableBySdk(R.drawable.ic_error_outline_white_48dp),
         WARNING_COLOR, duration, withIcon, true)
 
 @CheckResult
 @JvmOverloads
-fun Context?.info(
+fun Context?.Tinfo(
         message: CharSequence?,
         duration: Int = Toast.LENGTH_SHORT,
         withIcon: Boolean = true): Toast?
@@ -85,7 +85,7 @@ fun Context?.info(
 
 @CheckResult
 @JvmOverloads
-fun Context?.success(
+fun Context?.Tsuccess(
         message: CharSequence?,
         duration: Int = Toast.LENGTH_SHORT,
         withIcon: Boolean = true): Toast?
@@ -94,7 +94,7 @@ fun Context?.success(
 
 @CheckResult
 @JvmOverloads
-fun Context?.error(
+fun Context?.Terror(
         message: CharSequence?,
         duration: Int = Toast.LENGTH_SHORT,
         withIcon: Boolean = true): Toast?
@@ -112,6 +112,7 @@ fun Context?.custom(message: CharSequence?, @DrawableRes iconRes: Int,
                     withIcon: Boolean, shouldTint: Boolean): Toast?
         = this?.custom(message, this.getDrawableBySdk(iconRes),
         tintColor, duration, withIcon, shouldTint)
+
 
 @CheckResult
 fun Context?.custom(message: CharSequence?, icon: Drawable?,
