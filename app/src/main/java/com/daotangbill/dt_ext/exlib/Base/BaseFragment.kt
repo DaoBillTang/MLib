@@ -16,7 +16,7 @@ import com.daotangbill.dt_ext.exlib.commons.logger.debug
  * Created by Bill on 2016/9/18 11:32.
  * emal:1750352866@qq.com
  */
-abstract class BaseFragment : Fragment(), DtLogger {
+abstract class DtBaseFragment : Fragment(), DtLogger {
     private var mAct: Context? = null
     internal var proDialg: ProgressDialog? = null
     private var dlg: AlertDialog? = null

@@ -58,8 +58,8 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
             Process.killProcess(Process.myPid())
         }
 
-        if (mContext is BaseApp) {
-            (mContext as BaseApp).act?.showResultDialog("错误", "抱歉，发生了一点意外。")
+        if (mContext is DtBaseApp) {
+            (mContext as DtBaseApp).act?.showResultDialog("错误", "抱歉，发生了一点意外。")
             // TODO: 2017/7/18 show dialog
         }
     }

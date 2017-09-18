@@ -17,7 +17,7 @@ import kotlin.properties.Delegates
  * @version: 1.0
  * @description:
  */
-abstract class BaseApp : Application() {
+abstract class DtBaseApp : Application() {
 
     private var life: LifeListener? = null
 
@@ -25,13 +25,13 @@ abstract class BaseApp : Application() {
 
     companion object {
         @JvmStatic
-        var instance: BaseApp by Delegates.notNull()
+        var INSTANCE: DtBaseApp by Delegates.notNull()
         var actList: MutableList<Activity> = mutableListOf()
     }
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        INSTANCE = this
         life = LifeListener()
         registerActivityLifecycleCallbacks(life)
         val crash = CrashHandler.getsInstance()
@@ -44,9 +44,9 @@ abstract class BaseApp : Application() {
     }
 
 
-    var act: BaseActivity? = null
+    var act: DtBaseActivity? = null
 
-    fun addTopAct(act: BaseActivity) {
+    fun addTopAct(act: DtBaseActivity) {
         this.act = act
     }
 

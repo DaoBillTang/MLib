@@ -15,7 +15,7 @@ import com.daotangbill.dt_ext.exlib.commons.statusbar.StatusBarHelper
  * Created by Bill on 2016/9/18 11:31.
  * emal:1750352866@qq.com
  */
-abstract class BaseActivity : AppCompatActivity(), DtLogger {
+abstract class DtBaseActivity : AppCompatActivity(), DtLogger {
     private var proDialg: ProgressDialog? = null
     private var dlg: AlertDialog? = null
     protected var mStatusBarHelper: StatusBarHelper? = null

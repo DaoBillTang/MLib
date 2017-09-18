@@ -21,7 +21,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-import com.daotangbill.dt_ext.exlib.Base.BaseApp
+import com.daotangbill.dt_ext.exlib.Base.DtBaseApp
 
 
 /**
@@ -78,7 +78,7 @@ fun Activity.doubleBackToExit() {
         cToast("再按一次退出程序")
         exitTime = System.currentTimeMillis()
     } else {
-        BaseApp.instance.exit()
+        DtBaseApp.INSTANCE.exit()
     }
 }
 
