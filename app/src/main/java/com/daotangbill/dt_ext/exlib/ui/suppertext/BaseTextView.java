@@ -31,9 +31,7 @@ public class BaseTextView extends LinearLayout {
         super(context, attrs, defStyleAttr);
 
         this.setOrientation(VERTICAL);
-
         mContext = context;
-
         initView();
     }
 
@@ -70,7 +68,6 @@ public class BaseTextView extends LinearLayout {
         }
     }
 
-
     private TextView initTextView(LayoutParams params, TextView textView) {
 
         textView = getTextView(textView, params);
@@ -78,7 +75,6 @@ public class BaseTextView extends LinearLayout {
         addView(textView);
         return textView;
     }
-
 
     /**
      * 初始化textView
@@ -110,7 +106,6 @@ public class BaseTextView extends LinearLayout {
         return params;
     }
 
-
     private void setTextString(TextView textView, CharSequence textString) {
         textView.setText(textString);
         if (!TextUtils.isEmpty(textString)) {
@@ -121,7 +116,6 @@ public class BaseTextView extends LinearLayout {
     public void setTopTextString(CharSequence s) {
         setTextString(topTextView, s);
     }
-
 
     public void setCenterTextString(CharSequence s) {
         setTextString(centerTextView, s);
@@ -159,5 +153,4 @@ public class BaseTextView extends LinearLayout {
         centerTVParams.setMargins(0, centerSpaceHeight / 2, 0, centerSpaceHeight / 2);
         bottomTVParams.setMargins(0, centerSpaceHeight / 2, 0, 0);
     }
-
 }

@@ -1,5 +1,6 @@
 package com.daotangbill.dt_ext.exlib.commons.logger
 
+import com.daotangbill.dt_ext.exlib.commons.Utils.StringExtend
 import com.daotangbill.dt_ext.exlib.commons.logger.LoggerPrinter.log
 import org.json.JSONArray
 import org.json.JSONException
@@ -190,12 +191,12 @@ object LoggerPrinter {
     fun log(priority: Int, tag: String?, msg: String?, throwable: Throwable?) {
         var message = msg
         if (throwable != null && message != null) {
-            message += " : " + Utils.getStackTraceString(throwable)
+            message += " : " + StringExtend.getStackTraceString(throwable)
         }
         if (throwable != null && message == null) {
-            message = Utils.getStackTraceString(throwable)
+            message = StringExtend.getStackTraceString(throwable)
         }
-        if (Utils.isEmpty(message)) {
+        if (StringExtend.isEmpty(message)) {
             message = "Empty/NULL log message"
         }
         androidLogger.log(priority, tag, message)

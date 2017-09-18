@@ -30,7 +30,6 @@ public class CommonTextView extends RelativeLayout {
 
     private int mBackgroundColor = 0xffffffff;//背景颜色
 
-
     private Drawable mLeft_drawableLeft;
     private Drawable mLeft_drawableTop;
     private Drawable mLeft_drawableRight;
@@ -427,7 +426,6 @@ public class CommonTextView extends RelativeLayout {
                 setBottomLineMargin();
                 break;
         }
-
     }
 
     /**
@@ -455,7 +453,6 @@ public class CommonTextView extends RelativeLayout {
             initBottomLineView(mBottomDividerLineMarginLeft, mBottomDividerLineMarginRight);
         }
     }
-
 
     /**
      * 设置上边分割线view
@@ -582,9 +579,7 @@ public class CommonTextView extends RelativeLayout {
             leftTopTextView = initText(leftTopTextView, leftTopTVParams, R.id.cLeftTopTextId, mLeftTopTextColor, mLeftTopTextSize);
             leftTopTextView.setText(mLeftTopTextString);
             setTextViewGravity(leftTopTextView, mLeftTextViewGravity);
-
         }
-
     }
 
     /**

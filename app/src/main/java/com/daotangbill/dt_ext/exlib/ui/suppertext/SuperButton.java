@@ -13,11 +13,8 @@ import android.widget.Button;
 import com.daotangbill.dt_ext.exlib.R;
 
 /**
- * Created by Allen on 2017/7/6.
- * <p>
  * 超级按钮  实现shape所有的属性
  */
-
 @SuppressLint("AppCompatCustomView")
 public class SuperButton extends Button {
 
@@ -70,13 +67,11 @@ public class SuperButton extends Button {
 
     private boolean useSelector;
 
-
     //shape的样式
     public static final int RECTANGLE = 0;
     public static final int OVAL = 1;
     public static final int LINE = 2;
     public static final int RING = 3;
-
 
     //渐变色的显示方式
     public static final int TOP_BOTTOM = 0;
@@ -95,13 +90,11 @@ public class SuperButton extends Button {
     public static final int TEXT_GRAVITY_TOP = 3;
     public static final int TEXT_GRAVITY_BOTTOM = 4;
 
-
     private int shapeType;
 
     private int gravity;
 
     private GradientDrawable gradientDrawable;
-
 
     public SuperButton(Context context) {
         this(context, null);
@@ -176,7 +169,6 @@ public class SuperButton extends Button {
 
         setSGravity();
     }
-
 
     /**
      * 获取设置之后的Selector
@@ -396,7 +388,6 @@ public class SuperButton extends Button {
             }
         }
     }
-
 
     /////////////////对外暴露的方法//////////////
 
@@ -705,7 +696,6 @@ public class SuperButton extends Button {
         init();
     }
 
-
     /**
      * 单位转换工具类
      *
@@ -717,5 +707,4 @@ public class SuperButton extends Button {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
     }
-
 }

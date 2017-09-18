@@ -1,6 +1,9 @@
 package com.daotangbill.dt_ext.exlib.commons.Utils
 
 import android.text.Editable
+import java.io.PrintWriter
+import java.io.StringWriter
+import java.net.UnknownHostException
 
 /**
  * Project hschefu-android
@@ -10,6 +13,48 @@ import android.text.Editable
  * @author BILL
  * @version 1.0
  */
+object StringExtend {
+    @JvmStatic
+    fun isEmpty(str: CharSequence?): Boolean = str == null || str.isEmpty()
+
+    @JvmStatic
+    fun equals(a: CharSequence?, b: CharSequence?): Boolean {
+        if (a === b) return true
+        if (a != null && b != null) {
+            val length = a.length
+            if (length == b.length) {
+                return if (a is String && b is String) {
+                    a == b
+                } else {
+                    (0 until length).none { a[it] != b[it] }
+                }
+            }
+        }
+        return false
+    }
+
+    @JvmStatic
+    fun getStackTraceString(tr: Throwable?): String {
+        if (tr == null) {
+            return ""
+        }
+
+        var t = tr
+        while (t != null) {
+            if (t is UnknownHostException) {
+                return ""
+            }
+            t = t.cause
+        }
+
+        val sw = StringWriter()
+        val pw = PrintWriter(sw)
+        tr.printStackTrace(pw)
+        pw.flush()
+        return sw.toString()
+    }
+}
+
 
 /**
  *对于 输入小数的时候 ，保留两位小数，并且判断小数点等等
