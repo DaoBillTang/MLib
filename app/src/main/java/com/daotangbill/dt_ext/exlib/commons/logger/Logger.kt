@@ -1,6 +1,6 @@
-package com.daotangbill.dt_ext.dtext.commons.logger
+package com.daotangbill.dt_ext.exlib.commons.logger
 
-import com.daotangbill.dt_ext.dtext.commons.logger.LoggerPrinter.log
+import com.daotangbill.dt_ext.exlib.commons.logger.LoggerPrinter.log
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -87,8 +87,8 @@ fun DtLogger.json(mjson: String) {
     }
 }
 
-fun DtLogger.xml(xml: String) {
-    if (Utils.isEmpty(xml)) {
+fun DtLogger.xml(xml: String?) {
+    if (xml != null && xml.isBlank()) {
         this.d("Empty/Null xml content")
         return
     }

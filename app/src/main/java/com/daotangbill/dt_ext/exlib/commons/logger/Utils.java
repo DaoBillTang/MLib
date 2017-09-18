@@ -5,28 +5,19 @@ import java.io.StringWriter;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
-import static com.daotangbill.dt_ext.dtext.commons.logger.LoggerKt.ASSERT;
-import static com.daotangbill.dt_ext.dtext.commons.logger.LoggerKt.DEBUG;
-import static com.daotangbill.dt_ext.dtext.commons.logger.LoggerKt.ERROR;
-import static com.daotangbill.dt_ext.dtext.commons.logger.LoggerKt.INFO;
-import static com.daotangbill.dt_ext.dtext.commons.logger.LoggerKt.VERBOSE;
-import static com.daotangbill.dt_ext.dtext.commons.logger.LoggerKt.WARN;
+import static com.daotangbill.dt_ext.exlib.commons.logger.LoggerKt.ASSERT;
+import static com.daotangbill.dt_ext.exlib.commons.logger.LoggerKt.DEBUG;
+import static com.daotangbill.dt_ext.exlib.commons.logger.LoggerKt.ERROR;
+import static com.daotangbill.dt_ext.exlib.commons.logger.LoggerKt.INFO;
+import static com.daotangbill.dt_ext.exlib.commons.logger.LoggerKt.VERBOSE;
+import static com.daotangbill.dt_ext.exlib.commons.logger.LoggerKt.WARN;
 
-/**
- * Provides convenient methods to some common operations
- */
 final class Utils {
 
     private Utils() {
         // Hidden constructor.
     }
 
-    /**
-     * Returns true if the string is null or 0-length.
-     *
-     * @param str the string to be examined
-     * @return true if str is null or zero length
-     */
     static boolean isEmpty(CharSequence str) {
         return str == null || str.length() == 0;
     }
@@ -49,19 +40,11 @@ final class Utils {
         return false;
     }
 
-    /**
-     * Copied from "android.util.Log.getStackTraceString()" in order to avoid usage of Android stack
-     * in unit tests.
-     *
-     * @return Stack trace in form of String
-     */
     static String getStackTraceString(Throwable tr) {
         if (tr == null) {
             return "";
         }
 
-        // This is to reduce the amount of log spew that apps do in the non-error
-        // condition of the network being unavailable.
         Throwable t = tr;
         while (t != null) {
             if (t instanceof UnknownHostException) {

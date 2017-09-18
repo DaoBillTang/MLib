@@ -1,26 +1,13 @@
 package com.daotangbill.dt_ext.exlib.commons.logger;
 
-import com.daotangbill.dt_ext.dtext.commons.logger.LoggerPrinter;
-
 import java.util.logging.Logger;
 
 public class PrettyFormatStrategy implements FormatStrategy {
 
-  /**
-   * Android's max limit for a log entry is ~4076 bytes,
-   * so 4000 bytes is used as chunk size since default charset
-   * is UTF-8
-   */
   private static final int CHUNK_SIZE = 4000;
 
-  /**
-   * The minimum stack trace index, starts at this class after two native calls.
-   */
   private static final int MIN_STACK_OFFSET = 5;
 
-  /**
-   * Drawing toolbox
-   */
   private static final char TOP_LEFT_CORNER = '┌';
   private static final char BOTTOM_LEFT_CORNER = '└';
   private static final char MIDDLE_CORNER = '├';

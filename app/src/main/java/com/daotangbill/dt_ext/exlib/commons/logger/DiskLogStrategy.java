@@ -8,10 +8,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * Abstract class that takes care of background threading the file log operation on Android.
- * implementing classes are free to directly perform I/O operations there.
- */
 public class DiskLogStrategy implements LogStrategy {
 
     private final Handler handler;
@@ -62,13 +58,6 @@ public class DiskLogStrategy implements LogStrategy {
             }
         }
 
-        /**
-         * This is always called on a single background thread.
-         * Implementing classes must ONLY write to the fileWriter and nothing more.
-         * The abstract class takes care of everything else including close the stream and catching IOException
-         *
-         * @param fileWriter an instance of FileWriter already initialised to the correct file
-         */
         private void writeLog(FileWriter fileWriter, String content) throws IOException {
             fileWriter.append(content);
         }

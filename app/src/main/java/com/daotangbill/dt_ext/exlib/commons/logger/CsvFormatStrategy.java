@@ -9,11 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * CSV formatted file logging for Android.
- * Writes to CSV the following data:
- * epoch timestamp, ISO8601 timestamp (human-readable), log level, tag, log message.
- */
 public class CsvFormatStrategy implements FormatStrategy {
 
     private static final String NEW_LINE = System.getProperty("line.separator");
