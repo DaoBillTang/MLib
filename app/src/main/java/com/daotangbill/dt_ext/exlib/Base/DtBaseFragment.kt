@@ -1,11 +1,9 @@
 package com.daotangbill.dt_ext.exlib.Base
 
 import android.app.ProgressDialog
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +15,7 @@ import com.daotangbill.dt_ext.exlib.commons.logger.debug
  * emal:1750352866@qq.com
  */
 abstract class DtBaseFragment : Fragment(), DtLogger {
-    private var mAct: Context? = null
     internal var proDialg: ProgressDialog? = null
-    private var dlg: AlertDialog? = null
-    private val TAG = "baseFragment" + this.javaClass.name
     private var isFristVisibile = false
     val handler: Handler = Handler()
 
@@ -36,10 +31,6 @@ abstract class DtBaseFragment : Fragment(), DtLogger {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        mAct = context
-    }
 
     /**
      * 设置Fragment是否可见
@@ -71,14 +62,6 @@ abstract class DtBaseFragment : Fragment(), DtLogger {
 
     open fun onFragmentVisible(view: View) {
         debug { "onFragmentVisible" }
-    }
-
-    fun hideLoading() {
-        if (dlg != null) {
-            dlg!!.dismiss()
-            dlg!!.cancel()
-            dlg = null
-        }
     }
 
     @JvmOverloads
