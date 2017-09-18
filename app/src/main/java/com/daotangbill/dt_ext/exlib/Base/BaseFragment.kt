@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.daotangbill.dt_ext.exlib.commons.logger.DtLogger
-import com.daotangbill.dt_ext.exlib.commons.logger.d
+import com.daotangbill.dt_ext.exlib.commons.logger.debug
 
 /**
  * Created by Bill on 2016/9/18 11:32.
@@ -27,12 +27,12 @@ abstract class BaseFragment : Fragment(), DtLogger {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        d { "onCreate====" }
+        debug { "onCreate====" }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?
                               , savedInstanceState: Bundle?): View? {
-        d { "onCreateView====" }
+        debug { "onCreateView====" }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -47,7 +47,7 @@ abstract class BaseFragment : Fragment(), DtLogger {
      */
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        d { "setUserVisibleHint() -> isVisibleToUser: " + isVisibleToUser }
+        debug { "setUserVisibleHint() -> isVisibleToUser: " + isVisibleToUser }
         if (view != null) {
             if (isVisibleToUser && !isFristVisibile) {
                 firstInitView(view!!)
@@ -62,15 +62,15 @@ abstract class BaseFragment : Fragment(), DtLogger {
     }
 
     open fun firstInitView(view: View) {
-        d { "firstInitView=====" }
+        debug { "firstInitView=====" }
     }
 
     open fun onFragmentInvisible() {
-        d { "onFragmentInvisible" }
+        debug { "onFragmentInvisible" }
     }
 
     open fun onFragmentVisible(view: View) {
-        d { "onFragmentVisible" }
+        debug { "onFragmentVisible" }
     }
 
     fun hideLoading() {

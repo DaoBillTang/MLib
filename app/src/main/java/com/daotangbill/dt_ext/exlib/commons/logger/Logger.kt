@@ -29,31 +29,31 @@ fun DtLogger.outPut(b: Boolean) {
     LoggerPrinter.outPut = b
 }
 
-fun DtLogger.v(msg: String) {
+fun DtLogger.verbose(msg: String) {
     log(VERBOSE, null, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun DtLogger.d(msg: String) {
+fun DtLogger.debug(msg: String) {
     log(DEBUG, null, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun DtLogger.d(thr: Throwable?, msg: String) {
+fun DtLogger.debug(thr: Throwable?, msg: String) {
     log(DEBUG, thr, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun DtLogger.i(msg: String) {
+fun DtLogger.info(msg: String) {
     log(INFO, null, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun DtLogger.w(msg: String) {
+fun DtLogger.warn(msg: String) {
     log(WARN, null, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun DtLogger.e(msg: String) {
+fun DtLogger.error(msg: String) {
     log(ERROR, null, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun DtLogger.e(thr: Throwable?, msg: String) {
+fun DtLogger.error(thr: Throwable?, msg: String) {
     log(ERROR, thr, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
@@ -64,7 +64,7 @@ fun DtLogger.wtf(msg: String) {
 fun DtLogger.json(mjson: String) {
     var json = mjson
     if (json.isBlank()) {
-        this.d("Empty/Null json content")
+        this.debug("Empty/Null json content")
         return
     }
     try {
@@ -72,24 +72,24 @@ fun DtLogger.json(mjson: String) {
         if (json.startsWith("{")) {
             val jsonObject = JSONObject(json)
             val message = jsonObject.toString(JSON_INDENT)
-            this.d(message)
+            this.debug(message)
             return
         }
         if (json.startsWith("[")) {
             val jsonArray = JSONArray(json)
             val message = jsonArray.toString(JSON_INDENT)
-            this.d(message)
+            this.debug(message)
             return
         }
-        this.e("Invalid Json")
+        this.error("Invalid Json")
     } catch (e: JSONException) {
-        this.e("Invalid Json")
+        this.error("Invalid Json")
     }
 }
 
 fun DtLogger.xml(xml: String?) {
     if (xml != null && xml.isBlank()) {
-        this.d("Empty/Null xml content")
+        this.debug("Empty/Null xml content")
         return
     }
     try {
@@ -99,30 +99,30 @@ fun DtLogger.xml(xml: String?) {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes")
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2")
         transformer.transform(xmlInput, xmlOutput)
-        this.d(xmlOutput.writer.toString().replaceFirst(">".toRegex(), ">\n"))
+        this.debug(xmlOutput.writer.toString().replaceFirst(">".toRegex(), ">\n"))
     } catch (e: TransformerException) {
-        this.e("Invalid xml")
+        this.debug("Invalid xml")
     }
 }
 
-inline fun DtLogger.v(msg: () -> Any?) {
+inline fun DtLogger.verbose(msg: () -> Any?) {
     log(VERBOSE, null, msg()?.toString() ?: "null")
 
 }
 
-inline fun DtLogger.d(msg: () -> Any?) {
+inline fun DtLogger.debug(msg: () -> Any?) {
     log(DEBUG, null, msg()?.toString() ?: "null")
 }
 
-inline fun DtLogger.i(msg: () -> Any?) {
+inline fun DtLogger.info(msg: () -> Any?) {
     log(INFO, null, msg()?.toString() ?: "null")
 }
 
-inline fun DtLogger.w(msg: () -> Any?) {
+inline fun DtLogger.warn(msg: () -> Any?) {
     log(WARN, null, msg()?.toString() ?: "null")
 }
 
-inline fun DtLogger.e(msg: () -> Any?) {
+inline fun DtLogger.error(msg: () -> Any?) {
     log(ERROR, null, msg()?.toString() ?: "null")
 }
 
@@ -133,7 +133,7 @@ inline fun DtLogger.wtf(msg: () -> Any?) {
 inline fun DtLogger.json(mjson: () -> Any?) {
     var json = mjson()?.toString()
     if (json == null || json.isBlank()) {
-        this.d("Empty/Null json content")
+        this.debug("Empty/Null json content")
         return
     }
     try {
@@ -141,25 +141,25 @@ inline fun DtLogger.json(mjson: () -> Any?) {
         if (json.startsWith("{")) {
             val jsonObject = JSONObject(json)
             val message = jsonObject.toString(JSON_INDENT)
-            this.d(message)
+            this.debug(message)
             return
         }
         if (json.startsWith("[")) {
             val jsonArray = JSONArray(json)
             val message = jsonArray.toString(JSON_INDENT)
-            this.d(message)
+            this.debug(message)
             return
         }
-        this.e("Invalid Json")
+        this.error("Invalid Json")
     } catch (e: JSONException) {
-        this.e("Invalid Json")
+        this.error("Invalid Json")
     }
 }
 
 inline fun DtLogger.xml(mxml: () -> Any?) {
     val xml = mxml()?.toString()
     if (xml == null || xml.isBlank()) {
-        this.d("Empty/Null xml content")
+        this.debug("Empty/Null xml content")
         return
     }
     try {
@@ -169,9 +169,9 @@ inline fun DtLogger.xml(mxml: () -> Any?) {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes")
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2")
         transformer.transform(xmlInput, xmlOutput)
-        this.d(xmlOutput.writer.toString().replaceFirst(">".toRegex(), ">\n"))
+        this.debug(xmlOutput.writer.toString().replaceFirst(">".toRegex(), ">\n"))
     } catch (e: TransformerException) {
-        this.e("Invalid xml")
+        this.debug("Invalid xml")
     }
 }
 

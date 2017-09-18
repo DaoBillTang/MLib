@@ -1,4 +1,4 @@
-package com.hyhs.hschefu.staff.base
+package com.daotangbill.dt_ext.exlib.Base
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -7,7 +7,7 @@ import android.os.Environment
 import android.os.Process
 import android.os.SystemClock
 import android.util.Log
-import com.hyhs.hschefu.staff.AppManager
+import com.daotangbill.dt_ext.exlib.commons.Utils.showResultDialog
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -58,8 +58,8 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
             Process.killProcess(Process.myPid())
         }
 
-        if (mContext is AppManager) {
-            (mContext as AppManager).act?.showResultDialog("错误", "抱歉，发生了一点意外。")
+        if (mContext is BaseApp) {
+            (mContext as BaseApp).act?.showResultDialog("错误", "抱歉，发生了一点意外。")
             // TODO: 2017/7/18 show dialog
         }
     }

@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.hyhs.hschefu.staff.base.CrashHandler
 import kotlin.properties.Delegates
 
 /**
