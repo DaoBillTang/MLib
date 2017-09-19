@@ -11,6 +11,7 @@ package com.daotangbill.dt_ext.exlib.commons.Utils
 sealed class BooleanExt<out T> constructor(val boolean: Boolean)
 
 object Otherwise : BooleanExt<Nothing>(true)
+
 class WithData<out T>(val data: T): BooleanExt<T>(false)
 
 inline fun <T> Boolean.yes(block: () -> T): BooleanExt<T> = when {
@@ -27,14 +28,9 @@ inline fun <T> Boolean.no(block: () -> T) = when {
     }
 }
 
-inline infix fun <T> BooleanExt<T>.otherwise(block: () -> T): T {
-    return when (this) {
-        is Otherwise -> block()
-        is WithData<T> -> this.data
-        else ->{
-            throw IllegalAccessException()
-        }
-    }
+inline infix fun <T> BooleanExt<T>.otherwise(block: () -> T): T = when (this) {
+    is Otherwise -> block()
+    is WithData<T> -> this.data
 }
 
 inline operator fun <T> Boolean.invoke(block: () -> T) = yes(block)

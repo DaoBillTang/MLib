@@ -58,19 +58,6 @@ inline fun <reified T : View>
     return childView as T
 }
 
-@UiThread
-fun Context.TToast(message: String) {
-    val mToast = Toast.makeText(this, message + "", Toast.LENGTH_SHORT)
-    mToast.setGravity(Gravity.CENTER, 0, 0)
-    mToast.show()
-}
-
-@UiThread
-fun Activity.TToast(message: String) {
-    val mToast = Toast.makeText(this, message + "", Toast.LENGTH_SHORT)
-    mToast.setGravity(Gravity.CENTER, 0, 0)
-    mToast.show()
-}
 
 private var exitTime: Long = 0//记录时间
 fun Activity.doubleBackToExit() {
@@ -89,30 +76,12 @@ fun Fragment.TToast(message: String) {
     mToast.show()
 }
 
-
-@UiThread
-fun Context.TToast(str: Int) {
-    val mToast = Toast.makeText(this, this.resources.getString(str) + "", Toast.LENGTH_SHORT)
-    mToast.setGravity(Gravity.CENTER, 0, 0)
-    mToast.show()
-}
-
-
-@UiThread
-fun Activity.TToast(str: Int) {
-    val mToast = Toast.makeText(this, this.resources.getString(str) + "", Toast.LENGTH_SHORT)
-    mToast.setGravity(Gravity.CENTER, 0, 0)
-    mToast.show()
-}
-
-
 @UiThread
 fun Fragment.TToast(str: Int) {
     val mToast = Toast.makeText(this.activity, this.resources.getString(str) + "", Toast.LENGTH_SHORT)
     mToast.setGravity(Gravity.CENTER, 0, 0)
     mToast.show()
 }
-
 
 @UiThread
 fun Context.cToast(message: String): Unit {

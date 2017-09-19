@@ -36,120 +36,81 @@ import com.daotangbill.dt_ext.exlib.commons.toast.ToastConfig.tintIcon
  * @description:
  */
 @CheckResult
-fun Context?.Tnormal(message: CharSequence?): Toast? =
-        this?.Tnormal(message, Toast.LENGTH_SHORT, null, false)
+fun Context.Tnormal(message: CharSequence): Toast? =
+        this.Tnormal(message, Toast.LENGTH_SHORT, null, false)
 
 @CheckResult
-fun Context?.Tnormal(message: CharSequence?, icon: Drawable): Toast? =
-        this?.Tnormal(message, Toast.LENGTH_SHORT, icon, true)
-
-
-@CheckResult
-fun Context?.Tnormal(message: CharSequence?, duration: Int): Toast? =
-        this?.Tnormal(message, duration, null, false)
+fun Context.Tnormal(message: CharSequence, icon: Drawable): Toast? =
+        this.Tnormal(message, Toast.LENGTH_SHORT, icon, true)
 
 @CheckResult
-fun Context?.Tnormal(message: CharSequence?, duration: Int,
+fun Context.Tnormal(message: CharSequence, duration: Int): Toast? =
+        this.Tnormal(message, duration, null, false)
+
+@CheckResult
+fun Context.Tnormal(message: CharSequence, duration: Int,
                     icon: Drawable): Toast? =
-        this?.Tnormal(message, duration, icon, true)
+        this.Tnormal(message, duration, icon, true)
 
 @CheckResult
-fun Context?.Tnormal(message: CharSequence?, duration: Int,
-                     icon: Drawable?, withIcon: Boolean): Toast? =
-        this?.custom(message, icon, ToastConfig.NORMAL_COLOR, duration, withIcon, true)
+fun Context.Tnormal(message: CharSequence, duration: Int,
+                    icon: Drawable?, withIcon: Boolean): Toast? =
+        Toasty.custom(this, message, icon, Toasty.NORMAL_COLOR, duration, withIcon, true)
 
 @CheckResult
-fun Context?.Twarning(message: CharSequence?): Toast? =
-        this?.Twarning(message, Toast.LENGTH_SHORT, true)
+fun Context.Twarning(message: CharSequence): Toast? =
+        this.Twarning(message, Toast.LENGTH_SHORT, true)
 
 @CheckResult
-fun Context?.Twarning(message: CharSequence?, duration: Int): Toast? =
-        this?.Twarning(message, duration, true)
+fun Context.Twarning(message: CharSequence, duration: Int): Toast? =
+        this.Twarning(message, duration, true)
 
 @CheckResult
-fun Context?.Twarning(message: CharSequence??,
-                      duration: Int,
-                      withIcon: Boolean): Toast?
-        = this?.custom(message, this.getDrawableBySdk(R.drawable.ic_error_outline_white_48dp),
+fun Context.Twarning(message: CharSequence,
+                     duration: Int,
+                     withIcon: Boolean): Toast?
+        = Toasty.custom(this, message, this.getDrawableBySdk(R.drawable.ic_error_outline_white_48dp),
         WARNING_COLOR, duration, withIcon, true)
 
 @CheckResult
 @JvmOverloads
-fun Context?.Tinfo(
-        message: CharSequence?,
+fun Context.Tinfo(
+        message: CharSequence,
         duration: Int = Toast.LENGTH_SHORT,
         withIcon: Boolean = true): Toast?
-        = this?.custom(message,
+        = Toasty.custom(this, message,
         this.getDrawableBySdk(R.drawable.ic_info_outline_white_48dp),
         INFO_COLOR, duration, withIcon, true)
 
 @CheckResult
 @JvmOverloads
-fun Context?.Tsuccess(
-        message: CharSequence?,
+fun Context.Tsuccess(
+        message: CharSequence,
         duration: Int = Toast.LENGTH_SHORT,
         withIcon: Boolean = true): Toast?
-        = this?.custom(message, this.getDrawableBySdk(R.drawable.ic_check_white_48dp),
+        = Toasty.custom(this, message, this.getDrawableBySdk(R.drawable.ic_check_white_48dp),
         SUCCESS_COLOR, duration, withIcon, true)
 
 @CheckResult
 @JvmOverloads
-fun Context?.Terror(
-        message: CharSequence?,
+fun Context.Terror(
+        message: CharSequence,
         duration: Int = Toast.LENGTH_SHORT,
         withIcon: Boolean = true): Toast?
-        = this?.custom(message, this.getDrawableBySdk(R.drawable.ic_clear_white_48dp),
+        = Toasty.custom(this, message, this.getDrawableBySdk(R.drawable.ic_clear_white_48dp),
         ERROR_COLOR, duration, withIcon, true)
 
 @CheckResult
-fun Context?.custom(message: CharSequence?, icon: Drawable,
-                    duration: Int, withIcon: Boolean): Toast?
-        = this?.custom(message, icon, -1, duration, withIcon, false)
+fun Context.custom(message: CharSequence, icon: Drawable,
+                   duration: Int, withIcon: Boolean): Toast?
+        = Toasty.custom(this,message, icon, -1, duration, withIcon, false)
 
 @CheckResult
-fun Context?.custom(message: CharSequence?, @DrawableRes iconRes: Int,
-                    @ColorInt tintColor: Int, duration: Int,
-                    withIcon: Boolean, shouldTint: Boolean): Toast?
-        = this?.custom(message, this.getDrawableBySdk(iconRes),
+fun Context.custom(message: CharSequence, @DrawableRes iconRes: Int,
+                   @ColorInt tintColor: Int, duration: Int,
+                   withIcon: Boolean, shouldTint: Boolean): Toast?
+        = Toasty.custom(this,message, this.getDrawableBySdk(iconRes),
         tintColor, duration, withIcon, shouldTint)
-
-
-@CheckResult
-fun Context?.custom(message: CharSequence?, icon: Drawable?,
-                    @ColorInt tintColor: Int, duration: Int,
-                    withIcon: Boolean, shouldTint: Boolean): Toast {
-    var icon = icon
-    val currentToast = Toast(this)
-    val toastLayout = (this?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
-            .inflate(R.layout.toast_layout, null)
-    val toastIcon = toastLayout.findViewById(R.id.toast_icon) as ImageView
-    val toastTextView = toastLayout.findViewById(R.id.toast_text) as TextView
-    val drawableFrame: Drawable? = if (shouldTint)
-        this.tint9PatchDrawableFrame(tintColor)
-    else
-        this.getDrawableBySdk(R.drawable.toast_frame)
-
-    setBackground(toastLayout, drawableFrame)
-
-    if (withIcon) {
-        if (icon == null)
-            throw IllegalArgumentException("Avoid passing 'icon' as null if 'withIcon' is set to true")
-        if (tintIcon)
-            icon = getTintIcon(icon, DEFAULT_TEXT_COLOR)
-        setBackground(toastIcon, icon)
-    } else {
-        toastIcon.visibility = View.GONE
-    }
-
-    toastTextView.setTextColor(DEFAULT_TEXT_COLOR)
-    toastTextView.text = message
-    toastTextView.typeface = currentTypeface
-    toastTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize.toFloat())
-
-    currentToast.view = toastLayout
-    currentToast.duration = duration
-    return currentToast
-}
 
 object ToastConfig {
 

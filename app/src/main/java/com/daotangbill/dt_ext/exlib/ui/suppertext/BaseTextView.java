@@ -18,7 +18,6 @@ public class BaseTextView extends LinearLayout {
     private TextView topTextView, centerTextView, bottomTextView;
 
     private LayoutParams topTVParams, centerTVParams, bottomTVParams;
-
     public BaseTextView(Context context) {
         this(context, null);
     }
