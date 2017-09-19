@@ -36,20 +36,20 @@ import com.daotangbill.dt_ext.exlib.commons.toast.ToastConfig.tintIcon
  * @description:
  */
 @CheckResult
-fun Context?.TToast(message: CharSequence?): Toast? =
+fun Context?.Tnormal(message: CharSequence?): Toast? =
         this?.Tnormal(message, Toast.LENGTH_SHORT, null, false)
 
 @CheckResult
-fun Context?.TToast(message: CharSequence?, icon: Drawable): Toast? =
+fun Context?.Tnormal(message: CharSequence?, icon: Drawable): Toast? =
         this?.Tnormal(message, Toast.LENGTH_SHORT, icon, true)
 
 
 @CheckResult
-fun Context?.TToast(message: CharSequence?, duration: Int): Toast? =
+fun Context?.Tnormal(message: CharSequence?, duration: Int): Toast? =
         this?.Tnormal(message, duration, null, false)
 
 @CheckResult
-fun Context?.TToast(message: CharSequence?, duration: Int,
+fun Context?.Tnormal(message: CharSequence?, duration: Int,
                     icon: Drawable): Toast? =
         this?.Tnormal(message, duration, icon, true)
 
