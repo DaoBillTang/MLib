@@ -18,7 +18,7 @@ import com.daotangbill.dt_ext.exlib.commons.statusbar.StatusBarHelper
 abstract class DtBaseActivity : AppCompatActivity(), DtLogger {
     private var proDialg: ProgressDialog? = null
     private var dlg: AlertDialog? = null
-    protected var mStatusBarHelper: StatusBarHelper? = null
+    private var mStatusBarHelper: StatusBarHelper? = null
     protected val handler: Handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
