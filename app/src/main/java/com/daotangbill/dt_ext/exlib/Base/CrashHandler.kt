@@ -60,7 +60,6 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
 
         if (mContext is DtBaseApp) {
             (mContext as DtBaseApp).act?.showResultDialog("错误", "抱歉，发生了一点意外。")
-            // TODO: 2017/7/18 show dialog
         }
     }
 
