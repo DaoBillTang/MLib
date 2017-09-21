@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import com.daotangbill.dt_ext.exlib.commons.Utils.cToast
 import com.daotangbill.dt_ext.exlib.commons.logger.DtLogger
 
 /**
@@ -84,6 +85,16 @@ abstract class DtBaseApp : Application(), DtLogger {
             if (it::class.java.name == actName) {
                 it.finish()
             }
+        }
+    }
+
+    private var exitTime: Long = 0//记录时间
+    fun doubleBackToExit() {
+        if (System.currentTimeMillis() - exitTime > 2000) {
+            cToast("再按一次退出程序")
+            exitTime = System.currentTimeMillis()
+        } else {
+            exit()
         }
     }
 

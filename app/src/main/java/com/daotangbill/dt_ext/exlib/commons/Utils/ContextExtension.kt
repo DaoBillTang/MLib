@@ -58,17 +58,6 @@ inline fun <reified T : View>
     return childView as T
 }
 
-
-private var exitTime: Long = 0//记录时间
-fun Activity.doubleBackToExit() {
-    if (System.currentTimeMillis() - exitTime > 2000) {
-        cToast("再按一次退出程序")
-        exitTime = System.currentTimeMillis()
-    } else {
-        DtBaseApp.INSTANCE.exit()
-    }
-}
-
 @UiThread
 fun Fragment.TToast(message: String) {
     val mToast = Toast.makeText(this.activity, message + "", Toast.LENGTH_SHORT)
