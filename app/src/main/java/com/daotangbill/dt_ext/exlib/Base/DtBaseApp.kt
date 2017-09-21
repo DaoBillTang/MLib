@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import kotlin.properties.Delegates
+import com.daotangbill.dt_ext.exlib.commons.logger.DtLogger
 
 /**
  * project com.daotangbill.dt_ext.exlib.Base
@@ -17,21 +17,18 @@ import kotlin.properties.Delegates
  * @version: 1.0
  * @description:
  */
-abstract class DtBaseApp : Application() {
+abstract class DtBaseApp : Application(), DtLogger {
 
     private var life: LifeListener? = null
 
-//    private var mRefWatcher: RefWatcher? = null
-
     companion object {
         @JvmStatic
-        var INSTANCE: DtBaseApp by Delegates.notNull()
+        var act: Activity? = null
         var actList: MutableList<Activity> = mutableListOf()
     }
 
     override fun onCreate() {
         super.onCreate()
-        INSTANCE = this
         life = LifeListener()
         registerActivityLifecycleCallbacks(life)
         val crash = CrashHandler.getsInstance()
@@ -43,12 +40,6 @@ abstract class DtBaseApp : Application() {
         unregisterActivityLifecycleCallbacks(life)
     }
 
-
-    var act: DtBaseActivity? = null
-
-    fun addTopAct(act: DtBaseActivity) {
-        this.act = act
-    }
 
     /**
      * 去市场下载页面
@@ -71,7 +62,6 @@ abstract class DtBaseApp : Application() {
      * com.lenovo.leos.appstore 联想应用商店
      * com.coolapk.market cool市场
      */
-    @Deprecated("没用了")
     fun goToMarket(context: Context?, packageName: String) {
         if (context == null) return
         val uri = Uri.parse("market://details?id=" + packageName)
@@ -105,6 +95,7 @@ abstract class DtBaseApp : Application() {
         }
 
         override fun onActivityStarted(activity: Activity?) {
+            act = activity
         }
 
         override fun onActivityDestroyed(activity: Activity?) {
