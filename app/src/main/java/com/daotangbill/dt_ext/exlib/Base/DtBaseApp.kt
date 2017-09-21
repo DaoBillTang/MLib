@@ -8,7 +8,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.daotangbill.dt_ext.exlib.commons.Utils.cToast
-import com.daotangbill.dt_ext.exlib.commons.logger.DtLogger
 
 /**
  * project com.daotangbill.dt_ext.exlib.Base
@@ -18,15 +17,11 @@ import com.daotangbill.dt_ext.exlib.commons.logger.DtLogger
  * @version: 1.0
  * @description:
  */
-abstract class DtBaseApp : Application(), DtLogger {
+abstract class DtBaseApp : Application() {
 
     private var life: LifeListener? = null
-
-    companion object {
-        @JvmStatic
-        var act: Activity? = null
-        var actList: MutableList<Activity> = mutableListOf()
-    }
+    var act: Activity? = null
+    var actList: MutableList<Activity> = mutableListOf()
 
     override fun onCreate() {
         super.onCreate()
@@ -40,7 +35,6 @@ abstract class DtBaseApp : Application(), DtLogger {
         super.onTerminate()
         unregisterActivityLifecycleCallbacks(life)
     }
-
 
     /**
      * 去市场下载页面
@@ -98,7 +92,7 @@ abstract class DtBaseApp : Application(), DtLogger {
         }
     }
 
-    class LifeListener : ActivityLifecycleCallbacks {
+    inner class LifeListener : ActivityLifecycleCallbacks {
         override fun onActivityPaused(activity: Activity?) {
         }
 
