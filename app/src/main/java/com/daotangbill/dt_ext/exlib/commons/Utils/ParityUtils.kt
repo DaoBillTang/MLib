@@ -24,6 +24,7 @@ fun String?.parity(context: Context?, regular: String?, err: String = "校验错
             false
         } else {
             if (Pattern.matches(regular, this)) {
+
                 true
             } else {
                 context?.Terror(err)
