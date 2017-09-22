@@ -18,12 +18,25 @@ import java.util.regex.Pattern
  * @param regular 校验条件
  * @param err 错误提示
  */
-fun String?.parity(context: Context?, regular: String, err: String): Boolean =
+fun String?.parity(context: Context?, regular: String?, err: String = "校验错误"): Boolean =
         if (this == null) {
             context?.Terror(err)
             false
         } else {
             if (Pattern.matches(regular, this)) {
+                context?.Terror(err)
+                false
+            } else {
+                true
+            }
+        }
+
+fun String?.parityEmpty(context: Context?, err: String = "校验错误"): Boolean =
+        if (this == null) {
+            context?.Terror(err)
+            false
+        } else {
+            if (this.isBlank()) {
                 context?.Terror(err)
                 false
             } else {
