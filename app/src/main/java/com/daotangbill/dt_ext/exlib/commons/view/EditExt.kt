@@ -20,7 +20,7 @@ fun EditText?.Filter(filterStr: String?) {
 }
 
 fun EditText?.Filter(filterStr: String, max: Int) {
-    val filters = arrayOfNulls<InputFilter>(1)
+    val filters = arrayOfNulls<InputFilter>(2)
     filters[0] = MyInputFilter(filterStr)
     filters[1] = InputFilter.LengthFilter(max)
     this?.filters = filters
