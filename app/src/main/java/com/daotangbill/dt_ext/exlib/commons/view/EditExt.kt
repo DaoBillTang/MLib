@@ -19,10 +19,10 @@ fun EditText?.Filter(filterStr: String?) {
     this?.filters = filters
 }
 
-fun EditText?.Filter(filterStr: String, max: Int) {
-
+fun EditText?.Filter(filterStr: String?, max: Int?) {
+    if (filterStr == null) return
+    if (max == null) return
     val filters = arrayOfNulls<InputFilter>(2)
-
     filters[0] = MyInputFilter(filterStr)
     filters[1] = InputFilter.LengthFilter(max)
     this?.filters = filters
