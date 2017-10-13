@@ -4,6 +4,10 @@ import android.text.Editable
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.net.UnknownHostException
+import java.util.Collections.replaceAll
+import java.util.regex.Pattern
+import java.util.regex.PatternSyntaxException
+
 
 /**
  * Project hschefu-android
@@ -60,9 +64,7 @@ object StringExtend {
  *对于 输入小数的时候 ，保留两位小数，并且判断小数点等等
  * 已知bug:小数点数量过多
  */
-fun String.formatTime(): String {
-    return this.substring(0, 7).replaceFirst("-", "年").replaceFirst("-", "月")
-}
+fun String.formatTime(): String = this.substring(0, 7).replaceFirst("-", "年").replaceFirst("-", "月")
 
 fun Editable?.judgeNumber(intNum: Int, decimalNum: Int): String? {
     if (this == null) return null
@@ -91,6 +93,13 @@ fun Editable?.judgeNumber(intNum: Int, decimalNum: Int): String? {
     return this.toString()
 }
 
-fun CharSequence?.judgeNumber(intNum: Int, decimalNum: Int): String? {
-    return (this as Editable).judgeNumber(intNum, decimalNum)
+fun CharSequence?.judgeNumber(intNum: Int, decimalNum: Int): String? =
+        (this as Editable).judgeNumber(intNum, decimalNum)
+
+@Throws(PatternSyntaxException::class)
+fun String?.stringFilter(regEx: String): String? {
+    // 仅仅同意字母、数字和汉字
+    val p = Pattern.compile(regEx)
+    val m = p.matcher(this)
+    return m?.replaceAll("")?.trim()
 }
