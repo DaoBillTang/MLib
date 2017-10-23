@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.support.annotation.CheckResult
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,9 @@ import com.daotangbill.dt_ext.exlib.commons.toast.ToastExt.tintIcon
  * @version: 1.0
  * @description:
  */
+var toastStr: CharSequence? = null
+var toastTime: Long? = null
+
 fun Context.Tnormal(message: CharSequence) =
         this.Tnormal(message, Toast.LENGTH_SHORT, null, false)?.show()
 
@@ -124,6 +128,15 @@ object ToastExt {
 private fun custom(context: Context, message: CharSequence, inIcon: Drawable?,
                    @ColorInt tintColor: Int, duration: Int,
                    withIcon: Boolean, shouldTint: Boolean): Toast? {
+    if (toastTime != null && message == toastStr) {
+        if (System.currentTimeMillis() - (toastTime ?: 0L) <= 3000) {
+            Log.d("ExLib_toast", "连续显示相同的内容===$toastStr")
+            return null
+        }
+    }
+    toastTime = System.currentTimeMillis()
+    toastStr = message
+
     var icon = inIcon
     val currentToast = Toast(context)
     val toastLayout = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)

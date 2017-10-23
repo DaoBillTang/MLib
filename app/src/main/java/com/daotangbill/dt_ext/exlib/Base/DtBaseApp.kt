@@ -82,6 +82,11 @@ abstract class DtBaseApp : Application() {
         }
     }
 
+    fun finish(actClass: Class<Activity>) {
+        val name = actClass::class.java.name
+        finish(name)
+    }
+
     private var exitTime: Long = 0//记录时间
     fun doubleBackToExit() {
         if (System.currentTimeMillis() - exitTime > 2000) {
