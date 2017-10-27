@@ -31,6 +31,50 @@ fun String?.parity(context: Context?, regular: String?, err: String = "校验错
             }
         }
 
+
+fun String?.parityAndEmpty(context: Context?, regular: String?, err: String = "校验错误"): Boolean =
+        if (this == null) {
+            context?.Terror(err)
+            false
+        } else {
+            if (this.isBlank()) {
+                context?.Terror(err)
+                false
+            } else {
+                if (Pattern.matches(regular, this)) {
+                    true
+                } else {
+                    context?.Terror(err)
+                    false
+                }
+            }
+        }
+
+/**
+ *@author bill
+ *@description
+ * @param err:校验出不符合需求的内容的提示
+ * @param emptyErr:空值错误提示
+ */
+fun String?.notParity(context: Context?, regular: String?,
+                      err: String = "校验错误", emptyErr: String = "数值为空"): Boolean =
+        if (this == null) {
+            context?.Terror(emptyErr)
+            false
+        } else {
+            if (this.isBlank()) {
+                context?.Terror(emptyErr)
+                false
+            } else {
+                if (Pattern.matches(regular, this)) {
+                    context?.Terror(err)
+                    false
+                } else {
+                    true
+                }
+            }
+        }
+
 fun String?.parityEmpty(context: Context?, err: String = "校验错误"): Boolean =
         if (this == null) {
             context?.Terror(err)

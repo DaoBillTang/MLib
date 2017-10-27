@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.support.annotation.CheckResult
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
+import android.support.annotation.StringRes
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -30,7 +31,9 @@ import com.daotangbill.dt_ext.exlib.commons.toast.ToastExt.tintIcon
  * emal: tangbakzi@daotangbill.uu.me
  * @author: Bill
  * @version: 1.0
- * @description:
+ * @description 用于显示toast的工具集
+ * 注意：duration 只有两个值：0,1不要填其他的
+ *
  */
 var toastStr: CharSequence? = null
 var toastTime: Long? = null
@@ -38,31 +41,47 @@ var toastTime: Long? = null
 fun Context.Tnormal(message: CharSequence) =
         this.Tnormal(message, Toast.LENGTH_SHORT, null, false)?.show()
 
-@CheckResult
+fun Context.tnormal(@StringRes messageId: Int) =
+        this.Tnormal(this.resources.getString(messageId), Toast.LENGTH_SHORT, null, false)?.show()
+
 fun Context.Tnormal(message: CharSequence, icon: Drawable) =
         this.Tnormal(message, Toast.LENGTH_SHORT, icon, true)?.show()
 
-@CheckResult
+fun Context.Tnormal(@StringRes messageId: Int, icon: Drawable) =
+        this.Tnormal(this.resources.getString(messageId), Toast.LENGTH_SHORT, icon, true)?.show()
+
 fun Context.Tnormal(message: CharSequence, duration: Int) =
         this.Tnormal(message, duration, null, false)?.show()
 
-@CheckResult
+fun Context.Tnormal(@StringRes messageId: Int, duration: Int) =
+        this.Tnormal(this.resources.getString(messageId), duration, null, false)?.show()
+
 fun Context.Tnormal(message: CharSequence, duration: Int,
                     icon: Drawable) =
         this.Tnormal(message, duration, icon, true)?.show()
+
+fun Context.Tnormal(@StringRes messageId: Int, duration: Int,
+                    icon: Drawable) =
+        this.Tnormal(this.resources.getString(messageId), duration, icon, true)?.show()
 
 @CheckResult
 fun Context.Tnormal(message: CharSequence, duration: Int,
                     icon: Drawable?, withIcon: Boolean) =
         custom(this, message, icon, ToastExt.NORMAL_COLOR, duration, withIcon, true)
 
-@CheckResult
 fun Context.Twarning(message: CharSequence) =
         this.Twarning(message, Toast.LENGTH_SHORT, true)?.show()
+
+fun Context.Twarning(@StringRes messageId: Int) =
+        this.Twarning(this.resources.getString(messageId), Toast.LENGTH_SHORT, true)?.show()
 
 @CheckResult
 fun Context.Twarning(message: CharSequence, duration: Int) =
         this.Twarning(message, duration, true)?.show()
+
+@CheckResult
+fun Context.Twarning(@StringRes messageId: Int, duration: Int) =
+        this.Twarning(this.resources.getString(messageId), duration, true)?.show()
 
 @CheckResult
 fun Context.Twarning(message: CharSequence,
@@ -71,17 +90,14 @@ fun Context.Twarning(message: CharSequence,
         = custom(message, R.drawable.ic_error_outline_white_48dp,
         ToastExt.WARNING_COLOR, duration, withIcon, true)
 
-@CheckResult
 @JvmOverloads
 fun Context.Tinfo(
         message: CharSequence,
         duration: Int = Toast.LENGTH_SHORT,
         withIcon: Boolean = true)
-        = custom(message,
-        R.drawable.ic_info_outline_white_48dp,
-        ToastExt.INFO_COLOR, duration, withIcon, true)?.show()
+        = custom(message, R.drawable.ic_info_outline_white_48dp, ToastExt.INFO_COLOR,
+        duration, withIcon, true)?.show()
 
-@CheckResult
 @JvmOverloads
 fun Context.Tsuccess(
         message: CharSequence,
@@ -90,7 +106,7 @@ fun Context.Tsuccess(
         = custom(message, R.drawable.ic_check_white_48dp,
         ToastExt.SUCCESS_COLOR, duration, withIcon, true)?.show()
 
-@CheckResult
+
 @JvmOverloads
 fun Context.Terror(
         message: CharSequence,
@@ -125,6 +141,7 @@ object ToastExt {
     var tintIcon = true
 }
 
+@CheckResult
 private fun custom(context: Context, message: CharSequence, inIcon: Drawable?,
                    @ColorInt tintColor: Int, duration: Int,
                    withIcon: Boolean, shouldTint: Boolean): Toast? {
@@ -170,7 +187,7 @@ private fun custom(context: Context, message: CharSequence, inIcon: Drawable?,
     return currentToast
 }
 
-class Config private constructor() {
+class ToastConfig private constructor() {
     @ColorInt
     private var DEFAULT_TEXT_COLOR = ToastExt.DEFAULT_TEXT_COLOR
     @ColorInt
@@ -188,49 +205,49 @@ class Config private constructor() {
     private var tintIcon = ToastExt.tintIcon
 
     @CheckResult
-    fun setTextColor(@ColorInt textColor: Int): Config {
+    fun setTextColor(@ColorInt textColor: Int): ToastConfig {
         DEFAULT_TEXT_COLOR = textColor
         return this
     }
 
     @CheckResult
-    fun setErrorColor(@ColorInt errorColor: Int): Config {
+    fun setErrorColor(@ColorInt errorColor: Int): ToastConfig {
         ERROR_COLOR = errorColor
         return this
     }
 
     @CheckResult
-    fun setInfoColor(@ColorInt infoColor: Int): Config {
+    fun setInfoColor(@ColorInt infoColor: Int): ToastConfig {
         INFO_COLOR = infoColor
         return this
     }
 
     @CheckResult
-    fun setSuccessColor(@ColorInt successColor: Int): Config {
+    fun setSuccessColor(@ColorInt successColor: Int): ToastConfig {
         SUCCESS_COLOR = successColor
         return this
     }
 
     @CheckResult
-    fun setWarningColor(@ColorInt warningColor: Int): Config {
+    fun setWarningColor(@ColorInt warningColor: Int): ToastConfig {
         WARNING_COLOR = warningColor
         return this
     }
 
     @CheckResult
-    fun setToastTypeface(typeface: Typeface): Config {
+    fun setToastTypeface(typeface: Typeface): ToastConfig {
         this.typeface = typeface
         return this
     }
 
     @CheckResult
-    fun setTextSize(sizeInSp: Int): Config {
+    fun setTextSize(sizeInSp: Int): ToastConfig {
         this.textSize = sizeInSp
         return this
     }
 
     @CheckResult
-    fun tintIcon(tintIcon: Boolean): Config {
+    fun tintIcon(tintIcon: Boolean): ToastConfig {
         this.tintIcon = tintIcon
         return this
     }
@@ -248,9 +265,9 @@ class Config private constructor() {
 
     companion object {
 
-        val instance: Config
+        val instance: ToastConfig
             @CheckResult
-            get() = Config()
+            get() = ToastConfig()
 
         fun reset() {
             ToastExt.DEFAULT_TEXT_COLOR = Color.parseColor("#FFFFFF")
