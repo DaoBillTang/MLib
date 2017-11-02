@@ -19,8 +19,8 @@ android {
 }
 
 dependencies {
-    compile rootProject.ext.supportAppCompat
-    compile rootProject.ext.kotlinStdlib
+    provided rootProject.ext.supportAppCompat
+    provided rootProject.ext.kotlinStdlib
     testCompile rootProject.ext.junit
     provided rootProject.ext.supportRecyclerView
     provided rootProject.ext.rxJava
