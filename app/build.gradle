@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 25
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.compileSdkVersion
         versionCode 1
         versionName "1.0"
     }
@@ -19,8 +19,12 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.1.2'
-    testCompile 'junit:junit:4.12'
-    provided 'com.android.support:recyclerview-v7:25.3.1'
+    compile rootProject.ext.supportAppCompat
+    compile rootProject.ext.kotlinStdlib
+    testCompile rootProject.ext.junit
+    provided rootProject.ext.supportRecyclerView
+    provided rootProject.ext.rxJava
+    provided rootProject.ext.rxAndroid
+    provided rootProject.ext.glide
+    compileOnly rootProject.ext.jsr305Annotations
 }

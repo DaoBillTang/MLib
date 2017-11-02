@@ -1,0 +1,162 @@
+package com.daotangbill.exlib.base
+
+
+import android.app.ProgressDialog
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.support.annotation.CallSuper
+import android.support.annotation.CheckResult
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.daotangbill.exlib.commons.logger.DtLogger
+import com.daotangbill.exlib.commons.logger.debug
+import com.daotangbill.exlib.rx.lifecycle.LifecycleTransformer
+import com.daotangbill.exlib.rx.lifecycle.RxLifecycle
+import com.daotangbill.exlib.rx.lifecycle.FragmentEvent
+import com.daotangbill.exlib.rx.lifecycle.LifecycleProvider
+import com.daotangbill.exlib.rx.lifecycle.RxLifecycleAndroid
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
+
+/**
+ * Created by Bill on 2016/9/18 11:32.
+ * emal:1750352866@qq.com
+ */
+abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<FragmentEvent> {
+    internal var proDialg: ProgressDialog? = null
+    private var isFristVisibile = false
+
+    val handler: Handler = Handler(Looper.getMainLooper())
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycleSubject.onNext(FragmentEvent.CREATE)
+        debug { "onCreate====" }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?
+                              , savedInstanceState: Bundle?): View? {
+        debug { "onCreateView====" }
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    /**
+     * 设置Fragment是否可见
+     * 需要手动使用，或者使用viewpager
+     */
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        debug { "setUserVisibleHint() -> isVisibleToUser: " + isVisibleToUser }
+        if (view != null) {
+            if (isVisibleToUser && !isFristVisibile) {
+                firstInitView(view!!)
+                onFragmentVisible(view!!)
+                return
+            } else if (isVisibleToUser) {
+                onFragmentVisible(view!!)
+            } else {
+                onFragmentInvisible()
+            }
+        }
+    }
+
+    open fun firstInitView(view: View) {
+        debug { "firstInitView=====" }
+    }
+
+    open fun onFragmentInvisible() {
+        debug { "onFragmentInvisible" }
+    }
+
+    open fun onFragmentVisible(view: View) {
+        debug { "onFragmentVisible" }
+    }
+
+    @JvmOverloads
+    fun showProgressDialog(message: String = "正在处理中请稍后……") {
+        if (proDialg == null) {
+            proDialg = ProgressDialog(this.activity)
+        }
+        proDialg!!.setMessage(message)
+        proDialg!!.show()
+    }
+
+    fun proDialogDismiss() {
+        if (proDialg != null) proDialg!!.dismiss()
+        proDialg = null
+    }
+
+    override fun onDestroy() {
+        lifecycleSubject.onNext(FragmentEvent.DESTROY)
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    private val lifecycleSubject = BehaviorSubject.create<FragmentEvent>()
+
+    @CheckResult
+    override fun lifecycle(): Observable<FragmentEvent> {
+        return lifecycleSubject.hide()
+    }
+
+    @CheckResult
+    override fun <T> bindUntilEvent(event: FragmentEvent): LifecycleTransformer<T> {
+        return RxLifecycle.bindUntilEvent(lifecycleSubject, event)
+    }
+
+    @CheckResult
+    override fun <T> bindToLifecycle(): LifecycleTransformer<T> {
+        return RxLifecycleAndroid.bindFragment(lifecycleSubject)
+    }
+
+    @CallSuper
+    override fun onAttach(activity: android.app.Activity) {
+        super.onAttach(activity)
+        lifecycleSubject.onNext(FragmentEvent.ATTACH)
+    }
+
+    @CallSuper
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        lifecycleSubject.onNext(FragmentEvent.CREATE_VIEW)
+    }
+
+    @CallSuper
+    override fun onStart() {
+        super.onStart()
+        lifecycleSubject.onNext(FragmentEvent.START)
+    }
+
+    @CallSuper
+    override fun onResume() {
+        super.onResume()
+        lifecycleSubject.onNext(FragmentEvent.RESUME)
+    }
+
+    @CallSuper
+    override fun onPause() {
+        lifecycleSubject.onNext(FragmentEvent.PAUSE)
+        super.onPause()
+    }
+
+    @CallSuper
+    override fun onStop() {
+        lifecycleSubject.onNext(FragmentEvent.STOP)
+        super.onStop()
+    }
+
+    @CallSuper
+    override fun onDestroyView() {
+        lifecycleSubject.onNext(FragmentEvent.DESTROY_VIEW)
+        super.onDestroyView()
+    }
+
+    @CallSuper
+    override fun onDetach() {
+        lifecycleSubject.onNext(FragmentEvent.DETACH)
+        super.onDetach()
+    }
+}
