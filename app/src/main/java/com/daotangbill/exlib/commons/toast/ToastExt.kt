@@ -41,7 +41,7 @@ var toastTime: Long? = null
 fun Context.Tnormal(message: CharSequence) =
         this.Tnormal(message, Toast.LENGTH_SHORT, null, false)?.show()
 
-fun Context.tnormal(@StringRes messageId: Int) =
+fun Context.Tnormal(@StringRes messageId: Int) =
         this.Tnormal(this.resources.getString(messageId), Toast.LENGTH_SHORT, null, false)?.show()
 
 fun Context.Tnormal(message: CharSequence, icon: Drawable) =

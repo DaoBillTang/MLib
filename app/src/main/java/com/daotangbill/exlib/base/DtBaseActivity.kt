@@ -12,11 +12,7 @@ import android.support.v7.app.AppCompatActivity
 import com.daotangbill.exlib.commons.logger.DtLogger
 import com.daotangbill.exlib.commons.statusbar.StatusBarHelper
 import com.daotangbill.exlib.exlib.R
-import com.daotangbill.exlib.rx.lifecycle.LifecycleTransformer
-import com.daotangbill.exlib.rx.lifecycle.RxLifecycle
-import com.daotangbill.exlib.rx.lifecycle.ActivityEvent
-import com.daotangbill.exlib.rx.lifecycle.LifecycleProvider
-import com.daotangbill.exlib.rx.lifecycle.RxLifecycleAndroid
+import com.daotangbill.exlib.rx.lifecycle.*
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
@@ -40,19 +36,15 @@ abstract class DtBaseActivity : AppCompatActivity(), DtLogger, LifecycleProvider
     private val lifecycleSubject = BehaviorSubject.create<ActivityEvent>()
 
     @CheckResult
-    override fun lifecycle(): Observable<ActivityEvent> {
-        return lifecycleSubject.hide()
-    }
+    override fun lifecycle(): Observable<ActivityEvent> = lifecycleSubject.hide()
 
     @CheckResult
-    override fun <T> bindUntilEvent(event: ActivityEvent): LifecycleTransformer<T> {
-        return RxLifecycle.bindUntilEvent(lifecycleSubject, event)
-    }
+    override fun <T> bindUntilEvent(event: ActivityEvent): LifecycleTransformer<T> =
+            RxLifecycle.bindUntilEvent(lifecycleSubject, event)
 
     @CheckResult
-    override fun <T> bindToLifecycle(): LifecycleTransformer<T> {
-        return RxLifecycleAndroid.bindActivity(lifecycleSubject)
-    }
+    override fun <T> bindToLifecycle(): LifecycleTransformer<T> =
+            RxLifecycleAndroid.bindActivity(lifecycleSubject)
 
     @CallSuper
     override fun onStart() {
@@ -86,7 +78,6 @@ abstract class DtBaseActivity : AppCompatActivity(), DtLogger, LifecycleProvider
 //                    .detectCustomSlowCalls()
 //                    .detectNetwork()
                 .build())
-
         // 针对VM的相关策略
         StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
                 .detectAll()

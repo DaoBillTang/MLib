@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.daotangbill.exlib.commons.utils.cToast
+import com.daotangbill.exlib.commons.toast.Tnormal
 
 /**
  * project com.daotangbill.dt_ext.exlib.Base
@@ -29,6 +29,7 @@ abstract class DtBaseApp : Application() {
         registerActivityLifecycleCallbacks(life)
         val crash = CrashHandler.getsInstance()
         crash.init(this)
+
     }
 
     override fun onTerminate() {
@@ -87,14 +88,26 @@ abstract class DtBaseApp : Application() {
         finish(name)
     }
 
+
     private var exitTime: Long = 0//记录时间
-    fun doubleBackToExit() {
-        if (System.currentTimeMillis() - exitTime > 2000) {
-            cToast("再按一次退出程序")
+
+    /**
+     *@author bill
+     *created at 2017/11/6 16:44
+     *@description
+     * @param int time,毫秒
+     */
+    fun doubleBackToExit(int: Int) {
+        if (System.currentTimeMillis() - exitTime > int) {
+            Tnormal("再按一次退出程序")
             exitTime = System.currentTimeMillis()
         } else {
             exit()
         }
+    }
+
+    fun doubleBackToExit() {
+        doubleBackToExit(2000)
     }
 
     inner class LifeListener : ActivityLifecycleCallbacks {
