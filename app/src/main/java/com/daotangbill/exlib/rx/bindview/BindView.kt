@@ -3,6 +3,7 @@ package com.daotangbill.exlib.rx.bindview
 import android.app.Activity
 import android.os.Build
 import android.support.annotation.MainThread
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit
  *
  * @author Bill
  * @version 1.0
- * @description
+ * @description 专为 rxjava 的bind 准备的
  */
 
 /**
@@ -39,6 +40,13 @@ fun View.bindClick(listener: () -> Unit, time: Long, act: Activity,
     } else {
         throw  IllegalAccessException("需要Activity继承自DtBaseActivity")
     }
+}
+
+@MainThread
+fun View.bindClick(listener: () -> Unit, time: Long, fra: Fragment,
+                   event: ActivityEvent = ActivityEvent.DESTROY) {
+    val act = fra.activity
+    this.bindClick(listener, time, act, event)
 }
 
 /**
@@ -62,6 +70,14 @@ fun View.bindLongClick(listener: () -> Boolean, time: Long, act: Activity,
     }
 }
 
+@MainThread
+fun View.bindLongClick(listener: () -> Boolean, time: Long, fra: Fragment,
+                       call: Boolean = true,
+                       event: ActivityEvent = ActivityEvent.DESTROY) {
+    val act = fra.activity
+    this.bindLongClick(listener, time, act, call, event)
+}
+
 /**
  *@param listener 需要实现的功能
  *@param time 需要限制的时间，单位 秒
@@ -80,6 +96,14 @@ fun View.bindTouch(listener: (MotionEvent) -> Boolean,
     } else {
         throw  IllegalAccessException("需要Activity继承自DtBaseActivity")
     }
+}
+
+@MainThread
+fun View.bindTouch(listener: (MotionEvent) -> Boolean,
+                   fra: Fragment,
+                   event: ActivityEvent = ActivityEvent.DESTROY) {
+    val act = fra.activity
+    this?.bindTouch(listener, act, event)
 }
 
 /**
@@ -102,4 +126,12 @@ fun View.bindScroll(listener: (ViewScrollChangeEvent) -> Unit,
     } else {
         throw  IllegalAccessException("需要Activity继承自DtBaseActivity")
     }
+}
+
+@MainThread
+fun View.bindScroll(listener: (ViewScrollChangeEvent) -> Unit,
+                    fra: Fragment,
+                    event: ActivityEvent = ActivityEvent.DESTROY) {
+    val act = fra.activity
+    this.bindScroll(listener, act, event)
 }
