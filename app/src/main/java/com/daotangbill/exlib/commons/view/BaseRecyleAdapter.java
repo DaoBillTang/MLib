@@ -21,9 +21,6 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-
 /**
  * project com.daotangbill.dt_ext.exlib.commons.view
  * Created by Bill on 2017/10/10.
@@ -40,19 +37,9 @@ public class BaseRecyleAdapter extends RecyclerView.ViewHolder {
      */
     private final SparseArray<View> views;
 
-
-    private final HashSet<Integer> nestViews;
-
-    private final LinkedHashSet<Integer> childClickViewIds;
-
-    private final LinkedHashSet<Integer> itemChildLongClickViewIds;
-
     public BaseRecyleAdapter(final View view) {
         super(view);
         this.views = new SparseArray<>();
-        this.childClickViewIds = new LinkedHashSet<>();
-        this.itemChildLongClickViewIds = new LinkedHashSet<>();
-        this.nestViews = new HashSet<>();
     }
 
     /**

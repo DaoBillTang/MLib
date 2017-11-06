@@ -21,7 +21,6 @@ public class Regular {
 	public static final String REGEX_DATE_APPOINTMENT = "^$|^\\d{4}-[01]\\d-[0-3]\\d [0-2]\\d:(0|3)0$";
 	/** 日期 正则表达式 */
 	public static final String REGEX_DATE = "^$|^\\d{4}-[01]\\d-[0-3]\\d$";
-
 	/** 6位数字 */
 	public static final String REGEX_NUM6 = "^$|^\\d{6}$";
 	/** 两位以内正整数或0 */
@@ -38,7 +37,6 @@ public class Regular {
 	public static final String REGEX_INT10 = "^$|^[1-9]\\d{0,9}$|^0$";
 	/** 可有8位整数,2位小数 */
 	public static final String REGEX_PFLOAT10_2 = "^$|^(\\d\\.\\d{1})|([1-9]\\d{0,7}(\\.\\d{1,2})?)$";
-
 	/** 一位字符 */
 	public static final String REGEX_COLOR = "^$|^[a-zA-Z]{1}$";
 	/** 车牌号 */

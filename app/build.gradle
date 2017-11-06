@@ -27,4 +27,5 @@ dependencies {
     provided rootProject.ext.rxAndroid
     provided rootProject.ext.glide
     compileOnly rootProject.ext.jsr305Annotations
+
 }

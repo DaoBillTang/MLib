@@ -41,7 +41,6 @@ fun View.bindClick(listener: () -> Unit, time: Long, act: Activity,
     }
 }
 
-
 /**
  *@param listener 需要实现的功能
  *@param time 需要限制的时间，单位 秒

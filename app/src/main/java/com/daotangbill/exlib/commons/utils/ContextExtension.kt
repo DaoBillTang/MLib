@@ -1,5 +1,6 @@
 package com.daotangbill.exlib.commons.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
 import android.app.PendingIntent.CanceledException
@@ -15,12 +16,10 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.util.DisplayMetrics
 import android.util.SparseArray
-import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
 
 
 /**
@@ -56,30 +55,6 @@ inline fun <reified T : View>
     }
     return childView as T
 }
-
-@UiThread
-fun Fragment.TToast(message: String) {
-    val mToast = Toast.makeText(this.activity, message + "", Toast.LENGTH_SHORT)
-    mToast.setGravity(Gravity.CENTER, 0, 0)
-    mToast.show()
-}
-
-@UiThread
-fun Fragment.TToast(str: Int) {
-    val mToast = Toast.makeText(this.activity, this.resources.getString(str) + "", Toast.LENGTH_SHORT)
-    mToast.setGravity(Gravity.CENTER, 0, 0)
-    mToast.show()
-}
-
-@UiThread
-fun Context.cToast(message: String): Unit {
-    val mToast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
-    mToast.setGravity(Gravity.CENTER, 0, 0)
-    mToast.show()
-}
-
-@UiThread
-fun Fragment.cToast(message: String) = this.activity.cToast(message)
 
 /**
  * 显示 回复dialog
@@ -133,6 +108,7 @@ fun Fragment.showConfirmCancelDialog(title: String, message: String
     return dlg
 }
 
+@SuppressLint("MissingPermission")
 fun Context.isNetworkConnected(): Boolean {
     val mConnectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val ni = mConnectivityManager.activeNetworkInfo
@@ -140,6 +116,7 @@ fun Context.isNetworkConnected(): Boolean {
 }
 
 
+@SuppressLint("MissingPermission")
 fun Context.isWifiConnected(): Boolean {
     val mConnectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE)
             as ConnectivityManager

@@ -26,7 +26,6 @@ class StarBar : View {
 
     var isChoose: Boolean = true
 
-
     /**
      * 获取显示星星的数目
 
@@ -35,7 +34,6 @@ class StarBar : View {
     /**
      * 设置显示的星星的分数
      */
-
     var listener: ((mark: Float) -> Unit)? = null
 
     /**
@@ -71,7 +69,6 @@ class StarBar : View {
         init(context, attrs)
     }
 
-
     /**
      * 初始化UI组件
 
@@ -104,7 +101,6 @@ class StarBar : View {
         this.integerMark = integerMark
     }
 
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         setMeasuredDimension(starSize * starCount + starDistance * (starCount - 1), starSize)
@@ -115,7 +111,7 @@ class StarBar : View {
         if (starFillBitmap == null || starEmptyDrawable == null) {
             return
         }
-        for (i in 0..starCount - 1) {
+        for (i in 0 until starCount) {
             starEmptyDrawable!!.setBounds((starDistance + starSize) * i, 0, (starDistance + starSize) * i + starSize, starSize)
             starEmptyDrawable!!.draw(canvas)
         }

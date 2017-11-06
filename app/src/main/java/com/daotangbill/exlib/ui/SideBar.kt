@@ -15,7 +15,6 @@ import android.widget.TextView
 import com.daotangbill.exlib.exlib.R
 import com.daotangbill.exlib.commons.utils.sp2px
 
-
 /**
  * Created by Bill on 2016/9/7 14:42.
  * emal:1750352866@qq.com
@@ -124,5 +123,4 @@ class SideBar : View {
     fun setOnTouchingLetterChangedListener(listener: ((s: String) -> Unit)) {
         this.listener = listener
     }
-
 }

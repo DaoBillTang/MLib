@@ -8,5 +8,3 @@ import android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP
 enum class Notification {
     INSTANCE
 }
-
-

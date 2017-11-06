@@ -13,22 +13,19 @@ object RxLifecycleAndroid {
      * @return <T>
      */
     @CheckResult
-    fun <T> bindActivity(lifecycle: Observable<ActivityEvent>): LifecycleTransformer<T> {
-        return bind(lifecycle, ACTIVITY_LIFECYCLE)
-    }
+    fun <T> bindActivity(lifecycle: Observable<ActivityEvent>): LifecycleTransformer<T> =
+            bind(lifecycle, ACTIVITY_LIFECYCLE)
 
     /**
      * @param lifecycle :绑定自己生命周期的 的observabel
      * @return <T>
      */
     @CheckResult
-    fun <T> bindFragment(lifecycle: Observable<FragmentEvent>): LifecycleTransformer<T> {
-        return bind(lifecycle, FRAGMENT_LIFECYCLE)
-    }
+    fun <T> bindFragment(lifecycle: Observable<FragmentEvent>): LifecycleTransformer<T> =
+            bind(lifecycle, FRAGMENT_LIFECYCLE)
 
-    fun <T> bindPresenter(lifecycle: Observable<PresenterEvent>): LifecycleTransformer<T> {
-        return bind(lifecycle, PRESENTER_LIFECYCLE)
-    }
+    fun <T> bindPresenter(lifecycle: Observable<PresenterEvent>): LifecycleTransformer<T> =
+            bind(lifecycle, PRESENTER_LIFECYCLE)
 
 
     /**
