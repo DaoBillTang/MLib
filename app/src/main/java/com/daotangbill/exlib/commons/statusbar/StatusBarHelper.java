@@ -44,7 +44,7 @@ public class StatusBarHelper {
      */
     public static final int LEVEL_21_VIEW = 3;
 
-    private final StatusBarHelperImpl mImpl;
+    private final BaseStatusBarHelperImpl mImpl;
 
     public StatusBarHelper(Activity activity) {
         this(activity, LEVEL_19_TRANSLUCENT, LEVEL_21_NORMAL);

@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable;
  * @author BILL
  * @version 1.0
  */
-class StatusBarHelperImplBase extends StatusBarHelperImpl {
+class StatusBarHelperImplBase extends BaseStatusBarHelperImpl {
 
     public StatusBarHelperImplBase(Activity activity) {
         super(activity);

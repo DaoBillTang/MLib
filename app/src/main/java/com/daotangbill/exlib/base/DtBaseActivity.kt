@@ -7,7 +7,6 @@ import android.os.Looper
 import android.os.StrictMode
 import android.support.annotation.CallSuper
 import android.support.annotation.CheckResult
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import com.daotangbill.exlib.commons.logger.DtLogger
 import com.daotangbill.exlib.commons.statusbar.StatusBarHelper
@@ -22,7 +21,6 @@ import io.reactivex.subjects.BehaviorSubject
  */
 abstract class DtBaseActivity : AppCompatActivity(), DtLogger, LifecycleProvider<ActivityEvent> {
     private var proDialg: ProgressDialog? = null
-    private var dlg: AlertDialog? = null
     private var mStatusBarHelper: StatusBarHelper? = null
     val handler: Handler = Handler(Looper.getMainLooper())
 
@@ -111,13 +109,6 @@ abstract class DtBaseActivity : AppCompatActivity(), DtLogger, LifecycleProvider
         proDialg!!.show()
     }
 
-    fun hideLoading() {
-        if (dlg != null) {
-            dlg?.dismiss()
-            dlg?.cancel()
-            dlg = null
-        }
-    }
 
     /**
      * 隐藏 progress dialog

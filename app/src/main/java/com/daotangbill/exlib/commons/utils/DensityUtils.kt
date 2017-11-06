@@ -1,8 +1,13 @@
 package com.daotangbill.exlib.commons.utils
 
+import android.app.Activity
+import android.app.Fragment
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Rect
 import android.util.TypedValue
+import android.view.View
 
 /**
  * Created by BILL on 2016/11/24.
@@ -65,3 +70,45 @@ fun screenW(): Int = Resources.getSystem().displayMetrics.widthPixels
  * 获取屏幕高度
  */
 fun screenH(): Int = Resources.getSystem().displayMetrics.heightPixels
+
+fun screenShotWithStatusBar(activity: Activity): Bitmap? {
+    val view = activity.window.decorView
+    return screenShot(view, 0, 0, view.width, view.height)
+}
+
+fun screenShotWithStatusBar(fragment: Fragment): Bitmap? =
+        screenShotWithStatusBar(fragment.activity)
+
+/**
+ * 获取当前屏幕截图，不包含状濁栏
+ *
+ * @param activity
+ * @return
+ */
+fun screenShotWithoutStatusBar(activity: Activity): Bitmap? {
+    val view = activity.window.decorView
+    val frame = Rect()
+    activity.window.decorView.getWindowVisibleDisplayFrame(frame)
+    val statusBarHeight = frame.top
+    val width = screenW()
+    val height = screenH()
+    return screenShot(view, 0, statusBarHeight, width, height - statusBarHeight)
+}
+
+/**
+ * 获取某个View 的截屏
+ * @param view 需要截屏的View
+ * @param paddingX 需要偏离X轴的位移
+ * @param paddingY 需要偏移Y轴的位移
+ * @param width 需要绘制的图像的宽度
+ * @param height 需要绘制的图像的高度
+ * @return
+ */
+fun screenShot(view: View, paddingX: Int, paddingY: Int, width: Int, height: Int): Bitmap? {
+    view.isDrawingCacheEnabled = true
+    view.buildDrawingCache()
+    val bmp = view.drawingCache
+    val bp: Bitmap? = Bitmap.createBitmap(bmp, paddingX, paddingY, width, height)
+    view.destroyDrawingCache()
+    return bp
+}

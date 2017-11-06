@@ -26,7 +26,7 @@ import io.reactivex.subjects.BehaviorSubject
  * emal:1750352866@qq.com
  */
 abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<FragmentEvent> {
-    internal var proDialg: ProgressDialog? = null
+    private var proDialg: ProgressDialog? = null
     private var isFristVisibile = false
 
     val handler: Handler = Handler(Looper.getMainLooper())

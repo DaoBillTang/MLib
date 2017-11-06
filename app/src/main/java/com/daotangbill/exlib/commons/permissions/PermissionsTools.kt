@@ -19,8 +19,11 @@ import java.util.*
  * @version 1.0
  * @description
  */
-val TAG = "permission"
+private val TAG = "ExPermission"
 
+/**
+ *  使用的时候 实现 此callback ,然后调用相关的方法即可来获取 permission
+ */
 interface PermissionCallbacks : ActivityCompat.OnRequestPermissionsResultCallback {
     fun onPermissionsGranted(requestCode: Int, perms: List<String>)
 

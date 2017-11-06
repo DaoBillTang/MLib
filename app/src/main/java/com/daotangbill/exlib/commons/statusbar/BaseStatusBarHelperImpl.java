@@ -14,13 +14,13 @@ import android.view.ViewGroup;
  * @author BILL
  * @version 1.0
  */
-abstract class StatusBarHelperImpl {
+abstract class BaseStatusBarHelperImpl {
 
     final Activity mActivity;
 
     boolean mActivityRootLayoutFitSystemWindows = true;
 
-    public StatusBarHelperImpl(Activity activity) {
+    public BaseStatusBarHelperImpl(Activity activity) {
         this.mActivity = activity;
     }
 
@@ -81,5 +81,4 @@ abstract class StatusBarHelperImpl {
      * 如果Status Bar不用需要着色了，调用该方法移除相关View。
      */
     protected abstract void destroy();
-
 }
