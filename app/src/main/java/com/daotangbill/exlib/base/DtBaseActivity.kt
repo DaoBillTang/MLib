@@ -24,6 +24,7 @@ abstract class DtBaseActivity : AppCompatActivity(), DtLogger, LifecycleProvider
     private var mStatusBarHelper: StatusBarHelper? = null
     val handler: Handler = Handler(Looper.getMainLooper())
 
+    @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleSubject.onNext(ActivityEvent.CREATE)

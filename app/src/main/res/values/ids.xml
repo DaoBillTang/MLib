@@ -8,5 +8,6 @@
     <item name="sRightImgId" type="id" />
     <item name="sRightCheckBoxId" type="id" />
     <item name="sRightSwitchId" type="id" />
-
+    <!--自动轮滑的viewpager-->
+    <item name="viewpager_inner" type="id" />
 </resources>

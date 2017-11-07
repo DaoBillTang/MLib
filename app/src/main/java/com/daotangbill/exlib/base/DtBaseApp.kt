@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.annotation.CallSuper
 import com.daotangbill.exlib.commons.toast.Tnormal
 
 /**
@@ -23,15 +24,16 @@ abstract class DtBaseApp : Application() {
     var act: Activity? = null
     var actList: MutableList<Activity> = mutableListOf()
 
+    @CallSuper
     override fun onCreate() {
         super.onCreate()
         life = LifeListener()
         registerActivityLifecycleCallbacks(life)
         val crash = CrashHandler.getsInstance()
         crash.init(this)
-
     }
 
+    @CallSuper
     override fun onTerminate() {
         super.onTerminate()
         unregisterActivityLifecycleCallbacks(life)

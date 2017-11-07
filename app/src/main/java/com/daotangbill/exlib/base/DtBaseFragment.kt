@@ -31,12 +31,14 @@ abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<Fragment
 
     val handler: Handler = Handler(Looper.getMainLooper())
 
+    @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleSubject.onNext(FragmentEvent.CREATE)
         debug { "onCreate====" }
     }
 
+    @CallSuper
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?
                               , savedInstanceState: Bundle?): View? {
         debug { "onCreateView====" }
@@ -88,7 +90,7 @@ abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<Fragment
         if (proDialg != null) proDialg!!.dismiss()
         proDialg = null
     }
-
+    @CallSuper
     override fun onDestroy() {
         lifecycleSubject.onNext(FragmentEvent.DESTROY)
         super.onDestroy()
