@@ -338,7 +338,6 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
         startPlay();
     }
 
-
     public void pause() {
         stopPlay();
     }
@@ -350,7 +349,6 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
     public boolean isPlaying() {
         return timer != null;
     }
-
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mOnItemClickListener = listener;
@@ -470,5 +468,4 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
             page.onPage(arg0);
         }
     }
-
 }

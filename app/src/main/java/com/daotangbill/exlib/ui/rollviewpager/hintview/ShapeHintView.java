@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 import com.daotangbill.exlib.ui.rollviewpager.HintView;
 
 
+/**
+ * @author Administrator
+ */
 public abstract class ShapeHintView extends LinearLayout implements HintView {
     private ImageView[] mDots;
     private int length = 0;

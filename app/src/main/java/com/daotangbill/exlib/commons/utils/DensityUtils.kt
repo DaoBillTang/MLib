@@ -21,7 +21,7 @@ import android.view.View
 /**
  * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
  */
-fun dip2px(context: Context, dpValue: Float): Int {
+fun dip2px(dpValue: Float): Int {
     val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
             dpValue, Resources.getSystem().displayMetrics)
     return px.toInt()
