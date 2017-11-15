@@ -1,5 +1,5 @@
 package com.daotangbill.exlib.base
 
-interface DtBaseView<in T> {
+interface DtBaseView<T> {
     fun setParent(bean: T)
 }
