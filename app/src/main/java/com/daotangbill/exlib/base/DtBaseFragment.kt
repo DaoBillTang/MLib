@@ -13,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.daotangbill.exlib.commons.logger.DtLogger
 import com.daotangbill.exlib.commons.logger.debug
+import com.daotangbill.exlib.commons.toast.Terror
+import com.daotangbill.exlib.commons.toast.Tnormal
 import com.daotangbill.exlib.rx.lifecycle.LifecycleTransformer
 import com.daotangbill.exlib.rx.lifecycle.RxLifecycle
 import com.daotangbill.exlib.rx.lifecycle.FragmentEvent
@@ -25,7 +27,10 @@ import io.reactivex.subjects.BehaviorSubject
  * Created by Bill on 2016/9/18 11:32.
  * emal:1750352866@qq.com
  */
-abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<FragmentEvent> {
+abstract class DtBaseFragment : Fragment(),
+        DtLogger,
+        LifecycleProvider<FragmentEvent>,
+        DtBaseView {
     private var proDialg: ProgressDialog? = null
     private var isFristVisibile = false
 
@@ -77,8 +82,7 @@ abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<Fragment
         debug { "onFragmentVisible" }
     }
 
-    @JvmOverloads
-    fun showProgressDialog(message: String = "正在处理中请稍后……") {
+    override fun showProgressDialog(message: String?) {
         if (proDialg == null) {
             proDialg = ProgressDialog(this.activity)
         }
@@ -86,10 +90,23 @@ abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<Fragment
         proDialg!!.show()
     }
 
-    fun proDialogDismiss() {
+    override fun showProgressDialog() {
+        showProgressDialog("正在处理中请稍后……")
+    }
+
+    override fun proDialogDismiss() {
         if (proDialg != null) proDialg!!.dismiss()
         proDialg = null
     }
+
+    override fun showMsg(msg: String) {
+        activity.Tnormal(msg)
+    }
+
+    override fun showError(msg: String) {
+        activity.Terror(msg)
+    }
+
     @CallSuper
     override fun onDestroy() {
         lifecycleSubject.onNext(FragmentEvent.DESTROY)

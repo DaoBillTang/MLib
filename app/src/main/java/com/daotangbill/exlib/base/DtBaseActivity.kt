@@ -10,6 +10,8 @@ import android.support.annotation.CheckResult
 import android.support.v7.app.AppCompatActivity
 import com.daotangbill.exlib.commons.logger.DtLogger
 import com.daotangbill.exlib.commons.statusbar.StatusBarHelper
+import com.daotangbill.exlib.commons.toast.Terror
+import com.daotangbill.exlib.commons.toast.Tnormal
 import com.daotangbill.exlib.exlib.R
 import com.daotangbill.exlib.rx.lifecycle.*
 import io.reactivex.Observable
@@ -19,7 +21,10 @@ import io.reactivex.subjects.BehaviorSubject
  * Created by Bill on 2016/9/18 11:31.
  * emal:1750352866@qq.com
  */
-abstract class DtBaseActivity : AppCompatActivity(), DtLogger, LifecycleProvider<ActivityEvent> {
+abstract class DtBaseActivity : AppCompatActivity(),
+        DtLogger,
+        LifecycleProvider<ActivityEvent>,
+        DtBaseView {
     private var proDialg: ProgressDialog? = null
     private var mStatusBarHelper: StatusBarHelper? = null
     val handler: Handler = Handler(Looper.getMainLooper())
@@ -30,6 +35,14 @@ abstract class DtBaseActivity : AppCompatActivity(), DtLogger, LifecycleProvider
         lifecycleSubject.onNext(ActivityEvent.CREATE)
         setContentView(getLayoutResource())
         onTintStatusBar()
+    }
+
+    override fun showMsg(msg: String) {
+        Tnormal(msg)
+    }
+
+    override fun showError(msg: String) {
+        Terror(msg)
     }
 
     private val lifecycleSubject = BehaviorSubject.create<ActivityEvent>()
@@ -102,7 +115,7 @@ abstract class DtBaseActivity : AppCompatActivity(), DtLogger, LifecycleProvider
     /**
      * 显示[.proDialg],附带文字
      */
-    fun showProgressDialog(message: String? = "正在处理中请稍后……") {
+    override fun showProgressDialog(message: String?) {
         if (proDialg == null) {
             proDialg = ProgressDialog(this)
         }
@@ -110,11 +123,14 @@ abstract class DtBaseActivity : AppCompatActivity(), DtLogger, LifecycleProvider
         proDialg!!.show()
     }
 
+    override fun showProgressDialog() {
+        showProgressDialog("正在加载，请稍后...")
+    }
 
     /**
      * 隐藏 progress dialog
      */
-    fun proDialogDismiss() {
+    override fun proDialogDismiss() {
         if (proDialg != null) proDialg!!.dismiss()
         proDialg = null
     }
