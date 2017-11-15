@@ -1,5 +1,5 @@
 package com.daotangbill.exlib.base
 
 interface DtBaseView<T> {
-    fun setPresenter(bean: T)
+    fun setPresenter(bean: T?)
 }
