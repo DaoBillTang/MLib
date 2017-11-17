@@ -88,4 +88,22 @@ fun String?.parityEmpty(context: Context?, err: String = "校验错误"): Boolea
             }
         }
 
+fun String?.paritySize(context: Context?, min: Int, max: Int, err: String = "校验错误"): Boolean =
+        if (this == null) {
+            context?.Terror(err)
+            false
+        } else {
+            if (this.length in min..max) {
 
+                true
+            } else {
+                context?.Terror(err)
+                false
+            }
+        }
+
+fun String?.parityMinSize(context: Context?, min: Int, err: String = "校验错误"): Boolean =
+        this?.paritySize(context, min, Int.MAX_VALUE, err) ?: false
+
+fun String?.parityMaxSize(context: Context?, max: Int, err: String = "校验错误"): Boolean =
+        this?.paritySize(context, 0, max, err) ?: false
