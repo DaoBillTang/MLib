@@ -18,7 +18,7 @@ import java.util.regex.Pattern
  * @param regular 校验条件
  * @param err 错误提示
  */
-fun String?.parity(context: Context?, regular: String?, err: String = "校验错误"): Boolean =
+fun CharSequence?.parity(context: Context?, regular: String?, err: String = "校验错误"): Boolean =
         if (this == null) {
             context?.Terror(err)
             false
@@ -31,8 +31,7 @@ fun String?.parity(context: Context?, regular: String?, err: String = "校验错
             }
         }
 
-
-fun String?.parityAndEmpty(context: Context?, regular: String?, err: String = "校验错误"): Boolean =
+fun CharSequence?.parityAndEmpty(context: Context?, regular: String?, err: String = "校验错误"): Boolean =
         if (this == null) {
             context?.Terror(err)
             false
@@ -56,8 +55,8 @@ fun String?.parityAndEmpty(context: Context?, regular: String?, err: String = "�
  * @param err:校验出不符合需求的内容的提示
  * @param emptyErr:空值错误提示
  */
-fun String?.notParity(context: Context?, regular: String?,
-                      err: String = "校验错误", emptyErr: String = "数值为空"): Boolean =
+fun CharSequence?.notParity(context: Context?, regular: String?,
+                            err: String = "校验错误", emptyErr: String = "数值为空"): Boolean =
         if (this == null) {
             context?.Terror(emptyErr)
             false
@@ -75,7 +74,7 @@ fun String?.notParity(context: Context?, regular: String?,
             }
         }
 
-fun String?.parityEmpty(context: Context?, err: String = "校验错误"): Boolean =
+fun CharSequence?.parityEmpty(context: Context?, err: String = "校验错误"): Boolean =
         if (this == null) {
             context?.Terror(err)
             false
@@ -88,13 +87,12 @@ fun String?.parityEmpty(context: Context?, err: String = "校验错误"): Boolea
             }
         }
 
-fun String?.paritySize(context: Context?, min: Int, max: Int, err: String = "校验错误"): Boolean =
+fun CharSequence?.paritySize(context: Context?, min: Int, max: Int, err: String = "校验错误"): Boolean =
         if (this == null) {
             context?.Terror(err)
             false
         } else {
             if (this.length in min..max) {
-
                 true
             } else {
                 context?.Terror(err)
@@ -102,8 +100,18 @@ fun String?.paritySize(context: Context?, min: Int, max: Int, err: String = "校
             }
         }
 
-fun String?.parityMinSize(context: Context?, min: Int, err: String = "校验错误"): Boolean =
+fun CharSequence?.parityMinSize(context: Context?, min: Int, err: String = "校验错误"): Boolean =
         this?.paritySize(context, min, Int.MAX_VALUE, err) ?: false
 
-fun String?.parityMaxSize(context: Context?, max: Int, err: String = "校验错误"): Boolean =
+fun CharSequence?.parityMaxSize(context: Context?, max: Int, err: String = "校验错误"): Boolean =
         this?.paritySize(context, 0, max, err) ?: false
+
+fun CharSequence?.parityEquals(context: Context?, equals: CharSequence?, err: String = "校验错误")
+        : Boolean {
+    return if (this == equals) {
+        true
+    } else {
+        context?.Terror(err)
+        false
+    }
+}
