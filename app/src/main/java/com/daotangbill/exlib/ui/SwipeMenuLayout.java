@@ -16,6 +16,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import com.daotangbill.exlib.exlib.R;
+
 /**
  * 感谢:mcxtzhang/SwipeDelMenuLayout 的项目
  * 【Item侧滑删除菜单】
@@ -84,7 +85,6 @@ public class SwipeMenuLayout extends ViewGroup {
     private static boolean isTouching;
 
     private VelocityTracker mVelocityTracker;//滑动速度变量
-    private android.util.Log LogUtils;
 
     /**
      * 右滑删除功能的开关,默认开
@@ -479,6 +479,8 @@ public class SwipeMenuLayout extends ViewGroup {
                     }
                     //add by zhangxutong 2016 11 03 end
 
+                    break;
+                default:
                     break;
             }
             //模仿IOS 点击其他区域关闭：

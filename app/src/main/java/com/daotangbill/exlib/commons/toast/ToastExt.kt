@@ -8,22 +8,22 @@ import android.support.annotation.CheckResult
 import android.support.annotation.ColorInt
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.daotangbill.exlib.exlib.R
-import com.daotangbill.exlib.commons.utils.getDrawableBySdk
-import com.daotangbill.exlib.commons.utils.getTintIcon
-import com.daotangbill.exlib.commons.utils.setBackground
-import com.daotangbill.exlib.commons.utils.tint9PatchDrawableFrame
+import com.daotangbill.exlib.commons.logger.Lwarn
 import com.daotangbill.exlib.commons.toast.ToastExt.DEFAULT_TEXT_COLOR
 import com.daotangbill.exlib.commons.toast.ToastExt.currentTypeface
 import com.daotangbill.exlib.commons.toast.ToastExt.textSize
 import com.daotangbill.exlib.commons.toast.ToastExt.tintIcon
+import com.daotangbill.exlib.commons.utils.getDrawableBySdk
+import com.daotangbill.exlib.commons.utils.getTintIcon
+import com.daotangbill.exlib.commons.utils.setBackground
+import com.daotangbill.exlib.commons.utils.tint9PatchDrawableFrame
+import com.daotangbill.exlib.exlib.R
 
 /**
  * project com.daotangbill.dt_ext.exlib.commons.toast
@@ -147,7 +147,7 @@ private fun custom(context: Context, message: CharSequence, inIcon: Drawable?,
                    withIcon: Boolean, shouldTint: Boolean): Toast? {
     if (toastTime != null && message == toastStr) {
         if (System.currentTimeMillis() - (toastTime ?: 0L) <= 3000) {
-            Log.d("ExLib_toast", "连续显示相同的内容===$toastStr")
+            context.Lwarn { "连续显示相同的内容===$toastStr" }
             return null
         }
     }

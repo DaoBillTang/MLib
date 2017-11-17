@@ -4,10 +4,10 @@ import android.app.Activity
 import android.os.Build
 import android.support.annotation.MainThread
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.daotangbill.exlib.base.DtBaseActivity
+import com.daotangbill.exlib.commons.logger.Lerror
 import com.daotangbill.exlib.rx.lifecycle.ActivityEvent
 import io.reactivex.functions.Predicate
 import java.util.concurrent.TimeUnit
@@ -103,7 +103,7 @@ fun View.bindTouch(listener: (MotionEvent) -> Boolean,
                    fra: Fragment,
                    event: ActivityEvent = ActivityEvent.DESTROY) {
     val act = fra.activity
-    this?.bindTouch(listener, act, event)
+    this.bindTouch(listener, act, event)
 }
 
 /**
@@ -117,7 +117,7 @@ fun View.bindScroll(listener: (ViewScrollChangeEvent) -> Unit,
                     act: Activity,
                     event: ActivityEvent = ActivityEvent.DESTROY) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-        Log.e("rxExtLib", "当前版本小于23")
+        Lerror("当前版本小于23")
     }
     if (act is DtBaseActivity) {
         ViewScrollObservable(this)

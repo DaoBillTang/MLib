@@ -6,7 +6,7 @@ import android.os.Build
 import android.os.Environment
 import android.os.Process
 import android.os.SystemClock
-import android.util.Log
+import com.daotangbill.exlib.commons.logger.Lwarn
 import com.daotangbill.exlib.commons.utils.showResultDialog
 import java.io.*
 import java.text.SimpleDateFormat
@@ -68,7 +68,7 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
 
         if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
             if (DEBUG) {
-                Log.w(TAG, "sdcard unmounted, skip dump exception!")
+                Lwarn("sdcard unmounted, skip dump exception!")
             }
         }
         val dir = File(PATH)

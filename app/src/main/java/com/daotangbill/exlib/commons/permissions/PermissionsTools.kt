@@ -7,7 +7,7 @@ import android.os.Build
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.util.Log
+import com.daotangbill.exlib.commons.logger.Lwarn
 import java.util.*
 
 /**
@@ -39,7 +39,7 @@ interface PermissionCallbacks : ActivityCompat.OnRequestPermissionsResultCallbac
 fun Context?.hasPermissions(perms: Array<String>): Boolean {
     // Always return true for SDK < M, let the system deal with the permissions
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-        Log.w(TAG, "hasPermissions: API version < M, returning true by default")
+        this?.Lwarn { "hasPermissions: API version < M, returning true by default" }
         return true
     }
 
