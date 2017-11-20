@@ -67,9 +67,7 @@ fun Context?.hasPermissions(perms: String): Boolean {
         throw IllegalArgumentException("Can't check permissions for null context")
     }
 
-    return perms.none {
-        ContextCompat.checkSelfPermission(this, perms) != PackageManager.PERMISSION_GRANTED
-    }
+    return ContextCompat.checkSelfPermission(this, perms) != PackageManager.PERMISSION_GRANTED
 }
 
 /**
@@ -156,9 +154,7 @@ fun Fragment?.toRequestPermissions(perms: Array<String>,
 /**
  * should use in activity/Fragment/v4.Fragment onRequestPermissionsResult
  */
-fun Any.PermissionsResult(requestCode: Int,
-                          permissions: Array<String>,
-                          grantResults: Array<Int>) {
+fun Any.PermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
     val granted = ArrayList<String>()
     val denied = ArrayList<String>()
     for (i in permissions.indices) {
