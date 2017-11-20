@@ -19,8 +19,6 @@ import java.util.*
  * @version 1.0
  * @description
  */
-private val TAG = "ExPermission"
-
 /**
  *  使用的时候 实现 此callback ,然后调用相关的方法即可来获取 permission
  */
@@ -49,6 +47,28 @@ fun Context?.hasPermissions(perms: Array<String>): Boolean {
 
     return perms.none {
         ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+    }
+}
+
+/**
+ *@param perms 需要检测的 权限
+ * @return
+ * true :拥有权限
+ * false :缺失权限
+ */
+fun Context?.hasPermissions(perms: String): Boolean {
+    // Always return true for SDK < M, let the system deal with the permissions
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        this?.Lwarn { "hasPermissions: API version < M, returning true by default" }
+        return true
+    }
+
+    if (this == null) {
+        throw IllegalArgumentException("Can't check permissions for null context")
+    }
+
+    return perms.none {
+        ContextCompat.checkSelfPermission(this, perms) != PackageManager.PERMISSION_GRANTED
     }
 }
 
@@ -133,13 +153,12 @@ fun Fragment?.toRequestPermissions(perms: Array<String>,
  * ActivityCompat.shouldShowRequestPermissionRationale(thisActivity,permission )
  */
 
-
 /**
  * should use in activity/Fragment/v4.Fragment onRequestPermissionsResult
  */
-fun Any.onRequestPermissionsResult(requestCode: Int,
-                                   permissions: Array<String>,
-                                   grantResults: Array<Int>) {
+fun Any.PermissionsResult(requestCode: Int,
+                          permissions: Array<String>,
+                          grantResults: Array<Int>) {
     val granted = ArrayList<String>()
     val denied = ArrayList<String>()
     for (i in permissions.indices) {
