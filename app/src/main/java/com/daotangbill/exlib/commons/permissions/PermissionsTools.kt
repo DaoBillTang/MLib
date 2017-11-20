@@ -154,7 +154,7 @@ fun Fragment?.toRequestPermissions(perms: Array<String>,
 /**
  * should use in activity/Fragment/v4.Fragment onRequestPermissionsResult
  */
-fun Any.PermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+fun Any.PermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
     val granted = ArrayList<String>()
     val denied = ArrayList<String>()
     for (i in permissions.indices) {
