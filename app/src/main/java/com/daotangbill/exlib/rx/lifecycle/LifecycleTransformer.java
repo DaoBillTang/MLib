@@ -54,7 +54,7 @@ public final class LifecycleTransformer<T> implements ObservableTransformer<T, T
 
     @Override
     public MaybeSource<T> apply(Maybe<T> upstream) {
-        return upstream.takeUntil(observable.firstElement());
+            return upstream.takeUntil(observable.firstElement());
     }
 
     @Override

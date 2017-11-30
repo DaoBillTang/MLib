@@ -40,7 +40,6 @@ inline fun <reified T : View>
 inline fun <reified T : View>
         Fragment.findView(@IdRes id: Int): T? = this.view?.findViewById(id)
 
-
 /**
  * 自带holder 缓存的FindViewById方法
  */

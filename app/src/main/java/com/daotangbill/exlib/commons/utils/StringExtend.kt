@@ -3,7 +3,9 @@ package com.daotangbill.exlib.commons.utils
 import android.text.Editable
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.math.BigDecimal
 import java.net.UnknownHostException
+import java.text.DecimalFormat
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
 
@@ -15,6 +17,7 @@ import java.util.regex.PatternSyntaxException
  *
  * @author BILL
  * @version 1.0
+ * 一些 基础的string 的工具
  */
 object StringExtend {
     @JvmStatic
@@ -102,3 +105,4 @@ fun String?.stringFilter(regEx: String): String? {
     val m = p.matcher(this)
     return m?.replaceAll("")?.trim()
 }
+
