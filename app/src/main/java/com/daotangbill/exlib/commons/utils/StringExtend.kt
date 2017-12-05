@@ -105,4 +105,3 @@ fun String?.stringFilter(regEx: String): String? {
     val m = p.matcher(this)
     return m?.replaceAll("")?.trim()
 }
-

@@ -157,7 +157,7 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
         addView(mViewPager);
         type.recycle();
         //颜色
-        initHint(new ColorPointHintView(getContext(), Color.parseColor("#ffffff"), Color.parseColor("#88ffffff")));
+        initHint(new ColorPointHintView(getContext(), Color.parseColor("#CFAF78"), Color.parseColor("#88ffffff")));
         //手势处理
         mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -284,7 +284,6 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
 
         mHintViewDelegate.initView(mAdapter == null ? 0 : mAdapter.getCount(), gravity, (HintView) mHintView);
     }
-
 
     /**
      * 设置viewager滑动动画持续时间
