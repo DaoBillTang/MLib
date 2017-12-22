@@ -66,11 +66,17 @@ object StringExtend {
  *对于 输入小数的时候 ，保留两位小数，并且判断小数点等等
  * 已知bug:小数点数量过多
  */
-fun String.formatTime(): String = this.substring(0, 7).replaceFirst("-", "年").replaceFirst("-", "月")
+fun String.formatTime(): String = this.substring(0, 7).
+        replaceFirst("-", "年").
+        replaceFirst("-", "月")
 
 fun Editable?.judgeNumber(intNum: Int, decimalNum: Int): String? {
     if (this == null) return null
     val temp = this.toString()
+
+    if (this.startsWith(".")) {
+        return null
+    }
 
     if (this.startsWith("0")) {
         if (!this.startsWith("0.")) {
@@ -88,7 +94,7 @@ fun Editable?.judgeNumber(intNum: Int, decimalNum: Int): String? {
             return this.toString()
         }
     }
-    val otherDot = temp.indexOf(".", posDot+1)
+    val otherDot = temp.indexOf(".", posDot + 1)
     if (otherDot >= 0) {
         this.delete(otherDot, otherDot + 1)
         return this.toString()

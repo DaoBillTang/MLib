@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Pattern;
 
 /**
  * 字符串操作工具包
@@ -44,7 +43,7 @@ public class StringUtils {
             return format.toString();
         }
         DecimalFormat df = new DecimalFormat(format.toString());
-        BigDecimal b = new BigDecimal(num).divide(new BigDecimal(divide), decimalNum, BigDecimal.ROUND_DOWN);
+        BigDecimal b = new BigDecimal(num).divide(new BigDecimal(divide), decimalNum);
         return df.format(b);
     }
 
