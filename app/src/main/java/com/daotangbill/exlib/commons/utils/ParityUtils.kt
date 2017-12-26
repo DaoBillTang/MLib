@@ -120,7 +120,7 @@ fun CharSequence?.paritySize(min: Int, max: Int, err: (() -> Unit)?): Boolean =
 fun CharSequence?.parityMinSize(context: Context?, min: Int, err: String = "校验错误"): Boolean =
         this.paritySize(min, Int.MAX_VALUE, { context?.Terror(err) })
 
-fun CharSequence?.parityMinSize(context: Context?, min: Int, err: (() -> Unit)?): Boolean =
+fun CharSequence?.parityMinSize(min: Int, err: (() -> Unit)?): Boolean =
         this.paritySize(min, Int.MAX_VALUE, err)
 
 fun CharSequence?.parityMaxSize(context: Context?, max: Int, err: String = "校验错误"): Boolean =

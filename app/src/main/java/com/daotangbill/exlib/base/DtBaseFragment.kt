@@ -11,13 +11,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.daotangbill.exlib.commons.logger.DtLogger
-import com.daotangbill.exlib.commons.logger.debug
-import com.daotangbill.exlib.rx.lifecycle.LifecycleTransformer
-import com.daotangbill.exlib.rx.lifecycle.RxLifecycle
-import com.daotangbill.exlib.rx.lifecycle.FragmentEvent
-import com.daotangbill.exlib.rx.lifecycle.LifecycleProvider
-import com.daotangbill.exlib.rx.lifecycle.RxLifecycleAndroid
+import com.daotangbill.exlib.commons.logger.Ldebug
+import com.daotangbill.exlib.rx.lifecycle.*
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
@@ -25,7 +20,7 @@ import io.reactivex.subjects.BehaviorSubject
  * Created by Bill on 2016/9/18 11:32.
  * emal:1750352866@qq.com
  */
-abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<FragmentEvent> {
+abstract class DtBaseFragment : Fragment(), LifecycleProvider<FragmentEvent> {
     private var proDialg: ProgressDialog? = null
     private var isFristVisibile = false
 
@@ -35,13 +30,13 @@ abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<Fragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleSubject.onNext(FragmentEvent.CREATE)
-        debug { "onCreate====" }
+        Ldebug { "onCreate====" }
     }
 
     @CallSuper
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?
                               , savedInstanceState: Bundle?): View? {
-        debug { "onCreateView====" }
+        Ldebug { "onCreateView====" }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -51,7 +46,7 @@ abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<Fragment
      */
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        debug { "setUserVisibleHint() -> isVisibleToUser: " + isVisibleToUser }
+        Ldebug { "setUserVisibleHint() -> isVisibleToUser: " + isVisibleToUser }
         if (view != null) {
             if (isVisibleToUser && !isFristVisibile) {
                 firstInitView(view!!)
@@ -66,15 +61,15 @@ abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<Fragment
     }
 
     open fun firstInitView(view: View) {
-        debug { "firstInitView=====" }
+        Ldebug { "firstInitView=====" }
     }
 
     open fun onFragmentInvisible() {
-        debug { "onFragmentInvisible" }
+        Ldebug { "onFragmentInvisible" }
     }
 
     open fun onFragmentVisible(view: View) {
-        debug { "onFragmentVisible" }
+        Ldebug { "onFragmentVisible" }
     }
 
     @JvmOverloads
@@ -90,6 +85,7 @@ abstract class DtBaseFragment : Fragment(), DtLogger, LifecycleProvider<Fragment
         if (proDialg != null) proDialg!!.dismiss()
         proDialg = null
     }
+
     @CallSuper
     override fun onDestroy() {
         lifecycleSubject.onNext(FragmentEvent.DESTROY)

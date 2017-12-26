@@ -3,9 +3,7 @@ package com.daotangbill.exlib.commons.utils
 import android.text.Editable
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.math.BigDecimal
 import java.net.UnknownHostException
-import java.text.DecimalFormat
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
 

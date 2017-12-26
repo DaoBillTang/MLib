@@ -8,7 +8,6 @@ import android.os.StrictMode
 import android.support.annotation.CallSuper
 import android.support.annotation.CheckResult
 import android.support.v7.app.AppCompatActivity
-import com.daotangbill.exlib.commons.logger.DtLogger
 import com.daotangbill.exlib.commons.statusbar.StatusBarHelper
 import com.daotangbill.exlib.exlib.R
 import com.daotangbill.exlib.rx.lifecycle.*
@@ -19,7 +18,7 @@ import io.reactivex.subjects.BehaviorSubject
  * Created by Bill on 2016/9/18 11:31.
  * emal:1750352866@qq.com
  */
-abstract class DtBaseActivity : AppCompatActivity(), DtLogger, LifecycleProvider<ActivityEvent> {
+abstract class DtBaseActivity : AppCompatActivity(), LifecycleProvider<ActivityEvent> {
     private var proDialg: ProgressDialog? = null
     private var mStatusBarHelper: StatusBarHelper? = null
     val handler: Handler = Handler(Looper.getMainLooper())
