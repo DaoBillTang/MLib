@@ -159,3 +159,86 @@ fun CharSequence?.parityNotEquals(equals: CharSequence?, err: (() -> Unit)?)
         true
     }
 }
+
+/**
+ *@author bill
+ *created at 2018/1/15 11:04
+ *@description  对比两个 int 是否相等
+ */
+object IntParityStat {
+    const val LESS = -2
+    const val LESS_AND_EQUAL = -1
+    const val EQUAL = 0
+    const val LARGER_AND_EQUAL = 1
+    const val LARGER = 2
+}
+
+fun Int?.parity(other: Int, stats: Int = 0, err: (() -> Unit)?): Boolean {
+    val b = when (stats) {
+        IntParityStat.LESS -> {
+            this?.parityLess(other, err)
+        }
+        IntParityStat.LESS_AND_EQUAL -> {
+            this?.parityLessAndEqual(other, err)
+        }
+        IntParityStat.EQUAL -> {
+            this?.parityEqual(other, err)
+        }
+        IntParityStat.LARGER_AND_EQUAL -> {
+            this?.parityLargerAndEqual(other, err)
+        }
+        IntParityStat.LARGER -> {
+            this?.parityLarger(other, err)
+        }
+        else -> {
+            err?.invoke()
+            false
+        }
+    }
+
+    return b ?: false
+}
+
+fun Int?.parityEqual(other: Int, err: (() -> Unit)?): Boolean {
+    val b = other == this
+    if (!b) {
+        err?.invoke()
+    }
+    return b
+}
+
+fun Int?.parityLarger(other: Int, err: (() -> Unit)?): Boolean {
+    val b = (this != null && this > other)
+
+    if (!b) {
+        err?.invoke()
+    }
+
+    return b
+}
+
+fun Int?.parityLargerAndEqual(other: Int, err: (() -> Unit)?): Boolean {
+    val b = (this != null && this >= other)
+
+    if (!b) {
+        err?.invoke()
+    }
+
+    return b
+}
+
+fun Int?.parityLess(other: Int, err: (() -> Unit)?): Boolean {
+    val b = (this != null && this < other)
+    if (!b) {
+        err?.invoke()
+    }
+    return b
+}
+
+fun Int?.parityLessAndEqual(other: Int, err: (() -> Unit)?): Boolean {
+    val b = (this != null && this <= other)
+    if (!b) {
+        err?.invoke()
+    }
+    return b
+}

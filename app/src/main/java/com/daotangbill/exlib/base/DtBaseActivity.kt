@@ -85,7 +85,6 @@ abstract class DtBaseActivity : AppCompatActivity(), LifecycleProvider<ActivityE
 //                    .detectLeakedClosableObjects()
 //                    .penaltyDeath()
                 .build())
-
     }
 
     protected abstract fun getLayoutResource(): Int

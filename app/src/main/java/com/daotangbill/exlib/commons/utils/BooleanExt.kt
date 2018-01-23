@@ -16,7 +16,7 @@ class WithData<out T>(val data: T): BooleanExt<T>(false)
 
 inline fun <T> Boolean.yes(block: () -> T): BooleanExt<T> = when {
     this -> {
-        WithData(block())
+            WithData(block())
     }
     else -> Otherwise
 }

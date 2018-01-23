@@ -11,6 +11,7 @@ import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.support.annotation.IdRes
+import android.support.annotation.StringRes
 import android.support.annotation.UiThread
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
@@ -192,3 +193,6 @@ fun Context.getScreenHeight(): Int {
     manager.defaultDisplay.getMetrics(dm)
     return dm.heightPixels
 }
+
+fun Context?.getResString(@StringRes msgRes: Int): String?
+        = this?.resources?.getString(msgRes)
