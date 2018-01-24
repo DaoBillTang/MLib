@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.compileSdkVersion
-        versionCode 4
-        versionName "0.0.12"
+        versionCode 5
+        versionName "0.0.13"
     }
     buildTypes {
         release {
