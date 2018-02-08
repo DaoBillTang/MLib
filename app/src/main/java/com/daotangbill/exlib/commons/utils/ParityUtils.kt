@@ -21,7 +21,7 @@ import java.util.regex.Pattern
 fun CharSequence?.parity(context: Context?, regular: String?, err: String = "校验错误")
         : Boolean = this.parity(regular, { context?.Terror(err) })
 
-fun CharSequence?.parity(regular: String?, err: (() -> Unit)?): Boolean =
+fun CharSequence?.parity(regular: String?, err: (() -> Unit)): Boolean =
         if (this == null) {
             err?.invoke()
             false
@@ -37,7 +37,7 @@ fun CharSequence?.parity(regular: String?, err: (() -> Unit)?): Boolean =
 fun CharSequence?.parityAndEmpty(context: Context?, regular: String?, err: String = "校验错误")
         : Boolean = this.parityAndEmpty(regular, { context?.Terror(err) })
 
-fun CharSequence?.parityAndEmpty(regular: String?, err: (() -> Unit)?): Boolean =
+fun CharSequence?.parityAndEmpty(regular: String?, err: (() -> Unit)): Boolean =
         if (this == null) {
             err?.invoke()
             false
@@ -65,7 +65,7 @@ fun CharSequence?.notParity(context: Context?, regular: String?,
                             err: String = "校验错误", emptyErr: String = "数值为空")
         : Boolean = this.notParity(regular, { context?.Terror(err) })
 
-fun CharSequence?.notParity(regular: String?, err: (() -> Unit)?): Boolean =
+fun CharSequence?.notParity(regular: String?, err: (() -> Unit)): Boolean =
         if (this == null) {
             err?.invoke()
             false
@@ -87,7 +87,7 @@ fun CharSequence?.notParity(regular: String?, err: (() -> Unit)?): Boolean =
 fun CharSequence?.parityEmpty(context: Context?, err: String = "校验错误")
         : Boolean = this.parityEmpty({ context?.Terror(err) })
 
-fun CharSequence?.parityEmpty(err: (() -> Unit)?): Boolean =
+fun CharSequence?.parityEmpty(err: (() -> Unit)): Boolean =
         if (this == null) {
             err?.invoke()
             false
@@ -104,7 +104,7 @@ fun CharSequence?.parityEmpty(err: (() -> Unit)?): Boolean =
 fun CharSequence?.paritySize(context: Context?, min: Int, max: Int, err: String = "校验错误")
         : Boolean = this.paritySize(min, max, { context?.Terror(err) })
 
-fun CharSequence?.paritySize(min: Int, max: Int, err: (() -> Unit)?): Boolean =
+fun CharSequence?.paritySize(min: Int, max: Int, err: (() -> Unit)): Boolean =
         if (this == null) {
             err?.invoke()
             false
@@ -120,13 +120,13 @@ fun CharSequence?.paritySize(min: Int, max: Int, err: (() -> Unit)?): Boolean =
 fun CharSequence?.parityMinSize(context: Context?, min: Int, err: String = "校验错误"): Boolean =
         this.paritySize(min, Int.MAX_VALUE, { context?.Terror(err) })
 
-fun CharSequence?.parityMinSize(min: Int, err: (() -> Unit)?): Boolean =
+fun CharSequence?.parityMinSize(min: Int, err: (() -> Unit)): Boolean =
         this.paritySize(min, Int.MAX_VALUE, err)
 
 fun CharSequence?.parityMaxSize(context: Context?, max: Int, err: String = "校验错误"): Boolean =
         this.paritySize(0, max, { context?.Terror(err) })
 
-fun CharSequence?.parityMaxSize(max: Int, err: (() -> Unit)?): Boolean =
+fun CharSequence?.parityMaxSize(max: Int, err: (() -> Unit)): Boolean =
         this.paritySize(0, max, err)
 
 fun CharSequence?.parityEquals(context: Context?, equals: CharSequence?, err: String = "校验错误")
@@ -134,7 +134,7 @@ fun CharSequence?.parityEquals(context: Context?, equals: CharSequence?, err: St
     return this.parityEquals(equals, { context?.Terror(err) })
 }
 
-fun CharSequence?.parityEquals(equals: CharSequence?, err: (() -> Unit)?)
+fun CharSequence?.parityEquals(equals: CharSequence?, err: (() -> Unit))
         : Boolean {
     return if (this == equals) {
         true
@@ -150,7 +150,7 @@ fun CharSequence?.parityEquals(equals: CharSequence?, err: (() -> Unit)?)
 fun CharSequence?.parityNotEquals(context: Context?, equals: CharSequence?, err: String = "校验错误")
         : Boolean = this.parityNotEquals(equals, { context?.Terror(err) })
 
-fun CharSequence?.parityNotEquals(equals: CharSequence?, err: (() -> Unit)?)
+fun CharSequence?.parityNotEquals(equals: CharSequence?, err: (() -> Unit))
         : Boolean {
     return if (this == equals) {
         err?.invoke()
@@ -173,7 +173,7 @@ object IntParityStat {
     const val LARGER = 2
 }
 
-fun Int?.parity(other: Int, stats: Int = 0, err: (() -> Unit)?): Boolean {
+fun Int?.parity(other: Int, stats: Int = 0, err: (() -> Unit)): Boolean {
     val b = when (stats) {
         IntParityStat.LESS -> {
             this?.parityLess(other, err)
@@ -199,7 +199,7 @@ fun Int?.parity(other: Int, stats: Int = 0, err: (() -> Unit)?): Boolean {
     return b ?: false
 }
 
-fun Int?.parityEqual(other: Int, err: (() -> Unit)?): Boolean {
+fun Int?.parityEqual(other: Int, err: (() -> Unit)): Boolean {
     val b = other == this
     if (!b) {
         err?.invoke()
@@ -207,7 +207,7 @@ fun Int?.parityEqual(other: Int, err: (() -> Unit)?): Boolean {
     return b
 }
 
-fun Int?.parityLarger(other: Int, err: (() -> Unit)?): Boolean {
+fun Int?.parityLarger(other: Int, err: (() -> Unit)): Boolean {
     val b = (this != null && this > other)
 
     if (!b) {
@@ -217,7 +217,7 @@ fun Int?.parityLarger(other: Int, err: (() -> Unit)?): Boolean {
     return b
 }
 
-fun Int?.parityLargerAndEqual(other: Int, err: (() -> Unit)?): Boolean {
+fun Int?.parityLargerAndEqual(other: Int, err: (() -> Unit)): Boolean {
     val b = (this != null && this >= other)
 
     if (!b) {
@@ -227,7 +227,7 @@ fun Int?.parityLargerAndEqual(other: Int, err: (() -> Unit)?): Boolean {
     return b
 }
 
-fun Int?.parityLess(other: Int, err: (() -> Unit)?): Boolean {
+fun Int?.parityLess(other: Int, err: (() -> Unit)): Boolean {
     val b = (this != null && this < other)
     if (!b) {
         err?.invoke()
@@ -235,7 +235,7 @@ fun Int?.parityLess(other: Int, err: (() -> Unit)?): Boolean {
     return b
 }
 
-fun Int?.parityLessAndEqual(other: Int, err: (() -> Unit)?): Boolean {
+fun Int?.parityLessAndEqual(other: Int, err: (() -> Unit)): Boolean {
     val b = (this != null && this <= other)
     if (!b) {
         err?.invoke()
