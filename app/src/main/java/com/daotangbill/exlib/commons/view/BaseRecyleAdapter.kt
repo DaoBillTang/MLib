@@ -41,7 +41,7 @@ open class BaseRecyleAdapter(view: View) : RecyclerView.ViewHolder(view) {
      * @param value  The text to put in the text view.
      * @return The BaseRecyleAdapter for chaining.
      */
-    fun setText(@IdRes viewId: Int, value: CharSequence): BaseRecyleAdapter {
+    fun setText(@IdRes viewId: Int, value: CharSequence?): BaseRecyleAdapter {
         val view = getView<TextView>(viewId)
         view?.text = value
         return this
@@ -112,7 +112,7 @@ open class BaseRecyleAdapter(view: View) : RecyclerView.ViewHolder(view) {
      * @param drawable The image drawable.
      * @return The BaseRecyleAdapter for chaining.
      */
-    fun setImageDrawable(@IdRes viewId: Int, drawable: Drawable): BaseRecyleAdapter {
+    fun setImageDrawable(@IdRes viewId: Int, drawable: Drawable?): BaseRecyleAdapter {
         val view = getView<ImageView>(viewId)
         view?.setImageDrawable(drawable)
         return this
@@ -121,7 +121,7 @@ open class BaseRecyleAdapter(view: View) : RecyclerView.ViewHolder(view) {
     /**
      * Add an action to set the image of an image view. Can be called multiple times.
      */
-    fun setImageBitmap(@IdRes viewId: Int, bitmap: Bitmap): BaseRecyleAdapter {
+    fun setImageBitmap(@IdRes viewId: Int, bitmap: Bitmap?): BaseRecyleAdapter {
         val view = getView<ImageView>(viewId)
         view?.setImageBitmap(bitmap)
         return this
@@ -212,7 +212,7 @@ open class BaseRecyleAdapter(view: View) : RecyclerView.ViewHolder(view) {
      * @param max      The max value of a ProgressBar.
      * @return The BaseRecyleAdapter for chaining.
      */
-    fun setProgress(@IdRes viewId: Int, progress: Int, max: Int): BaseRecyleAdapter {
+    fun setProgress(@IdRes viewId: Int, progress: Int, max: Int = 100): BaseRecyleAdapter {
         val view = getView<ProgressBar>(viewId)
         view?.max = max
         view?.progress = progress
@@ -267,9 +267,11 @@ open class BaseRecyleAdapter(view: View) : RecyclerView.ViewHolder(view) {
      * @param listener The on click listener;
      * @return The BaseRecyleAdapter for chaining.
      */
-    fun setOnClickListener(@IdRes viewId: Int, listener: View.OnClickListener): BaseRecyleAdapter {
+    fun setOnClickListener(@IdRes viewId: Int, listener: (() -> Unit)?): BaseRecyleAdapter {
         val view = getView<View>(viewId)
-        view?.setOnClickListener(listener)
+        view?.setOnClickListener {
+            listener?.invoke()
+        }
         return this
     }
 
@@ -293,9 +295,8 @@ open class BaseRecyleAdapter(view: View) : RecyclerView.ViewHolder(view) {
      * @param listener The checked change listener of compound button.
      * @return The BaseRecyleAdapter for chaining.
      */
-    fun setOnCheckedChangeListener(
-            @IdRes viewId: Int,
-            listener: CompoundButton.OnCheckedChangeListener): BaseRecyleAdapter {
+    fun setOnCheckedChangeListener(@IdRes viewId: Int,
+                                   listener: CompoundButton.OnCheckedChangeListener): BaseRecyleAdapter {
         val view = getView<CompoundButton>(viewId)
         view?.setOnCheckedChangeListener(listener)
         return this
