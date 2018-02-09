@@ -114,10 +114,16 @@ abstract class DtBaseApp : Application() {
         doubleBackToExit(2000)
     }
 
+    /**
+     * 说明从后台回到了前台
+     */
     open fun appFromBackground() {
 
     }
 
+    /**
+     *说明从前台回到了后台
+     */
     open fun appToBackground() {
 
     }
