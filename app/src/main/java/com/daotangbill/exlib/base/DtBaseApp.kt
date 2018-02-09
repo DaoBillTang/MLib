@@ -114,11 +114,11 @@ abstract class DtBaseApp : Application() {
         doubleBackToExit(2000)
     }
 
-    fun appFromBackground() {
+    open fun appFromBackground() {
 
     }
 
-    fun appToBackground() {
+    open fun appToBackground() {
 
     }
 
