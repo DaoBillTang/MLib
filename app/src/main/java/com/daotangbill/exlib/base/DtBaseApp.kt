@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.CallSuper
+import com.daotangbill.exlib.commons.logger.Ldebug
 import com.daotangbill.exlib.commons.toast.Tnormal
 
 /**
@@ -23,6 +24,7 @@ abstract class DtBaseApp : Application() {
     private var life: LifeListener? = null
     var act: Activity? = null
     var actList: MutableList<Activity> = mutableListOf()
+    private var mFinalCount: Int = 0
 
     @CallSuper
     override fun onCreate() {
@@ -112,6 +114,14 @@ abstract class DtBaseApp : Application() {
         doubleBackToExit(2000)
     }
 
+    fun appFromBackground() {
+
+    }
+
+    fun appToBackground() {
+
+    }
+
     inner class LifeListener : ActivityLifecycleCallbacks {
         override fun onActivityPaused(activity: Activity?) {
         }
@@ -121,6 +131,13 @@ abstract class DtBaseApp : Application() {
 
         override fun onActivityStarted(activity: Activity?) {
             act = activity
+            mFinalCount++;
+            //如果mFinalCount ==1，说明是从后台到前台
+            Ldebug { "onActivityStarted ${mFinalCount}++++" }
+            if (mFinalCount == 1) {
+                //说明从后台回到了前台
+                appFromBackground()
+            }
         }
 
         override fun onActivityDestroyed(activity: Activity?) {
@@ -133,6 +150,13 @@ abstract class DtBaseApp : Application() {
         }
 
         override fun onActivityStopped(activity: Activity?) {
+            mFinalCount--;
+            //如果mFinalCount ==0，说明是前台到后台
+            Ldebug { "onActivityStopped$mFinalCount" }
+            if (mFinalCount == 0) {
+                //说明从前台回到了后台
+                appToBackground()
+            }
         }
 
         override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
