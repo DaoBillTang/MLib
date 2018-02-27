@@ -38,10 +38,8 @@ object Regular {
     const val REGEX_PFLOAT10_2 = "^$|^(\\d\\.\\d{1})|([1-9]\\d{0,7}(\\.\\d{1,2})?)$"
     /** 一位字符  */
     const val REGEX_COLOR = "^$|^[a-zA-Z]{1}$"
-    /** 车牌号  */
-    const val REGEX_LPN = "^$|^[\u4e00-\u9fa5]{1}[a-zA-Z]{1}[a-zA-Z0-9]{5}$"
-    /** 车架号  */
-    const val REGEX_VIN = "^$|^[a-zA-Z0-9]{17}$"
-    /** 车主姓名  */
+    /** 中文姓名  */
     const val REGEX_OWNERNAME = "^$|^[\u4E00-\u9FA5A-Za-z0-9]{0,50}$"
+    /** email */
+    const val Email = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+\$"
 }

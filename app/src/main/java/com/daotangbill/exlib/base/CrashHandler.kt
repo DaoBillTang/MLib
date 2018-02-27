@@ -63,7 +63,6 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
         }
     }
 
-
     private fun write2SD(throwable: Throwable) {
 
         if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
@@ -93,7 +92,6 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
     }
 
     /**
@@ -118,7 +116,6 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
         }
         return null
     }
-
 
     /**
      * 上传服务器端

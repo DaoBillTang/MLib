@@ -19,16 +19,16 @@ import io.reactivex.subjects.BehaviorSubject
  * emal:1750352866@qq.com
  */
 abstract class DtBaseActivity : AppCompatActivity(), LifecycleProvider<ActivityEvent> {
-    private var proDialg: ProgressDialog? = null
-    private var mStatusBarHelper: StatusBarHelper? = null
+    private var proDialog: ProgressDialog? = null
+    var mStatusBarHelper: StatusBarHelper? = null
     val handler: Handler = Handler(Looper.getMainLooper())
 
-    @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleSubject.onNext(ActivityEvent.CREATE)
         setContentView(getLayoutResource())
         onTintStatusBar()
+        onInitToolBar()
     }
 
     private val lifecycleSubject = BehaviorSubject.create<ActivityEvent>()
@@ -44,20 +44,17 @@ abstract class DtBaseActivity : AppCompatActivity(), LifecycleProvider<ActivityE
     override fun <T> bindToLifecycle(): LifecycleTransformer<T> =
             RxLifecycleAndroid.bindActivity(lifecycleSubject)
 
-    @CallSuper
     override fun onStart() {
         super.onStart()
         lifecycleSubject.onNext(ActivityEvent.START)
     }
 
-    @CallSuper
     override fun onResume() {
         super.onResume()
         lifecycleSubject.onNext(ActivityEvent.RESUME)
     }
 
 
-    @CallSuper
     override fun onStop() {
         lifecycleSubject.onNext(ActivityEvent.STOP)
         super.onStop()
@@ -89,6 +86,9 @@ abstract class DtBaseActivity : AppCompatActivity(), LifecycleProvider<ActivityE
 
     protected abstract fun getLayoutResource(): Int
 
+    /**
+     * 对状态栏进行修改
+     */
     open fun onTintStatusBar() {
         if (mStatusBarHelper == null) {
             mStatusBarHelper = StatusBarHelper(this, StatusBarHelper.LEVEL_19_TRANSLUCENT,
@@ -98,30 +98,36 @@ abstract class DtBaseActivity : AppCompatActivity(), LifecycleProvider<ActivityE
     }
 
     /**
-     * 显示[.proDialg],附带文字
+     * 对toolbar 进行修改
      */
-    fun showProgressDialog(message: String? = "正在处理中请稍后……") {
-        if (proDialg == null) {
-            proDialg = ProgressDialog(this)
-        }
-        proDialg!!.setMessage(message)
-        proDialg!!.show()
+    open fun onInitToolBar() {
+
     }
 
+    /**
+     * 显示[.proDialog],附带文字
+     */
+    fun showProgressDialog(message: String? = "正在处理中请稍后……") {
+        if (proDialog == null) {
+            proDialog = ProgressDialog(this)
+        }
+        proDialog!!.setMessage(message)
+        proDialog!!.show()
+    }
 
     /**
      * 隐藏 progress dialog
      */
     fun proDialogDismiss() {
-        if (proDialg != null) proDialg!!.dismiss()
-        proDialg = null
+        if (proDialog != null) proDialog!!.dismiss()
+        proDialog = null
     }
 
     override fun onPause() {
         lifecycleSubject.onNext(ActivityEvent.PAUSE)
         super.onPause()
         //清理痕迹
-        proDialg = null
+        proDialog = null
     }
 
     override fun onDestroy() {

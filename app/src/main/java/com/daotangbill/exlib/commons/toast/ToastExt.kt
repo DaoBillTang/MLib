@@ -145,6 +145,10 @@ object ToastExt {
 private fun custom(context: Context, message: CharSequence, inIcon: Drawable?,
                    @ColorInt tintColor: Int, duration: Int,
                    withIcon: Boolean, shouldTint: Boolean): Toast? {
+    if (message.isBlank()) {
+        context.Lwarn { "===显示空白内容===" }
+        return null
+    }
     if (toastTime != null && message == toastStr) {
         if (System.currentTimeMillis() - (toastTime ?: 0L) <= 3000) {
             context.Lwarn { "连续显示相同的内容===$toastStr" }

@@ -116,6 +116,7 @@ abstract class DtBaseApp : Application() {
 
     /**
      * 说明从后台回到了前台
+     * 包括首次启动APP也会回调该方法
      */
     open fun appFromBackground() {
 
