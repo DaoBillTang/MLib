@@ -7,6 +7,7 @@ import android.os.Build
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import com.daotangbill.exlib.commons.logger.Linfo
 import com.daotangbill.exlib.commons.logger.Lwarn
 import java.util.*
 
@@ -59,7 +60,7 @@ fun Context?.hasPermissions(perms: Array<String>): Boolean {
 fun Context?.hasPermissions(perms: String): Boolean {
     // Always return true for SDK < M, let the system deal with the permissions
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-        this?.Lwarn { "hasPermissions: API version < M, returning true by default" }
+        this?.Linfo { "hasPermissions: API version < M, returning true by default" }
         return true
     }
 

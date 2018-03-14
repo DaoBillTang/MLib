@@ -1,11 +1,10 @@
 package com.daotangbill.exlib.ui.rollviewpager.hintview;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 
-import com.daotangbill.exlib.ui.rollviewpager.Util;
+import com.daotangbill.exlib.commons.utils.DensityUtilsKt;
 
 
 /**
@@ -30,8 +29,8 @@ public class ColorPointHintView extends ShapeHintView {
     public Drawable makeFocusDrawable() {
         GradientDrawable dot_focus = new GradientDrawable();
         dot_focus.setColor(focusColor);
-        dot_focus.setCornerRadius(Util.dip2px(getContext(), 4));
-        dot_focus.setSize(Util.dip2px(getContext(), 8), Util.dip2px(getContext(), 8));
+        dot_focus.setCornerRadius(DensityUtilsKt.dip2px(4));
+        dot_focus.setSize(DensityUtilsKt.dip2px(8), DensityUtilsKt.dip2px(8));
         return dot_focus;
     }
 
@@ -39,8 +38,8 @@ public class ColorPointHintView extends ShapeHintView {
     public Drawable makeNormalDrawable() {
         GradientDrawable dot_normal = new GradientDrawable();
         dot_normal.setColor(normalColor);
-        dot_normal.setCornerRadius(Util.dip2px(getContext(), 4));
-        dot_normal.setSize(Util.dip2px(getContext(), 8), Util.dip2px(getContext(), 8));
+        dot_normal.setCornerRadius(DensityUtilsKt.dip2px( 4));
+        dot_normal.setSize(DensityUtilsKt.dip2px( 8), DensityUtilsKt.dip2px( 8));
         return dot_normal;
     }
 }

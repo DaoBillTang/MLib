@@ -180,6 +180,10 @@ fun Fragment.hideKeyboard() {
     this.activity.hideKeyboard()
 }
 
+fun Fragment.hideKeyboard(editText: EditText) {
+    this.activity.hideKeyboard(editText)
+}
+
 fun Context.getScreenWith(): Int {
     val manager = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     val dm = DisplayMetrics()

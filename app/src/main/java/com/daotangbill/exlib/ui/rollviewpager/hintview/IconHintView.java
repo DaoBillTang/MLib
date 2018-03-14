@@ -9,7 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 
-import com.daotangbill.exlib.ui.rollviewpager.Util;
+import com.daotangbill.exlib.commons.utils.DensityUtilsKt;
 
 
 /**
@@ -27,7 +27,7 @@ public class IconHintView extends ShapeHintView {
 
 
     public IconHintView(Context context, @DrawableRes int focusResId, @DrawableRes int normalResId) {
-        this(context, focusResId, normalResId, Util.dip2px(context,32));
+        this(context, focusResId, normalResId, DensityUtilsKt.dip2px(32));
     }
 
     public IconHintView(Context context, @DrawableRes int focusResId, @DrawableRes int normalResId, int size) {
@@ -40,8 +40,8 @@ public class IconHintView extends ShapeHintView {
     @Override
     public Drawable makeFocusDrawable() {
         Drawable drawable = getContext().getResources().getDrawable(focusResId);
-        if (size>0){
-            drawable = zoomDrawable(drawable,size,size);
+        if (size > 0) {
+            drawable = zoomDrawable(drawable, size, size);
         }
         return drawable;
     }
@@ -49,8 +49,8 @@ public class IconHintView extends ShapeHintView {
     @Override
     public Drawable makeNormalDrawable() {
         Drawable drawable = getContext().getResources().getDrawable(normalResId);
-        if (size>0){
-            drawable = zoomDrawable(drawable,size,size);
+        if (size > 0) {
+            drawable = zoomDrawable(drawable, size, size);
         }
         return drawable;
     }

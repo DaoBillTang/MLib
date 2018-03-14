@@ -19,6 +19,7 @@ import android.view.animation.Interpolator;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
+import com.daotangbill.exlib.commons.utils.DensityUtilsKt;
 import com.daotangbill.exlib.exlib.R;
 import com.daotangbill.exlib.ui.rollviewpager.adapter.LoopPagerAdapter;
 import com.daotangbill.exlib.ui.rollviewpager.hintview.ColorPointHintView;
@@ -149,7 +150,8 @@ public class RollPagerView extends RelativeLayout implements OnPageChangeListene
         paddingLeft = (int) type.getDimension(R.styleable.RollPagerView_rollviewpager_hint_paddingLeft, 0);
         paddingRight = (int) type.getDimension(R.styleable.RollPagerView_rollviewpager_hint_paddingRight, 0);
         paddingTop = (int) type.getDimension(R.styleable.RollPagerView_rollviewpager_hint_paddingTop, 0);
-        paddingBottom = (int) type.getDimension(R.styleable.RollPagerView_rollviewpager_hint_paddingBottom, Util.dip2px(getContext(), 4));
+        paddingBottom = (int) type.getDimension(R.styleable.RollPagerView_rollviewpager_hint_paddingBottom,
+                DensityUtilsKt.dip2px(4));
 
         mViewPager = new ViewPager(getContext());
         mViewPager.setId(R.id.viewpager_inner);

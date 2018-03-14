@@ -1,5 +1,6 @@
 package com.daotangbill.exlib.commons.logger
 
+import android.text.TextUtils
 import com.daotangbill.exlib.commons.logger.LoggerPrinter.log
 import com.daotangbill.exlib.commons.utils.StringExtend
 import org.json.JSONArray
