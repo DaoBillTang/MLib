@@ -1,16 +1,14 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.github.dcendents.android-maven'
 android {
-
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.compileSdkVersion
         versionCode 6
-        versionName "0.0.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionName "0.0.15"
     }
     buildTypes {
         release {
@@ -21,17 +19,14 @@ android {
 }
 
 dependencies {
-    provided rootProject.ext.supportV4
     provided rootProject.ext.supportAppCompat
-    provided rootProject.ext.supportDesign
-    provided rootProject.ext.supportRecyclerView
-    provided rootProject.ext.supportAnnotations
-    provided rootProject.ext.rxJava
     provided rootProject.ext.kotlinStdlib
     testCompile rootProject.ext.junit
+    provided rootProject.ext.supportRecyclerView
+    provided rootProject.ext.rxJava
     provided rootProject.ext.rxAndroid
     provided rootProject.ext.glide
-    implementation project(':core')
+    compileOnly rootProject.ext.jsr305Annotations
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
