@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--  白色  -->
+    <color name="white">#FFF</color>
+    <color name="common_pressed">#20000000</color>
+    <!-- 白色背景按下去的颜色 -->
+    <color name="line">#e8e8e8</color>
+    <!---->
+    <color name="bottom_lib_transport">#00000000</color>
+    <color name="bottom_lib_dialog_item_text_color">#333333</color>
+    <color name="bottom_lib_dialog_title_text_color">#666666</color>
+    <color name="bottom_lib_dialog_cancel_text_color">#666666</color>
+</resources>

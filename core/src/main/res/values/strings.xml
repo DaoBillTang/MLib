@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ExLib</string>
+
+    <string name="cancel">@string/bottom_dialog_lib_cancel</string>
+    <string name="bottom_dialog_lib_cancel">取消</string>
+</resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.daotangbill.exlib.sample.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/show_content"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="show content" />
+
+        <TextView
+            android:id="@+id/show_error"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="show error" />
+
+        <TextView
+            android:id="@+id/show_load"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="show load" />
+
+        <TextView
+            android:id="@+id/show_empty"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="show empty" />
+    </LinearLayout>
+
+    <com.daotangbill.exlib.ui.MultiStateView
+        android:id="@+id/msv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:msv_animateViewChanges="true"
+        app:msv_emptyView="@layout/layout_empty"
+        app:msv_errorView="@layout/layout_error"
+        app:msv_loadingView="@layout/layout_loadding"
+        app:msv_viewState="content">
+
+
+        <com.daotangbill.exlib.ui.suppertext.BaseTextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.daotangbill.exlib.ui.MultiStateView>
+</LinearLayout>
