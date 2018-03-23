@@ -15,7 +15,7 @@ import java.util.*
  * @property datas 数据源
  *
  */
-abstract class BaseAdapter<T>(private val datas: List<T>)
+abstract class BaseAdapter<T>(private val datas: MutableList<T>)
     : RecyclerView.Adapter<BaseRecyleHolder>() {
 
     /**

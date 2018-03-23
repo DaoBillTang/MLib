@@ -58,5 +58,4 @@ public class PermissionsUtils {
         }
         return cameraPermissionGranted;
     }
-
 }

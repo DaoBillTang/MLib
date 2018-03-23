@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.daotangbill.exlib.commons.utils.DensityUtilsKt;
 import com.daotangbill.exlib.exlib.R;
 
 /**
  * 通用的textView可以实现大部分常用布局样式
  */
+
 public class CommonTextView extends RelativeLayout {
 
     private Context mContext;
@@ -118,6 +118,7 @@ public class CommonTextView extends RelativeLayout {
     private int mDividerLineColor;
     private int mDividerLineHeight;
 
+
     private int mLeftTextViewLineSpacingExtra;
     private int mCenterTextViewLineSpacingExtra;
     private int mRightTextViewLineSpacingExtra;
@@ -166,6 +167,7 @@ public class CommonTextView extends RelativeLayout {
     private boolean mCenterViewIsClickable = false;
     private boolean mRightViewIsClickable = false;
 
+
     private LayoutParams leftTVParams, centerTVParams, rightTVParams, topLineParams, bottomLineParams;
     private LayoutParams leftTopTVParams, centerTopTVParams, rightTopTVParams;
     private LayoutParams leftBottomTVParams, centerBottomTVParams, rightBottomTVParams;
@@ -190,9 +192,9 @@ public class CommonTextView extends RelativeLayout {
     public CommonTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
-        defaultSize = DensityUtilsKt.dip2px(13);
-        defaultPadding = DensityUtilsKt.dip2px(10);
-        mCenterSpaceHeight = DensityUtilsKt.dip2px(5);
+        defaultSize = dip2px(context, 13);
+        defaultPadding = dip2px(context, 10);
+        mCenterSpaceHeight = dip2px(context, 5);
         getAttr(attrs);
         init();
     }
@@ -296,7 +298,7 @@ public class CommonTextView extends RelativeLayout {
         mDividerLineType = typedArray.getInt(R.styleable.CommonTextView_cShowDividerLineType, DEFAULT);
         mDividerLineColor = typedArray.getColor(R.styleable.CommonTextView_cDividerLineColor, defaultDividerLineColor);
 
-        mDividerLineHeight = typedArray.getDimensionPixelSize(R.styleable.CommonTextView_cDividerLineHeight, DensityUtilsKt.dip2px(0.5f));
+        mDividerLineHeight = typedArray.getDimensionPixelSize(R.styleable.CommonTextView_cDividerLineHeight, dip2px(mContext, 0.5f));
 
         useRipple = typedArray.getBoolean(R.styleable.CommonTextView_cUseRipple, false);
 
@@ -317,7 +319,7 @@ public class CommonTextView extends RelativeLayout {
         mBackground_drawable = typedArray.getDrawable(R.styleable.CommonTextView_cBackgroundDrawableRes);
 
         mIsCenterAlignLeft = typedArray.getBoolean(R.styleable.CommonTextView_cIsCenterAlignLeft, false);
-        mCenterViewMarginLeft = typedArray.getDimensionPixelSize(R.styleable.CommonTextView_cCenterViewMarginLeft, DensityUtilsKt.dip2px(200));
+        mCenterViewMarginLeft = typedArray.getDimensionPixelSize(R.styleable.CommonTextView_cCenterViewMarginLeft, dip2px(mContext, 200));
 
         typedArray.recycle();
     }
@@ -797,7 +799,7 @@ public class CommonTextView extends RelativeLayout {
             textView.setSingleLine(mSetSingleLine);
 //            textView.setMaxEms(mSetMaxEms);
 //            textView.setEllipsize(TextUtils.TruncateAt.END);
-            textView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mSetMaxEms)});
+            textView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mSetMaxEms) });
             addView(textView);
         }
         return textView;
@@ -1434,4 +1436,41 @@ public class CommonTextView extends RelativeLayout {
         }
         return this;
     }
+
+    /**
+     * 单位转换工具类
+     *
+     * @param context  上下文对象
+     * @param dipValue 值
+     * @return 返回值
+     */
+    public int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
+    /**
+     * 单位转换工具类
+     *
+     * @param context 上下文对象
+     * @param pxValue 值
+     * @return 返回值
+     */
+    public int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    /**
+     * 单位转换工具类
+     *
+     * @param context 上下文对象
+     * @param spValue 值
+     * @return 返回值
+     */
+    public int sp2px(Context context, float spValue) {
+        final float scale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * scale + 0.5f);
+    }
+
 }

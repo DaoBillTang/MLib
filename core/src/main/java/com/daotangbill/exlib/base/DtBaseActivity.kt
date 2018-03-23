@@ -28,9 +28,10 @@ abstract class DtBaseActivity :
         LifecycleProvider<ActivityEvent>,
         PermissionCallbacks {
     private var proDialog: ProgressDialog? = null
-    var mStatusBarHelper: StatusBarHelper? = null
 
-    val handler: Handler by lazy {
+    open var mStatusBarHelper: StatusBarHelper? = null
+
+    open val handler: Handler by lazy {
         Handler(Looper.getMainLooper())
     }
 

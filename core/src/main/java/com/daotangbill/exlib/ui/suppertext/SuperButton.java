@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.Button;
 
-import com.daotangbill.exlib.commons.utils.DensityUtilsKt;
 import com.daotangbill.exlib.exlib.R;
 
 /**
@@ -138,7 +137,7 @@ public class SuperButton extends Button {
         strokeColor = typedArray.getColor(R.styleable.SuperButton_sStrokeColor, defaultColor);
 
         sizeWidth = typedArray.getDimensionPixelSize(R.styleable.SuperButton_sSizeWidth, 0);
-        sizeHeight = typedArray.getDimensionPixelSize(R.styleable.SuperButton_sSizeHeight,  DensityUtilsKt.dip2px( 48));
+        sizeHeight = typedArray.getDimensionPixelSize(R.styleable.SuperButton_sSizeHeight, dip2px(mContext, 48));
 
         gradientOrientation = typedArray.getInt(R.styleable.SuperButton_sGradientOrientation, -1);
 
@@ -465,7 +464,7 @@ public class SuperButton extends Button {
      * @return 对象
      */
     public SuperButton setShapeStrokeWidth(int strokeWidth) {
-        this.strokeWidth =  DensityUtilsKt.dip2px( strokeWidth);
+        this.strokeWidth = dip2px(mContext, strokeWidth);
         return this;
     }
 
@@ -487,7 +486,7 @@ public class SuperButton extends Button {
      * @return 对象
      */
     public SuperButton setShapeSrokeDashWidth(float strokeDashWidth) {
-        this.strokeDashWidth =  DensityUtilsKt.dip2px( strokeDashWidth);
+        this.strokeDashWidth = dip2px(mContext, strokeDashWidth);
         return this;
     }
 
@@ -498,7 +497,7 @@ public class SuperButton extends Button {
      * @return 对象
      */
     public SuperButton setShapeStrokeDashGap(float strokeDashGap) {
-        this.strokeDashGap =  DensityUtilsKt.dip2px( strokeDashGap);
+        this.strokeDashGap = dip2px(mContext, strokeDashGap);
         return this;
     }
 
@@ -509,7 +508,7 @@ public class SuperButton extends Button {
      * @return 对象
      */
     public SuperButton setShapeCornersRadius(float radius) {
-        this.cornersRadius =  DensityUtilsKt.dip2px( radius);
+        this.cornersRadius = dip2px(mContext, radius);
         return this;
     }
 
@@ -520,7 +519,7 @@ public class SuperButton extends Button {
      * @return 对象
      */
     public SuperButton setShapeCornersTopLeftRadius(float radius) {
-        this.cornersTopLeftRadius =  DensityUtilsKt.dip2px( radius);
+        this.cornersTopLeftRadius = dip2px(mContext, radius);
         return this;
     }
 
@@ -531,7 +530,7 @@ public class SuperButton extends Button {
      * @return 对象
      */
     public SuperButton setShapeCornersTopRightRadius(float radius) {
-        this.cornersTopRightRadius =  DensityUtilsKt.dip2px( radius);
+        this.cornersTopRightRadius = dip2px(mContext, radius);
         return this;
     }
 
@@ -542,7 +541,7 @@ public class SuperButton extends Button {
      * @return 对象
      */
     public SuperButton setShapeCornersBottomLeftRadius(float radius) {
-        this.cornersBottomLeftRadius =  DensityUtilsKt.dip2px( radius);
+        this.cornersBottomLeftRadius = dip2px(mContext, radius);
         return this;
     }
 
@@ -553,7 +552,7 @@ public class SuperButton extends Button {
      * @return 对象
      */
     public SuperButton setShapeCornersBottomRightRadius(float radius) {
-        this.cornersBottomRightRadius =  DensityUtilsKt.dip2px( radius);
+        this.cornersBottomRightRadius = dip2px(mContext, radius);
         return this;
     }
 
@@ -695,5 +694,17 @@ public class SuperButton extends Button {
      */
     public void setUseShape() {
         init();
+    }
+
+    /**
+     * 单位转换工具类
+     *
+     * @param context  上下文对象
+     * @param dipValue 值
+     * @return 返回值
+     */
+    private int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
     }
 }

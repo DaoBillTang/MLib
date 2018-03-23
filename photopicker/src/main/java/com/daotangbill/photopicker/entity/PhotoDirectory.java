@@ -21,8 +21,12 @@ public class PhotoDirectory {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PhotoDirectory)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof PhotoDirectory)) {
+            return false;
+        }
 
         PhotoDirectory directory = (PhotoDirectory) o;
 
@@ -97,7 +101,9 @@ public class PhotoDirectory {
     }
 
     public void setPhotos(List<Photo> photos) {
-        if (photos == null) return;
+        if (photos == null) {
+            return;
+        }
         for (int i = 0, j = 0, num = photos.size(); i < num; i++) {
             Photo p = photos.get(j);
             if (p == null || !FileUtils.fileIsExists(p.getPath())) {

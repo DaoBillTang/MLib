@@ -150,8 +150,10 @@ public class PhotoPagerActivity extends AppCompatActivity {
   }
 
   public void updateActionBarTitle() {
-    if (actionBar != null) actionBar.setTitle(
-        getString(R.string.__picker_image_index, pagerFragment.getViewPager().getCurrentItem() + 1,
-            pagerFragment.getPaths().size()));
+    if (actionBar != null) {
+      actionBar.setTitle(
+              getString(R.string.__picker_image_index, pagerFragment.getViewPager().getCurrentItem() + 1,
+                      pagerFragment.getPaths().size()));
+    }
   }
 }

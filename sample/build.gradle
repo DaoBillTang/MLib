@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 26
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -24,6 +24,7 @@ android {
 }
 
 dependencies {
+    compile 'com.github.DaoBillTang:DTUtils:0.0.1B4'
     implementation rootProject.ext.supportAppCompat
     implementation rootProject.ext.kotlinStdlib
     testCompile rootProject.ext.junit

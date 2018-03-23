@@ -21,7 +21,7 @@ abstract class DtBaseFragment : Fragment(), LifecycleProvider<FragmentEvent> {
     private var proDialg: ProgressDialog? = null
     private var isFristVisibile = false
 
-    val handler: Handler = Handler(Looper.getMainLooper())
+    open val handler: Handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

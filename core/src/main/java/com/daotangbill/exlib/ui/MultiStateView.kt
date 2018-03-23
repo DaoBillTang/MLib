@@ -82,10 +82,6 @@ class MultiStateView : FrameLayout {
         loadingViewResId = a.getResourceId(R.styleable.MultiStateView_msv_loadingView, -1)
         emptyViewResId = a.getResourceId(R.styleable.MultiStateView_msv_emptyView, -1)
         errorViewResId = a.getResourceId(R.styleable.MultiStateView_msv_errorView, -1)
-        //        if (errorViewResId > -1) {
-        //            mErrorView = mInflater.inflate(errorViewResId, this, false);
-        //            addView(mErrorView, mErrorView.getLayoutParams());
-        //        }
         mViewState = a.getInt(R.styleable.MultiStateView_msv_viewState, VIEW_STATE_CONTENT)
         mAnimateViewChanges = a.getBoolean(R.styleable.MultiStateView_msv_animateViewChanges, false)
         a.recycle()
@@ -152,10 +148,7 @@ class MultiStateView : FrameLayout {
     }
 
     /**
-     * Returns the [View] associated with the [ViewState]
-     *
-     * @param state The [ViewState] with to return the view for
-     * @return The [View] associated with the [ViewState], null if no view is present
+     *  进行了修改，在调用此方法时 才会初始化某个状态的view
      */
     fun getView(state: Int): View? {
         when (state) {
