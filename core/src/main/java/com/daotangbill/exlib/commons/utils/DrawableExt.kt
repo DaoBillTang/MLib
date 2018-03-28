@@ -19,6 +19,12 @@ import com.daotangbill.exlib.exlib.R
  * @description:处理图片 的方法合集
  */
 
+fun s(){
+    "".let {  }
+
+
+}
+
 /**
  * 染色 图标
  */

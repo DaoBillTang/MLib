@@ -78,8 +78,10 @@ fun Activity.showResultDialog(title: String?, msg: String?
 @UiThread
 fun Fragment.showResultDialog(msg: String?, title: String?
                               , button: String = "我知道了") {
-    AlertDialog.Builder(this.activity).setTitle(title).setMessage(msg)
-            .setNegativeButton(button, null).create().show()
+    this.activity?.let {
+        AlertDialog.Builder(it).setTitle(title).setMessage(msg)
+                .setNegativeButton(button, null).create().show()
+    }
 }
 
 @UiThread
@@ -99,15 +101,22 @@ fun Activity.showConfirmCancelDialog(title: String?, message: String?
 fun Fragment.showConfirmCancelDialog(title: String, message: String
                                      , posListener: DialogInterface.OnClickListener
                                      , cancelListener: DialogInterface.OnClickListener)
-        : AlertDialog {
-    val dlg = AlertDialog.Builder(this.activity).setMessage(message).setTitle(title)
-            .setPositiveButton("确认", posListener)
-            .setNegativeButton("取消", cancelListener).create()
-    dlg.setCanceledOnTouchOutside(false)
-    dlg.show()
-    return dlg
+        : AlertDialog? {
+    val ctx = this.activity
+
+    if (ctx != null) {
+        val dlg = AlertDialog.Builder(ctx).setMessage(message).setTitle(title)
+                .setPositiveButton("确认", posListener)
+                .setNegativeButton("取消", cancelListener).create()
+        dlg.setCanceledOnTouchOutside(false)
+        dlg.show()
+        return dlg
+    }
+
+    return null
 }
 
+@Deprecated(" 改到 systemUtils")
 @SuppressLint("MissingPermission")
 fun Context.isNetworkConnected(): Boolean {
     val mConnectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -177,11 +186,11 @@ fun Activity.hideKeyboard(editText: EditText) {
 }
 
 fun Fragment.hideKeyboard() {
-    this.activity.hideKeyboard()
+    this.activity?.hideKeyboard()
 }
 
 fun Fragment.hideKeyboard(editText: EditText) {
-    this.activity.hideKeyboard(editText)
+    this.activity?.hideKeyboard(editText)
 }
 
 fun Context.getScreenWith(): Int {
@@ -198,5 +207,4 @@ fun Context.getScreenHeight(): Int {
     return dm.heightPixels
 }
 
-fun Context?.getResString(@StringRes msgRes: Int): String?
-        = this?.resources?.getString(msgRes)
+fun Context?.getResString(@StringRes msgRes: Int): String? = this?.resources?.getString(msgRes)

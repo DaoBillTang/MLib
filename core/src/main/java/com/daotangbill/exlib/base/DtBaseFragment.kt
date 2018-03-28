@@ -3,7 +3,6 @@ package com.daotangbill.exlib.base
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +20,9 @@ abstract class DtBaseFragment : Fragment(), LifecycleProvider<FragmentEvent> {
     private var proDialg: ProgressDialog? = null
     private var isFristVisibile = false
 
-    open val handler: Handler = Handler(Looper.getMainLooper())
+    open val handler: Handler by lazy {
+        SafeHandler(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +30,7 @@ abstract class DtBaseFragment : Fragment(), LifecycleProvider<FragmentEvent> {
         Ldebug { "onCreate====" }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?
                               , savedInstanceState: Bundle?): View? {
         Ldebug { "onCreateView====" }
         return super.onCreateView(inflater, container, savedInstanceState)

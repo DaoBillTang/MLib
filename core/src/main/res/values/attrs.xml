@@ -431,4 +431,14 @@
         </attr>
         <attr name="msv_animateViewChanges" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="SpringRecyclerView">
+        <attr name="srv_enableSpringEffectWhenDrag" format="boolean" />
+        <!--当我们将recyclerView转到overScroll时是否启用了弹簧效果。-->
+        <attr name="srv_enableSpringEffectWhenFling" format="boolean" />
+        <!--我们发布recyclerView后反弹动画的持续时间。以毫秒为单位。-->
+        <attr name="srv_releaseBackAnimDuration" format="integer" />
+        <!--反弹动画的持续时间，当我们摆脱recyclerView。以毫秒为单位。-->
+        <attr name="srv_flingBackAnimDuration" format="integer" />
+    </declare-styleable>
 </resources>

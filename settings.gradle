@@ -1,1 +1,1 @@
-include ':core', ':sample', ':photopicker'
+include ':core', ':sample', ':photopicker', ':aop'

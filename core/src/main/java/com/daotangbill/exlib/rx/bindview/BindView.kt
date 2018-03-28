@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit
  *@warning 同时，一个View 有且只应该有一个 事件绑定进去
  */
 @MainThread
-fun View.bindClick(listener: () -> Unit, time: Long, act: Activity,
+fun View.bindClick(listener: () -> Unit, time: Long, act: Activity?,
                    event: ActivityEvent = ActivityEvent.DESTROY) {
     if (act is DtBaseActivity) {
         ViewClickObservable(this)
@@ -57,7 +57,7 @@ fun View.bindClick(listener: () -> Unit, time: Long, fra: Fragment,
  *@param event 需要限制 当前事件最后的生命周期
  */
 @MainThread
-fun View.bindLongClick(listener: () -> Boolean, time: Long, act: Activity,
+fun View.bindLongClick(listener: () -> Boolean, time: Long, act: Activity?,
                        call: Boolean = true,
                        event: ActivityEvent = ActivityEvent.DESTROY) {
     if (act is DtBaseActivity) {
@@ -87,7 +87,7 @@ fun View.bindLongClick(listener: () -> Boolean, time: Long, fra: Fragment,
  */
 @MainThread
 fun View.bindTouch(listener: (MotionEvent) -> Boolean,
-                   act: Activity,
+                   act: Activity?,
                    event: ActivityEvent = ActivityEvent.DESTROY) {
     if (act is DtBaseActivity) {
         ViewTouchObservable(this, Predicate { listener.invoke(it) })
@@ -114,7 +114,7 @@ fun View.bindTouch(listener: (MotionEvent) -> Boolean,
  */
 @MainThread
 fun View.bindScroll(listener: (ViewScrollChangeEvent) -> Unit,
-                    act: Activity,
+                    act: Activity?,
                     event: ActivityEvent = ActivityEvent.DESTROY) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
         Lerror("当前版本小于23")

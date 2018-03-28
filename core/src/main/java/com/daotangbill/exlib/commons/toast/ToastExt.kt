@@ -1,5 +1,6 @@
 package com.daotangbill.exlib.commons.toast
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
@@ -39,56 +40,55 @@ var toastStr: CharSequence? = null
 var toastTime: Long? = null
 
 fun Context.Tnormal(message: CharSequence) =
-        this.Tnormal(message, Toast.LENGTH_SHORT, null, false)?.show()
+        this.Tnormal(message, Toast.LENGTH_SHORT, null, false)
 
 fun Context.Tnormal(@StringRes messageId: Int) =
-        this.Tnormal(this.resources.getString(messageId), Toast.LENGTH_SHORT, null, false)?.show()
+        this.Tnormal(this.resources.getString(messageId), Toast.LENGTH_SHORT, null, false)
 
 fun Context.Tnormal(message: CharSequence, icon: Drawable) =
-        this.Tnormal(message, Toast.LENGTH_SHORT, icon, true)?.show()
+        this.Tnormal(message, Toast.LENGTH_SHORT, icon, true)
 
 fun Context.Tnormal(@StringRes messageId: Int, icon: Drawable) =
-        this.Tnormal(this.resources.getString(messageId), Toast.LENGTH_SHORT, icon, true)?.show()
+        this.Tnormal(this.resources.getString(messageId), Toast.LENGTH_SHORT, icon, true)
 
 fun Context.Tnormal(message: CharSequence, duration: Int) =
-        this.Tnormal(message, duration, null, false)?.show()
+        this.Tnormal(message, duration, null, false)
 
 fun Context.Tnormal(@StringRes messageId: Int, duration: Int) =
-        this.Tnormal(this.resources.getString(messageId), duration, null, false)?.show()
+        this.Tnormal(this.resources.getString(messageId), duration, null, false)
 
 fun Context.Tnormal(message: CharSequence, duration: Int,
                     icon: Drawable) =
-        this.Tnormal(message, duration, icon, true)?.show()
+        this.Tnormal(message, duration, icon, true)
 
 fun Context.Tnormal(@StringRes messageId: Int, duration: Int,
                     icon: Drawable) =
-        this.Tnormal(this.resources.getString(messageId), duration, icon, true)?.show()
+        this.Tnormal(this.resources.getString(messageId), duration, icon, true)
 
-@CheckResult
 fun Context.Tnormal(message: CharSequence, duration: Int,
-                    icon: Drawable?, withIcon: Boolean) =
-        custom(this, message, icon, ToastExt.NORMAL_COLOR, duration, withIcon, true)
+                    icon: Drawable?, withIcon: Boolean) {
+    custom(this, message, icon, ToastExt.NORMAL_COLOR, duration, withIcon, true)
+}
+
 
 fun Context.Twarning(message: CharSequence) =
-        this.Twarning(message, Toast.LENGTH_SHORT, true)?.show()
+        this.Twarning(message, Toast.LENGTH_SHORT, true)
 
 fun Context.Twarning(@StringRes messageId: Int) =
-        this.Twarning(this.resources.getString(messageId), Toast.LENGTH_SHORT, true)?.show()
+        this.Twarning(this.resources.getString(messageId), Toast.LENGTH_SHORT, true)
 
-@CheckResult
 fun Context.Twarning(message: CharSequence, duration: Int) =
-        this.Twarning(message, duration, true)?.show()
+        this.Twarning(message, duration, true)
 
-@CheckResult
 fun Context.Twarning(@StringRes messageId: Int, duration: Int) =
-        this.Twarning(this.resources.getString(messageId), duration, true)?.show()
+        this.Twarning(this.resources.getString(messageId), duration, true)
 
-@CheckResult
 fun Context.Twarning(message: CharSequence,
                      duration: Int,
-                     withIcon: Boolean): Toast?
-        = custom(message, R.drawable.ic_error_outline_white_48dp,
-        ToastExt.WARNING_COLOR, duration, withIcon, true)
+                     withIcon: Boolean) {
+    custom(message, R.drawable.ic_error_outline_white_48dp,
+            ToastExt.WARNING_COLOR, duration, withIcon, true)
+}
 
 @JvmOverloads
 fun Context.Tinfo(
@@ -96,7 +96,7 @@ fun Context.Tinfo(
         duration: Int = Toast.LENGTH_SHORT,
         withIcon: Boolean = true)
         = custom(message, R.drawable.ic_info_outline_white_48dp, ToastExt.INFO_COLOR,
-        duration, withIcon, true)?.show()
+        duration, withIcon, true)
 
 @JvmOverloads
 fun Context.Tsuccess(
@@ -104,7 +104,7 @@ fun Context.Tsuccess(
         duration: Int = Toast.LENGTH_SHORT,
         withIcon: Boolean = true)
         = custom(message, R.drawable.ic_check_white_48dp,
-        ToastExt.SUCCESS_COLOR, duration, withIcon, true)?.show()
+        ToastExt.SUCCESS_COLOR, duration, withIcon, true)
 
 
 @JvmOverloads
@@ -113,18 +113,18 @@ fun Context.Terror(
         duration: Int = Toast.LENGTH_SHORT,
         withIcon: Boolean = true)
         = custom(message, R.drawable.ic_clear_white_48dp,
-        ToastExt.ERROR_COLOR, duration, withIcon, true)?.show()
+        ToastExt.ERROR_COLOR, duration, withIcon, true)
 
 fun Context.custom(message: CharSequence, icon: Drawable,
                    duration: Int, withIcon: Boolean)
-        = custom(this, message, icon, -1, duration, withIcon, false)?.show()
+        = custom(this, message, icon, -1, duration, withIcon, false)
 
-@CheckResult
 fun Context.custom(message: CharSequence, @DrawableRes iconRes: Int,
                    @ColorInt tintColor: Int, duration: Int,
-                   withIcon: Boolean, shouldTint: Boolean): Toast?
-        = custom(this, message, this.getDrawableBySdk(iconRes),
-        tintColor, duration, withIcon, shouldTint)
+                   withIcon: Boolean, shouldTint: Boolean) {
+    custom(this, message, this.getDrawableBySdk(iconRes),
+            tintColor, duration, withIcon, shouldTint)
+}
 
 object ToastExt {
     var DEFAULT_TEXT_COLOR = Color.parseColor("#FFFFFF")
@@ -141,10 +141,24 @@ object ToastExt {
     var tintIcon = true
 }
 
-@CheckResult
+/**
+ * 在 Activity 的Context 中 保证为主线程进行操作，但是 其他的Context 不保证
+ */
 private fun custom(context: Context, message: CharSequence, inIcon: Drawable?,
                    @ColorInt tintColor: Int, duration: Int,
-                   withIcon: Boolean, shouldTint: Boolean): Toast? {
+                   withIcon: Boolean, shouldTint: Boolean) {
+    if (context is Activity){
+        context.runOnUiThread {
+            customImpl(context, message, inIcon, tintColor, duration, withIcon, shouldTint)?.show()
+        }
+    }else{
+        customImpl(context, message, inIcon, tintColor, duration, withIcon, shouldTint)?.show()
+    }
+}
+
+private fun customImpl(context: Context, message: CharSequence, inIcon: Drawable?,
+                       @ColorInt tintColor: Int, duration: Int,
+                       withIcon: Boolean, shouldTint: Boolean): Toast? {
     if (message.isBlank()) {
         context.Lwarn { "===显示空白内容===" }
         return null

@@ -8,7 +8,6 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import com.daotangbill.exlib.commons.logger.Linfo
-import com.daotangbill.exlib.commons.logger.Lwarn
 import java.util.*
 
 /**
@@ -36,9 +35,8 @@ interface PermissionCallbacks : ActivityCompat.OnRequestPermissionsResultCallbac
  * false :缺失权限
  */
 fun Context?.hasPermissions(perms: Array<String>): Boolean {
-    // Always return true for SDK < M, let the system deal with the permissions
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-        this?.Lwarn { "hasPermissions: API version < M, returning true by default" }
+        this?.Linfo { "hasPermissions: API version < M, returning true by default" }
         return true
     }
 
@@ -122,7 +120,7 @@ permission:android.permission.READ_CELL_BROADCASTS
  *
  */
 fun Activity?.toRequestPermissions(perms: Array<String>,
-                                   requestCode: Int) {
+                                   requestCode: Int): Boolean {
     if (this == null) {
         throw IllegalArgumentException("Can't request permissions for null context")
     }
@@ -131,12 +129,13 @@ fun Activity?.toRequestPermissions(perms: Array<String>,
         if (this is PermissionCallbacks) {
             onPermissionsGranted(requestCode, perms.toList())
         }
-        return
+        return true
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         this.requestPermissions(perms, requestCode)
     }
+    return false
 }
 
 fun Fragment?.toRequestPermissions(perms: Array<String>,

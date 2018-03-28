@@ -156,8 +156,8 @@ abstract class BaseAdapter<T>(private val datas: MutableList<T>)
      * @param position
      * @param payloads
      */
-    override fun onBindViewHolder(holder: BaseRecyleHolder, position: Int, payloads: List<Any>?) {
-        if (payloads!!.isEmpty()) {
+    override fun onBindViewHolder(holder: BaseRecyleHolder, position: Int, payloads: List<Any>) {
+        if (payloads.isEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
         }
     }

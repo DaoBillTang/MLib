@@ -50,20 +50,20 @@ class DtBottomDialog : DtBaseDialogFragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater?,
+    override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         initData()
-        mRootView = inflater!!.inflate(R.layout.bottom_lib_layout, container, false)
+        mRootView = inflater.inflate(R.layout.bottom_lib_layout, container, false)
         AnimationUtils.slideToUp(mRootView)
         return mRootView
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val titleView = view!!.findViewById<TextView>(R.id.title)
+        val titleView = view.findViewById<TextView>(R.id.title)
         if (TextUtils.isEmpty(mTitle)) {
             view.findViewById<View>(R.id.titleLayout).visibility = View.GONE
         } else {
@@ -85,9 +85,9 @@ class DtBottomDialog : DtBaseDialogFragment() {
     }
 
     private fun initData() {
-        mTitle = arguments.getString("title")
-        items = arguments.getStringArray("items")
-        mCancel = arguments.getString("cancel")
+        mTitle = arguments?.getString("title")
+        items = arguments?.getStringArray("items")
+        mCancel = arguments?.getString("cancel")
         if (TextUtils.isEmpty(mCancel)) {
             mCancel = resources.getString(R.string.bottom_dialog_lib_cancel)
         }

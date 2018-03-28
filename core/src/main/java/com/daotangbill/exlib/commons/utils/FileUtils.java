@@ -1,11 +1,17 @@
 package com.daotangbill.exlib.commons.utils;
 
 import android.content.Context;
+import android.os.Environment;
+
+import com.daotangbill.exlib.commons.logger.LoggerKt;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class FileUtils {
 
@@ -51,16 +57,20 @@ public class FileUtils {
 
     public static byte[] readAudioFile(Context context, String filename) {
         File file = new File(filename);
-        if(file != null) {
+        InputStream ins = null;
+        try {
+            ins = new FileInputStream(file);
+            byte[] data = new byte[ins.available()];
+            ins.read(data);
+            return data;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
             try {
-                InputStream ins = new FileInputStream(file);
-                byte[] data = new byte[ins.available()];
-                ins.read(data);
-                ins.close();
-
-                return data;
+                if (ins != null) {
+                    ins.close();
+                }
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -80,5 +90,44 @@ public class FileUtils {
             return false;
         }
         return true;
+    }
+
+    public static boolean exists(File file) {
+        return file != null && file.exists();
+    }
+
+    /**
+     * 判断是否文件
+     *
+     * @param file
+     * @return
+     */
+    public static boolean isFile(File file) {
+        return exists(file) && file.isFile();
+    }
+
+    /**
+     * 判断是否目录
+     *
+     * @param file
+     * @return
+     */
+    public static boolean isDirectory(File file) {
+        return exists(file) && file.isDirectory();
+    }
+
+
+    public static File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + ".jpg";
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        if (!storageDir.exists()) {
+            if (!storageDir.mkdir()) {
+                LoggerKt.Lerror("createImageFile", "Throwing Errors....");
+                throw new IOException();
+            }
+        }
+        return new File(storageDir, imageFileName);
     }
 }

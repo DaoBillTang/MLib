@@ -5,7 +5,6 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.support.annotation.CheckResult
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewTreeObserver
@@ -32,7 +31,7 @@ abstract class DtBaseActivity :
     open var mStatusBarHelper: StatusBarHelper? = null
 
     open val handler: Handler by lazy {
-        Handler(Looper.getMainLooper())
+        SafeHandler(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

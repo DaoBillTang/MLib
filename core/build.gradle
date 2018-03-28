@@ -1,6 +1,10 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.hujiang.android-aspectjx'
 apply plugin: 'com.github.dcendents.android-maven'
+
+
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -19,13 +23,14 @@ android {
 }
 
 dependencies {
-    provided rootProject.ext.supportAppCompat
-    provided rootProject.ext.kotlinStdlib
-    testCompile rootProject.ext.junit
-    provided rootProject.ext.supportRecyclerView
-    provided rootProject.ext.rxJava
-    provided rootProject.ext.rxAndroid
-    provided rootProject.ext.glide
+    compileOnly rootProject.ext.supportAppCompat
+    compileOnly rootProject.ext.kotlinStdlib
+    testImplementation rootProject.ext.junit
+    compileOnly rootProject.ext.supportRecyclerView
+    compileOnly rootProject.ext.rxJava
+    compileOnly rootProject.ext.rxAndroid
+    compileOnly rootProject.ext.glide
+    implementation rootProject.ext.jodaTime
     compileOnly rootProject.ext.jsr305Annotations
 
     testImplementation 'junit:junit:4.12'
