@@ -5,17 +5,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
-import android.util.Log;
+
+import com.daotangbill.exlib.commons.utils.BitmapUtils;
+import com.daotangbill.exlib.commons.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by donglua on 15/6/23.
@@ -35,33 +33,13 @@ public class ImageCaptureManager {
         this.mContext = mContext;
     }
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + ".jpg";
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-
-        if (!storageDir.exists()) {
-            if (!storageDir.mkdir()) {
-                Log.e("TAG", "Throwing Errors....");
-                throw new IOException();
-            }
-        }
-
-        File image = new File(storageDir, imageFileName);
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-
     public Intent dispatchTakePictureIntent() throws IOException {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(mContext.getPackageManager()) != null) {
             // Create the File where the photo should go
-            File file = createImageFile();
+            File file = FileUtils.createImageFile();
+            mCurrentPhotoPath = file.getAbsolutePath();
             Uri photoFile;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 String authority = mContext.getApplicationInfo().packageName + ".provider";
@@ -78,7 +56,6 @@ public class ImageCaptureManager {
         return takePictureIntent;
     }
 
-
     public void galleryAddPic() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 
@@ -92,11 +69,9 @@ public class ImageCaptureManager {
         mContext.sendBroadcast(mediaScanIntent);
     }
 
-
     public String getCurrentPhotoPath() {
         return mCurrentPhotoPath;
     }
-
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null && mCurrentPhotoPath != null) {
@@ -109,5 +84,4 @@ public class ImageCaptureManager {
             mCurrentPhotoPath = savedInstanceState.getString(CAPTURED_PHOTO_PATH_KEY);
         }
     }
-
 }

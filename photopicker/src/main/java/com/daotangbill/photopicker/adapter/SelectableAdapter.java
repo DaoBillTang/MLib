@@ -19,12 +19,10 @@ public abstract class SelectableAdapter<VH extends RecyclerView.ViewHolder>
 
   public int currentDirectoryIndex = 0;
 
-
   public SelectableAdapter() {
     photoDirectories = new ArrayList<>();
     selectedPhotos = new ArrayList<>();
   }
-
 
   /**
    * Indicates if the item at position where is selected
