@@ -1,6 +1,7 @@
 package com.daotangbill.exlib.commons.timer
 
 import com.daotangbill.exlib.commons.logger.Lerror
+import com.daotangbill.exlib.commons.logger.Linfo
 import com.daotangbill.exlib.commons.timer.contract.CountDownContract
 import com.daotangbill.exlib.commons.utils.isFalse
 import com.daotangbill.exlib.commons.utils.isTrue
@@ -49,13 +50,18 @@ class CountDownImpl constructor(private val coreSize: Int = 1) : CountDownContra
             return
         }
 
+        val t = timerMap[key]
+
+        if (t?.isDisposed == true) {
+            Linfo { "同一个key 在同一时间只能进行一个计时操作" }
+            return
+        }
+
         val disposableObserver = object : DisposableObserver<Long>() {
             override fun onComplete() {
                 mView.notNullAndEqualTo(view, {
                     view.timerChange(-1, key)
-                }).isFalse {
-                    this.dispose()
-                }
+                })
                 timerMap[key] = null
             }
 

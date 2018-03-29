@@ -14,6 +14,7 @@ import com.daotangbill.exlib.commons.logger.setLoggerLevel
 import com.daotangbill.exlib.commons.timer.CountDownImpl
 import com.daotangbill.exlib.commons.timer.contract.CountDownContract
 import com.daotangbill.exlib.commons.utils.DateUtil
+import com.daotangbill.exlib.commons.utils.asyncIO
 import com.daotangbill.exlib.commons.utils.cache
 import com.daotangbill.exlib.commons.utils.safe
 import com.daotangbill.exlib.ui.MultiStateView
@@ -97,13 +98,21 @@ class MainActivity : DtBaseActivity(), CountDownContract.View {
         safe {
             val s = "5s" + 1
 
-
             s.toInt()
         }
 
-//        asyncIO {
-//            A()
-//        }
+        asyncIO {
+            Thread.sleep(5000)
+
+            handler.post {
+                tv.append("这里搞了个 奇怪 东西欧")
+            }
+
+            handler.postDelayed({
+                tv.append("这里搞了个 奇怪 东西欧")
+            }, 1000)
+
+        }
 
         val u = User()
         u.name = "tony"
@@ -125,7 +134,19 @@ class MainActivity : DtBaseActivity(), CountDownContract.View {
     }
 
     fun B() {
-        pre.startCountDown(this, 15, i++)
+        handler.timer(15, "${i++}", { timeLimit, key ->
+            Lerror {
+                "倒计时测试======================\n key =$key\n time ===${15 - timeLimit}"
+            }
+
+            safe {
+                list[key.toInt()]?.text = "key$key\ntime${15 - timeLimit}"
+            }
+
+            if (timeLimit == 3L) {
+                handler.removeCallbacksAndMessages(key)
+            }
+        })
     }
 
     class User : Serializable {
@@ -133,6 +154,4 @@ class MainActivity : DtBaseActivity(), CountDownContract.View {
         var password: String? = null
 
     }
-
-
 }

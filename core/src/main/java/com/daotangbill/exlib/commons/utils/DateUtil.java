@@ -14,7 +14,6 @@ import java.util.TimeZone;
  */
 public class DateUtil {
 
-    public static final TimeZone tz = TimeZone.getTimeZone("GMT+8:00");
     public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     private static final long ONEDAY = 86400000;
@@ -74,6 +73,7 @@ public class DateUtil {
     /**
      * 得到当前的年份
      * 返回格式:yyyy
+     *
      * @return String
      */
     public static String getCurrentYear() {
@@ -83,6 +83,7 @@ public class DateUtil {
     /**
      * 得到当前的月份
      * 返回格式:MM
+     *
      * @return String
      */
     public static String getCurrentMonth() {
@@ -92,6 +93,7 @@ public class DateUtil {
     /**
      * 得到当前的日期
      * 返回格式:dd
+     *
      * @return String
      */
     public static String getCurrentDay() {
@@ -101,6 +103,7 @@ public class DateUtil {
     /**
      * 得到当前的小时
      * 返回格式:hh
+     *
      * @return String
      */
     public static String getCurrentHour() {
@@ -110,6 +113,7 @@ public class DateUtil {
     /**
      * 得到当前的分钟
      * 返回格式:mm
+     *
      * @return String
      */
     public static String getCurrentMinute() {
@@ -119,6 +123,7 @@ public class DateUtil {
     /**
      * 得到当前的秒
      * 返回格式:ss
+     *
      * @return String
      */
     public static String getCurrentSecond() {
@@ -128,6 +133,7 @@ public class DateUtil {
     /**
      * 得到当前的时间，精确到毫秒,共14位
      * 返回格式:yyyy-MM-dd HH:mm:ss
+     *
      * @return String
      */
     public static String getCurrentTime() {
@@ -137,6 +143,7 @@ public class DateUtil {
     /**
      * 得到当前的日期,共10位
      * 返回格式：yyyy-MM-dd
+     *
      * @return String
      */
     public static String getCurrentDate() {
@@ -145,10 +152,11 @@ public class DateUtil {
 
     /**
      * parse date using default pattern yyyy-MM-dd
+     *
      * @param strDate
      * @return
      */
-    public static Date parseDate(String strDate){
+    public static Date parseDate(String strDate) {
         Date date = null;
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -164,7 +172,7 @@ public class DateUtil {
      * @param pattern
      * @return
      */
-    public static final Date parseDate(String strDate, String pattern){
+    public static final Date parseDate(String strDate, String pattern) {
         SimpleDateFormat df = null;
         Date date = null;
         df = new SimpleDateFormat(pattern);
@@ -181,7 +189,7 @@ public class DateUtil {
      * @return formated date by yyyy-MM-dd
      */
     public static final String formatDate(Date date) {
-        return format(date,"yyyy-MM-dd");
+        return format(date, "yyyy-MM-dd");
     }
 
     /**
@@ -189,7 +197,7 @@ public class DateUtil {
      * @return formated date by yyyy-MM-dd HH:mm:ss
      */
     public static final String formatDateTime(Date date) {
-        return format(date,"yyyy-MM-dd HH:mm:ss");
+        return format(date, "yyyy-MM-dd HH:mm:ss");
     }
 
     /**
@@ -198,7 +206,7 @@ public class DateUtil {
      * @return
      */
     public static final String format(Date date, String pattern) {
-        if(date==null) {
+        if (date == null) {
             return null;
         }
         return new DateTime(date).toString(pattern);
@@ -212,64 +220,64 @@ public class DateUtil {
      * @param seconds
      * @return original+day+hour+minutes+seconds
      */
-    public static final Date addTime(Date original,int days, int hours, int minutes, int seconds){
-        if(original==null) {
+    public static final Date addTime(Date original, int days, int hours, int minutes, int seconds) {
+        if (original == null) {
             return null;
         }
 
         return new DateTime(original).plusDays(days).plusHours(hours).plusMinutes(minutes).plusSeconds(seconds).toDate();
     }
 
-    public static Date addYear(Date original, int years){
-        if(original==null) {
+    public static Date addYear(Date original, int years) {
+        if (original == null) {
             return null;
         }
 
         return new DateTime(original).plusYears(years).toDate();
     }
 
-    public static Date addMonth(Date original, int months){
-        if(original==null) {
+    public static Date addMonth(Date original, int months) {
+        if (original == null) {
             return null;
         }
 
         return new DateTime(original).plusMonths(months).toDate();
     }
 
-    public static Date addWeek(Date original, int weeks){
-        if(original==null) {
+    public static Date addWeek(Date original, int weeks) {
+        if (original == null) {
             return null;
         }
 
         return new DateTime(original).plusWeeks(weeks).toDate();
     }
 
-    public static final Date addDay(Date original,int days){
-        if(original==null) {
+    public static final Date addDay(Date original, int days) {
+        if (original == null) {
             return null;
         }
 
         return new DateTime(original).plusDays(days).toDate();
     }
 
-    public static final Date addHour(Date original, int hours){
-        if(original==null) {
+    public static final Date addHour(Date original, int hours) {
+        if (original == null) {
             return null;
         }
 
         return new DateTime(original).plusHours(hours).toDate();
     }
 
-    public static final Date addMinute(Date original, int minutes){
-        if(original==null) {
+    public static final Date addMinute(Date original, int minutes) {
+        if (original == null) {
             return null;
         }
 
         return new DateTime(original).plusMinutes(minutes).toDate();
     }
 
-    public static final Date addSecond(Date original, int second){
-        if(original==null) {
+    public static final Date addSecond(Date original, int second) {
+        if (original == null) {
             return null;
         }
 
@@ -277,7 +285,7 @@ public class DateUtil {
     }
 
     public static boolean isTomorrow(Date date) {
-        if(date==null) {
+        if (date == null) {
             return false;
         }
 
@@ -286,11 +294,12 @@ public class DateUtil {
 
     /**
      * 获取日期所在月份的第一天
+     *
      * @param date
      * @return
      */
     public static Date getMonthFirstDay(Date date) {
-        if(date==null) {
+        if (date == null) {
             return null;
         }
 
@@ -300,11 +309,12 @@ public class DateUtil {
 
     /**
      * 获取日期所在月份的最后一天
+     *
      * @param date
      * @return
      */
-    public static Date getMonthLastDay(Date date){
-        if(date==null) {
+    public static Date getMonthLastDay(Date date) {
+        if (date == null) {
             return null;
         }
 
@@ -315,48 +325,50 @@ public class DateUtil {
     }
 
     public static String getDateDesc(Date time) {
-        if(time==null) {
+        if (time == null) {
             return "";
         }
         String timeContent;
-        Long ss = System.currentTimeMillis()-time.getTime();
-        Long minute = ss/60000;
-        if (minute<1) {
+        Long ss = System.currentTimeMillis() - time.getTime();
+        Long minute = ss / 60000;
+        if (minute < 1) {
             minute = 1L;
         }
-        if(minute>=60){
-            Long hour = minute/60;
-            if(hour>=24){
-                if(hour>720) {
+        if (minute >= 60) {
+            Long hour = minute / 60;
+            if (hour >= 24) {
+                if (hour > 720) {
                     timeContent = "1月前";
-                } else if(hour>168 && hour<=720) {
+                } else if (hour > 168 && hour <= 720) {
                     timeContent = (hour / 168) + "周前";
                 } else {
                     timeContent = (hour / 24) + "天前";
                 }
-            }else{
-                timeContent =  hour+"小时前";
+            } else {
+                timeContent = hour + "小时前";
             }
-        }else{
-            timeContent = minute+"分钟前";
+        } else {
+            timeContent = minute + "分钟前";
         }
         return timeContent;
     }
 
     /**
      * 判断是否为闰年
+     *
      * @param year
      * @return
      */
     public static boolean isLeapYear(int year) {
-        if(year % 100==0) {
-            return year % 400==0;
+        if (year % 100 == 0) {
+            return year % 400 == 0;
         }
-        return year % 4==0;
+        return year % 4 == 0;
     }
 
     /**
      * 日期字符串转换成Calendar
+     *
      * @param strDate
      * @return
      */
@@ -366,53 +378,54 @@ public class DateUtil {
 
     /**
      * 比较src 是否在 dest 之前,true 代表src 小于dest 日期
-     * @param src 源日期
+     *
+     * @param src  源日期
      * @param dest 目标日期
      * @param unit 单位
-     * 0：年
-     * 1：月
-     * 2：日
-     * 3：时
-     * 4：分
-     * 5：秒
-     * 如果比较分:包含以上值，是包含关系
+     *             0：年
+     *             1：月
+     *             2：日
+     *             3：时
+     *             4：分
+     *             5：秒
+     *             如果比较分:包含以上值，是包含关系
      */
-    public static boolean compareIsBefore(Date src, Date dest,int unit){
-        if(src == null || dest == null){
+    public static boolean compareIsBefore(Date src, Date dest, int unit) {
+        if (src == null || dest == null) {
             return false;
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
         String srcStr = format.format(src);
         String destStr = format.format(dest);
         boolean result = false;
-        switch(unit){
+        switch (unit) {
             case 0:
-                if(Long.parseLong(srcStr.substring(0,4)) < Long.parseLong(destStr.substring(0,4))){
+                if (Long.parseLong(srcStr.substring(0, 4)) < Long.parseLong(destStr.substring(0, 4))) {
                     result = true;
                 }
                 break;
             case 1:
-                if(Long.parseLong(srcStr.substring(0,6)) < Long.parseLong(destStr.substring(0,6))){
+                if (Long.parseLong(srcStr.substring(0, 6)) < Long.parseLong(destStr.substring(0, 6))) {
                     result = true;
                 }
                 break;
             case 2:
-                if(Long.parseLong(srcStr.substring(0,8)) < Long.parseLong(destStr.substring(0,8))){
+                if (Long.parseLong(srcStr.substring(0, 8)) < Long.parseLong(destStr.substring(0, 8))) {
                     result = true;
                 }
                 break;
             case 3:
-                if(Long.parseLong(srcStr.substring(0,10)) < Long.parseLong(destStr.substring(0,10))){
+                if (Long.parseLong(srcStr.substring(0, 10)) < Long.parseLong(destStr.substring(0, 10))) {
                     result = true;
                 }
                 break;
             case 4:
-                if(Long.parseLong(srcStr.substring(0,12)) < Long.parseLong(destStr.substring(0,12))){
+                if (Long.parseLong(srcStr.substring(0, 12)) < Long.parseLong(destStr.substring(0, 12))) {
                     result = true;
                 }
                 break;
             case 5:
-                if(Long.parseLong(srcStr.substring(0,14)) < Long.parseLong(destStr.substring(0,14))){
+                if (Long.parseLong(srcStr.substring(0, 14)) < Long.parseLong(destStr.substring(0, 14))) {
                     result = true;
                 }
                 break;
@@ -423,17 +436,49 @@ public class DateUtil {
         return result;
     }
 
+    private static boolean compareIsBefore(String date1, String date2) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+        try {
+            Date dt1 = null;
+            dt1 = df.parse(date1);
+            Date dt2 = df.parse(date2);
+            return dt1.getTime() >= dt2.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    private static boolean compareIsAfter(String date1, String date2) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+        try {
+            Date dt1 = null;
+            dt1 = df.parse(date1);
+            Date dt2 = df.parse(date2);
+            return dt1.getTime() <= dt2.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
     /**
      * 返回某一天是星期几
+     *
      * @param date
      * @return
      */
-    public static String getWeek(Date date){
+    public static String getWeek(Date date) {
         return new DateTime(date).dayOfWeek().getAsText();
     }
 
     /**
      * 将时间戳转换成日期字符串
+     *
      * @param timestamp
      * @return
      */
@@ -443,11 +488,12 @@ public class DateUtil {
 
     /**
      * 将时间戳转换成日期字符串
+     *
      * @param timestamp
      * @param pattern
      * @return
      */
-    public static String timestamp2String(Long timestamp,String pattern) {
-        return DateUtil.format(new Date(timestamp),pattern);
+    public static String timestamp2String(Long timestamp, String pattern) {
+        return DateUtil.format(new Date(timestamp), pattern);
     }
 }

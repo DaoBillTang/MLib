@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.daotangbill.exlib.commons.utils;
 
 import android.Manifest;
@@ -46,12 +43,6 @@ import java.util.List;
 
 import static android.content.Context.USAGE_STATS_SERVICE;
 
-
-/**
- * SAF的工具类
- *
- * @author Tony Shen
- */
 public class SystemUtils {
 
     @SuppressLint("ObsoleteSdkInt")

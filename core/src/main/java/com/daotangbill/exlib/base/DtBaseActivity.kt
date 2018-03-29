@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.support.annotation.CheckResult
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewTreeObserver
@@ -30,8 +29,8 @@ abstract class DtBaseActivity :
 
     open var mStatusBarHelper: StatusBarHelper? = null
 
-    open val handler: Handler by lazy {
-        SafeHandler(this)
+    open val handler: RxHandler by lazy {
+        RxHandler()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
