@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.StrictMode
 import android.support.annotation.CallSuper
 import com.daotangbill.exlib.commons.logger.Ldebug
 import com.daotangbill.exlib.commons.toast.Tnormal
@@ -39,6 +40,21 @@ abstract class DtBaseApp : Application() {
     override fun onTerminate() {
         super.onTerminate()
         unregisterActivityLifecycleCallbacks(life)
+    }
+
+    fun startStrictMode(b: Boolean) {
+        if (b){
+            // 针对线程的相关策略
+            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build())
+            // 针对VM的相关策略
+            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .build())
+        }
     }
 
     /**

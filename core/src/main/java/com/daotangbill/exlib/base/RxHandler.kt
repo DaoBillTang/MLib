@@ -160,7 +160,10 @@ class RxHandler {
                     val b = block()
                     if (b) {
                         time++
-                        if (limitime > 0 && limitime >= time) {
+                        if (limitime <= 0) {
+                            Linfo { "失败进行第${time}次重试" }
+                            e.onError(Throwable("retry"))
+                        } else if (limitime > 0 && limitime >= time) {
                             Linfo { "失败进行第${time}次重试" }
                             e.onError(Throwable("retry"))
                         } else {
