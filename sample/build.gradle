@@ -24,7 +24,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.DaoBillTang:DTUtils:0.0.1B4'
     implementation rootProject.ext.supportAppCompat
     implementation rootProject.ext.kotlinStdlib
     implementation rootProject.ext.anko

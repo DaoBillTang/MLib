@@ -2,7 +2,6 @@ package com.daotangbill.exlib.base
 
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,8 +19,8 @@ abstract class DtBaseFragment : Fragment(), LifecycleProvider<FragmentEvent> {
     private var proDialg: ProgressDialog? = null
     private var isFristVisibile = false
 
-    open val handler: Handler by lazy {
-        SafeHandler(this)
+    open val handler: RxHandler by lazy {
+        RxHandler()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

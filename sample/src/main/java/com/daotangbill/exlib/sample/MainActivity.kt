@@ -2,25 +2,19 @@ package com.daotangbill.exlib.sample
 
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.daotangbill.exlib.base.DtBaseActivity
-import com.daotangbill.exlib.commons.logger.Ldebug
 import com.daotangbill.exlib.commons.logger.Lerror
 import com.daotangbill.exlib.commons.logger.Linfo
-import com.daotangbill.exlib.commons.logger.setLoggerLevel
 import com.daotangbill.exlib.commons.timer.CountDownImpl
 import com.daotangbill.exlib.commons.timer.contract.CountDownContract
-import com.daotangbill.exlib.commons.utils.DateUtil
 import com.daotangbill.exlib.commons.utils.asyncIO
-import com.daotangbill.exlib.commons.utils.cache
 import com.daotangbill.exlib.commons.utils.safe
 import com.daotangbill.exlib.ui.MultiStateView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
-import java.util.*
 
 class MainActivity : DtBaseActivity(), CountDownContract.View {
     override fun getLayoutResource(): Int {
@@ -75,7 +69,7 @@ class MainActivity : DtBaseActivity(), CountDownContract.View {
 
     }
 
-    fun A() {
+    fun testIoThread() {
         temp.text = "你看报错不？"
         val sb = StringBuilder()
         sb.append("current thread=").append(Thread.currentThread().id)
@@ -89,51 +83,61 @@ class MainActivity : DtBaseActivity(), CountDownContract.View {
 
     override fun onStart() {
         super.onStart()
-        setLoggerLevel(Log.DEBUG)
-        Linfo { "info=====info====" }
-        Log.d("TAG", "info=====info====")
-        Ldebug { "debug =====================" }
-        Lerror { "error============error==================" }
+        testRetry()
 
-        safe {
-            val s = "5s" + 1
-
-            s.toInt()
-        }
-
-        asyncIO {
-            Thread.sleep(5000)
-
-            handler.post {
-                tv.append("这里搞了个 奇怪 东西欧")
-            }
-
-            handler.postDelayed({
-                tv.append("这里搞了个 奇怪 东西欧")
-            }, 1000)
-
-        }
-
-        val u = User()
-        u.name = "tony"
-        u.password = "123456"
-
-        cache {
-            key = "sdf"
-
-            return@cache u
-        }
-
-        "asd".plus(123)
-
-        val s = DateUtil.addDay(Date(), 15)
-
-        Ldebug { s.toString() }
-
-        B()
+//        setLoggerLevel(Log.DEBUG)
+//        Linfo { "info=====info====" }
+//        Log.d("TAG", "info=====info====")
+//        Ldebug { "debug =====================" }
+//        Lerror { "error============error==================" }
+//
+//        safe {
+//            val s = "5s" + 1
+//            s.toInt()
+//        }
+//
+//        asyncIO {
+//            Thread.sleep(5000)
+//
+//            handler.post {
+//                tv.append("这里搞了个 奇怪 东西欧")
+//            }
+//
+//            handler.postDelayed({
+//                tv.append("这里搞了个 奇怪 东西欧")
+//            }, 1000)
+//
+//        }
+//
+//        val u = User()
+//        u.name = "tony"
+//        u.password = "123456"
+//
+//        cache {
+//            key = "sdf"
+//
+//            return@cache u
+//        }
+//
+//        Ldebug { s.toString() }
+//
+//        testTimer()
     }
 
-    fun B() {
+    private fun testRetry() {
+        handler.retry("retry", 5, 1000, {
+            val i = (Math.random() * 100)
+            Lerror { "i===================$i" }
+            i < 80
+        }, {
+            Lerror { "success" }
+        }, {
+            Lerror { "error" }
+        })
+//        handler.removeCallbacksAndMessages("retry")
+    }
+
+    private fun testTimer() {
         handler.timer(15, "${i++}", { timeLimit, key ->
             Lerror {
                 "倒计时测试======================\n key =$key\n time ===${15 - timeLimit}"
@@ -143,7 +147,7 @@ class MainActivity : DtBaseActivity(), CountDownContract.View {
                 list[key.toInt()]?.text = "key$key\ntime${15 - timeLimit}"
             }
 
-            if (timeLimit == 3L) {
+            if (timeLimit == 3L && key == "3") {
                 handler.removeCallbacksAndMessages(key)
             }
         })

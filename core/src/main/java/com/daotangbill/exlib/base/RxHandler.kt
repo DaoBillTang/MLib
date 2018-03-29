@@ -5,10 +5,12 @@ import com.daotangbill.exlib.commons.logger.Linfo
 import com.daotangbill.exlib.commons.utils.isFalse
 import com.daotangbill.exlib.commons.utils.isTrue
 import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 /**
@@ -70,10 +72,14 @@ class RxHandler {
         mCompositeDisposable.add(disposableObserver)
     }
 
+    /**
+     * @param timeLimit 计时次数
+     * @param key 当前流的 名字，用于提前取消等操作
+     * @param block （time 计数次数，是增加；
+     *              key,当前流的名字）
+     */
     fun timer(timeLimit: Long, key: String, block: (time: Long, key: String) -> Unit) {
-        val t = disposableMap[key]
-        if (t != null) {
-            Linfo { "同一个key 在同一时间只能进行一个计时操作" }
+        if (checkKey(key)) {
             return
         }
 
@@ -83,7 +89,7 @@ class RxHandler {
             }
 
             override fun onNext(t: Long) {
-                block(t, key)
+                block(t + 1, key)
             }
 
             override fun onError(e: Throwable) {
@@ -93,11 +99,102 @@ class RxHandler {
         }
         disposableMap[key] = disposableObserver
 
-        Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
-                .take(timeLimit)
+//        Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
+//                .take(timeLimit)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(disposableObserver)
+
+        Observable.intervalRange(0, timeLimit, 0, 1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(disposableObserver)
         mCompositeDisposable.add(disposableObserver)
+    }
+
+
+    fun retry(key: String,
+              waitTime: Long,
+              block: () -> Boolean,
+              success: (() -> Unit)? = null,
+              error: (() -> Unit)? = null) {
+        retry(key, 0, waitTime, block, success, error)
+    }
+
+    /**
+     * 失败重试？或者重试
+     * @param block : 返回值为  是否重试：true ,重试，false 不重试
+     * @param limitime : <=0 代表无线次
+     * @param waitTime : ms 重试间隔时间
+     * @param success : 成功之后的 操作
+     * @param error : 失败之后的 操作
+     */
+    fun retry(key: String,
+              limitime: Int,
+              waitTime: Long,
+              block: () -> Boolean,
+              success: (() -> Unit)? = null,
+              error: (() -> Unit)? = null) {
+        if (checkKey(key)) {
+            return
+        }
+        var time = 0
+        val disposableObserver = object : DisposableObserver<String>() {
+            override fun onComplete() {
+                Linfo { "retry == onComplete" }
+                success?.invoke()
+                disposableMap.remove(key)
+            }
+
+            override fun onNext(t: String) {
+                Linfo { "retry==onNext==$t " }
+            }
+
+            override fun onError(e: Throwable) {
+                Lerror { "${e.message}====失败了" }
+//                disposableMap.remove(key)
+                error?.invoke()
+            }
+        }
+
+        Observable
+                .create(ObservableOnSubscribe<String> { e ->
+                    val b = block()
+                    if (b) {
+                        time++
+                        if (limitime > 0 && limitime >= time) {
+                            Linfo { "失败进行第${time}次重试" }
+                            e.onError(Throwable("retry"))
+                        } else {
+                            Linfo { "失败，重试次数超限 limit=$limitime , time = $time" }
+                            e.onError(Throwable("More retry times"))
+                        }
+                    } else {
+                        Linfo { "成功" }
+                        e.onNext("Work Success")
+                        e.onComplete()
+                    }
+                })
+                .retryWhen {
+                    it.flatMap {
+                        val msg = it.message
+                        return@flatMap if (msg == "retry") {
+                            Observable.timer(waitTime, TimeUnit.MILLISECONDS)
+                        } else {
+//                            这两个都是可以 取消 重试机制
+                            Observable.error(it)
+//                            Observable.empty()
+                        }
+                    }
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(disposableObserver)
+        disposableMap[key] = disposableObserver
+        mCompositeDisposable.add(disposableObserver)
+    }
+
+    private fun checkKey(key: String): Boolean {
+        val t = disposableMap[key]
+        return t != null && t.isDisposed
     }
 
     fun removeCallbacksAndMessages(key: String? = null, block: ((b: Boolean) -> Unit)? = null) {
