@@ -6,6 +6,7 @@ import com.daotangbill.exlib.commons.utils.isFalse
 import com.daotangbill.exlib.commons.utils.isTrue
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -195,7 +196,60 @@ class RxHandler {
         mCompositeDisposable.add(disposableObserver)
     }
 
-    private fun checkKey(key: String): Boolean {
+    class NetWorkContext<T> {
+        companion object {
+            /**
+             * 同时只有一个请求，重复请求 拒绝
+             */
+            const val TYPE_REFUSING_SECOND = 0
+        }
+
+        var key: String? = null
+        var type: Int = TYPE_REFUSING_SECOND
+        var subscribeOnScheduler: Scheduler = Schedulers.io()
+        var observeOnScheduler: Scheduler = AndroidSchedulers.mainThread()
+        var disposable: DisposableObserver<T>? = null
+        var observable: Observable<T>? = null
+
+        fun start() {
+            val obs = observable
+            val disp = disposable
+            if (obs != null && disp != null) {
+                obs.subscribeOn(subscribeOnScheduler)
+                        .observeOn(observeOnScheduler)
+                        .subscribe(disp)
+            }
+        }
+    }
+
+    fun <T> netWork(block: NetWorkContext<T>.() -> Unit): NetWorkContext<T>? {
+        val context = NetWorkContext<T>()
+        val disp = context.disposable
+        val obs = context.observable
+        val key = context.key
+        context.block()
+        if (obs == null || disp == null || key == null || context.key.isNullOrBlank()) {
+            return null
+        }
+        val b: Boolean = when (context.type) {
+            NetWorkContext.TYPE_REFUSING_SECOND -> {
+                val b = checkKey(key)
+                if (b) {
+                    false
+                }
+                mCompositeDisposable.add(disp)
+                true
+            }
+            else -> false
+        }
+        return if (b) {
+            context
+        } else {
+            null
+        }
+    }
+
+    fun checkKey(key: String): Boolean {
         val t = disposableMap[key]
         return t != null && t.isDisposed
     }
