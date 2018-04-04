@@ -10,10 +10,10 @@ import com.daotangbill.exlib.commons.logger.Lerror
 import com.daotangbill.exlib.commons.logger.Linfo
 import com.daotangbill.exlib.commons.timer.CountDownImpl
 import com.daotangbill.exlib.commons.timer.contract.CountDownContract
-import com.daotangbill.exlib.commons.utils.asyncIO
 import com.daotangbill.exlib.commons.utils.safe
 import com.daotangbill.exlib.ui.MultiStateView
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Response
 import java.io.Serializable
 
 class MainActivity : DtBaseActivity(), CountDownContract.View {
@@ -83,8 +83,38 @@ class MainActivity : DtBaseActivity(), CountDownContract.View {
 
     override fun onStart() {
         super.onStart()
-        testRetry()
+//        testRetry()
+        handler.createNetWork<Response<String>>("banner")
+                ?.apply {
+                    observable = ApiService.instance.getObserver()
+                    disposable = object : BaseNoErrorCallSubscriber<String>() {
+                        override fun onSuccess(baseRsps: String?) {
+                            Lerror {
+                                baseRsps ?: "+++++++++++++"
+                            }
+                        }
 
+                        override fun onError(code: Int?, s: ErrorRsps?) {
+                            super.onError(code, s)
+                            Lerror { "error============================================${s?.msg}" }
+                        }
+                    }
+                }?.start()
+
+        handler.createNetWork<Response<String>>("banner")
+                ?.apply {
+                    observable = ApiService.instance.getObserver()
+                    disposable = object : BaseNoErrorCallSubscriber<String>() {
+                        override fun onSuccess(baseRsps: String?) {
+                            Lerror {
+                                baseRsps ?: "+++++++++++++"
+                            }
+                        }
+                    }
+                }?.start()
+
+
+//        testTimer()
 //        setLoggerLevel(Log.DEBUG)
 //        Linfo { "info=====info====" }
 //        Log.d("TAG", "info=====info====")
@@ -138,9 +168,9 @@ class MainActivity : DtBaseActivity(), CountDownContract.View {
     }
 
     private fun testTimer() {
-        handler.timer(15, "${i++}", { timeLimit, key ->
+        handler.timer(5, "$i", { timeLimit, key ->
             Lerror {
-                "倒计时测试======================\n key =$key\n time ===${15 - timeLimit}"
+                "倒计时测试======================\n key =$key\n time ===${5 - timeLimit}"
             }
 
             safe {

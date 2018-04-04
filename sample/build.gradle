@@ -34,6 +34,12 @@ dependencies {
     implementation rootProject.ext.rxAndroid
     implementation rootProject.ext.glide
     compileOnly rootProject.ext.jsr305Annotations
+
+    implementation rootProject.ext.retrofit
+    implementation rootProject.ext.retrofitGson
+    implementation rootProject.ext.retrofitInterceptor
+    implementation rootProject.ext.retrofitRxjavaAdapter
+
     //    implementation project("sample")
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'

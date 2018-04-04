@@ -208,6 +208,11 @@ class RxHandler {
              * 同时只有一个请求，重复请求 拒绝
              */
             const val TYPE_REFUSING_SECOND = 0
+
+            /**
+             * 同时只有一个请求，重复请求 取消前一个，换用现在的
+             */
+            const val TYPE_REPLACE = 1
         }
 
         var type: Int = TYPE_REFUSING_SECOND
@@ -220,8 +225,15 @@ class RxHandler {
             if (key == null) {
                 return
             }
-            if (weakReference.get()?.checkKey(key) == true) {
-                return
+            when (type) {
+                TYPE_REFUSING_SECOND -> {
+                    if (weakReference.get()?.checkKey(key) == true) {
+                        return
+                    }
+                }
+                TYPE_REPLACE -> {
+                    weakReference.get()?.removeCallbacksAndMessages(key)
+                }
             }
             val obs = observable
             val disp = disposable
