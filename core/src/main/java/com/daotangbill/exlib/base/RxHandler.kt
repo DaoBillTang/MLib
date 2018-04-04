@@ -12,6 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import java.lang.ref.WeakReference
 import java.util.concurrent.TimeUnit
 
 /**
@@ -200,7 +201,8 @@ class RxHandler {
         mCompositeDisposable.add(disposableObserver)
     }
 
-    class NetWorkContext<T> {
+    class NetWorkContext<T>(private val weakReference: WeakReference<RxHandler>,
+                            private val key: String?) {
         companion object {
             /**
              * 同时只有一个请求，重复请求 拒绝
@@ -208,7 +210,6 @@ class RxHandler {
             const val TYPE_REFUSING_SECOND = 0
         }
 
-        var key: String? = null
         var type: Int = TYPE_REFUSING_SECOND
         var subscribeOnScheduler: Scheduler = Schedulers.io()
         var observeOnScheduler: Scheduler = AndroidSchedulers.mainThread()
@@ -216,9 +217,16 @@ class RxHandler {
         var observable: Observable<T>? = null
 
         fun start() {
+            if (key == null) {
+                return
+            }
+            if (weakReference.get()?.checkKey(key) == true) {
+                return
+            }
             val obs = observable
             val disp = disposable
             if (obs != null && disp != null) {
+                weakReference.get()?.put(key, disp)
                 obs.subscribeOn(subscribeOnScheduler)
                         .observeOn(observeOnScheduler)
                         .subscribe(disp)
@@ -226,12 +234,22 @@ class RxHandler {
         }
     }
 
+    fun <T> createNetWork(key: String): NetWorkContext<T>? {
+        if (key.isBlank()) {
+            return null
+        }
+        if (checkKey(key)) {
+            return null
+        }
+        return NetWorkContext(WeakReference(this), key)
+    }
+
     /**
      *
      */
     fun checkKey(key: String): Boolean {
         val t = disposableMap[key]
-        return t?.isDisposed==false
+        return t?.isDisposed == false
     }
 
     fun removeCallbacksAndMessages(key: String? = null, block: ((b: Boolean) -> Unit)? = null) {
