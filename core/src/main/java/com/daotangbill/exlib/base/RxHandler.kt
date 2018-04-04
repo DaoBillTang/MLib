@@ -231,7 +231,7 @@ class RxHandler {
      */
     fun checkKey(key: String): Boolean {
         val t = disposableMap[key]
-        return t?.isDisposed != true
+        return t?.isDisposed==false
     }
 
     fun removeCallbacksAndMessages(key: String? = null, block: ((b: Boolean) -> Unit)? = null) {
