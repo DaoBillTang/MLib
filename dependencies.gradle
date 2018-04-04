@@ -56,4 +56,9 @@ ext {
     SmartRefreshLayout = 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     //jodatime
     jodaTime = 'joda-time:joda-time:2.9.9'
+    //retrofit and okhttp
+    retrofit = 'com.squareup.retrofit2:retrofit:2.3.0'
+    retrofitGson = 'com.squareup.retrofit2:converter-gson:2.3.0'
+    retrofitRxjavaAdapter = 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    retrofitInterceptor = 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 }
