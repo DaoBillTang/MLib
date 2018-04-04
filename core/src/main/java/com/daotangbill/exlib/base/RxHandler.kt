@@ -57,6 +57,7 @@ class RxHandler {
     fun postDelayed(block: () -> Unit, time: Long) {
         val disposableObserver = object : DisposableObserver<Any>() {
             override fun onComplete() {
+                dispose()
             }
 
             override fun onNext(t: Any) {
@@ -64,6 +65,7 @@ class RxHandler {
             }
 
             override fun onError(e: Throwable) {
+                dispose()
             }
         }
 
@@ -87,6 +89,7 @@ class RxHandler {
         val disposableObserver = object : DisposableObserver<Long>() {
             override fun onComplete() {
                 disposableMap.remove(key)
+                dispose()
             }
 
             override fun onNext(t: Long) {
@@ -96,6 +99,7 @@ class RxHandler {
             override fun onError(e: Throwable) {
                 Lerror { "倒计时 出现异常： ${e.printStackTrace()}" }
                 disposableMap.remove(key)
+                dispose()
             }
         }
         disposableMap[key] = disposableObserver
@@ -222,36 +226,12 @@ class RxHandler {
         }
     }
 
-    fun <T> netWork(block: NetWorkContext<T>.() -> Unit): NetWorkContext<T>? {
-        val context = NetWorkContext<T>()
-        val disp = context.disposable
-        val obs = context.observable
-        val key = context.key
-        context.block()
-        if (obs == null || disp == null || key == null || context.key.isNullOrBlank()) {
-            return null
-        }
-        val b: Boolean = when (context.type) {
-            NetWorkContext.TYPE_REFUSING_SECOND -> {
-                val b = checkKey(key)
-                if (b) {
-                    false
-                }
-                mCompositeDisposable.add(disp)
-                true
-            }
-            else -> false
-        }
-        return if (b) {
-            context
-        } else {
-            null
-        }
-    }
-
+    /**
+     *
+     */
     fun checkKey(key: String): Boolean {
         val t = disposableMap[key]
-        return t != null && t.isDisposed
+        return t?.isDisposed != true
     }
 
     fun removeCallbacksAndMessages(key: String? = null, block: ((b: Boolean) -> Unit)? = null) {
