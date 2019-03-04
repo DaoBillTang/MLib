@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.daotangbill.exlib.sample.MainActivity">
+    tools:context="com.dtb.utils.sample.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -104,7 +104,7 @@
             android:text="show empty" />
     </LinearLayout>
 
-    <com.daotangbill.exlib.ui.MultiStateView
+    <com.dtb.utils.ui.MultiStateView
         android:id="@+id/msv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -115,7 +115,7 @@
         app:msv_viewState="content">
 
 
-        <com.daotangbill.exlib.ui.suppertext.BaseTextView
+        <com.dtb.utils.ui.suppertext.BaseTextView
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
@@ -127,5 +127,5 @@
             android:layout_width="match_parent"
             android:layout_height="50dp" />
 
-    </com.daotangbill.exlib.ui.MultiStateView>
+    </com.dtb.utils.ui.MultiStateView>
 </LinearLayout>
