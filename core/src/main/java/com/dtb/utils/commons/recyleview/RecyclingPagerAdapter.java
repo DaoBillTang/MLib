@@ -1,4 +1,4 @@
-package com.dtb.utils.commons.view;
+package com.dtb.utils.commons.recyleview;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;

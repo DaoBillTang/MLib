@@ -1,5 +1,8 @@
+@file:Suppress("FunctionName")
+
 package com.dtb.utils.commons.toast
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
@@ -39,50 +42,63 @@ import com.dtb.utils.exlib.R
 var toastStr: CharSequence? = null
 var toastTime: Long? = null
 
+@Suppress("SpellCheckingInspection")
 fun Context.Tnormal(message: CharSequence) =
         this.Tnormal(message, Toast.LENGTH_SHORT, null, false)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Tnormal(@StringRes messageId: Int) =
         this.Tnormal(this.resources.getString(messageId), Toast.LENGTH_SHORT, null, false)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Tnormal(message: CharSequence, icon: Drawable) =
         this.Tnormal(message, Toast.LENGTH_SHORT, icon, true)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Tnormal(@StringRes messageId: Int, icon: Drawable) =
         this.Tnormal(this.resources.getString(messageId), Toast.LENGTH_SHORT, icon, true)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Tnormal(message: CharSequence, duration: Int) =
         this.Tnormal(message, duration, null, false)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Tnormal(@StringRes messageId: Int, duration: Int) =
         this.Tnormal(this.resources.getString(messageId), duration, null, false)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Tnormal(message: CharSequence, duration: Int,
                     icon: Drawable) =
         this.Tnormal(message, duration, icon, true)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Tnormal(@StringRes messageId: Int, duration: Int,
                     icon: Drawable) =
         this.Tnormal(this.resources.getString(messageId), duration, icon, true)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Tnormal(message: CharSequence, duration: Int,
                     icon: Drawable?, withIcon: Boolean) {
     custom(this, message, icon, ToastExt.NORMAL_COLOR, duration, withIcon, true)
 }
 
-
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Twarning(message: CharSequence) =
         this.Twarning(message, Toast.LENGTH_SHORT, true)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Twarning(@StringRes messageId: Int) =
         this.Twarning(this.resources.getString(messageId), Toast.LENGTH_SHORT, true)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Twarning(message: CharSequence, duration: Int) =
         this.Twarning(message, duration, true)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Twarning(@StringRes messageId: Int, duration: Int) =
         this.Twarning(this.resources.getString(messageId), duration, true)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.Twarning(message: CharSequence,
                      duration: Int,
                      withIcon: Boolean) {
@@ -90,35 +106,35 @@ fun Context.Twarning(message: CharSequence,
             ToastExt.WARNING_COLOR, duration, withIcon, true)
 }
 
+@Suppress("SpellCheckingInspection", "unused")
 @JvmOverloads
 fun Context.Tinfo(
         message: CharSequence,
         duration: Int = Toast.LENGTH_SHORT,
-        withIcon: Boolean = true)
-        = custom(message, R.drawable.ic_info_outline_white_48dp, ToastExt.INFO_COLOR,
+        withIcon: Boolean = true) = custom(message, R.drawable.ic_info_outline_white_48dp, ToastExt.INFO_COLOR,
         duration, withIcon, true)
 
+@Suppress("SpellCheckingInspection", "unused")
 @JvmOverloads
 fun Context.Tsuccess(
         message: CharSequence,
         duration: Int = Toast.LENGTH_SHORT,
-        withIcon: Boolean = true)
-        = custom(message, R.drawable.ic_check_white_48dp,
+        withIcon: Boolean = true) = custom(message, R.drawable.ic_check_white_48dp,
         ToastExt.SUCCESS_COLOR, duration, withIcon, true)
 
-
+@Suppress("SpellCheckingInspection", "unused")
 @JvmOverloads
 fun Context.Terror(
         message: CharSequence,
         duration: Int = Toast.LENGTH_SHORT,
-        withIcon: Boolean = true)
-        = custom(message, R.drawable.ic_clear_white_48dp,
+        withIcon: Boolean = true) = custom(message, R.drawable.ic_clear_white_48dp,
         ToastExt.ERROR_COLOR, duration, withIcon, true)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.custom(message: CharSequence, icon: Drawable,
-                   duration: Int, withIcon: Boolean)
-        = custom(this, message, icon, -1, duration, withIcon, false)
+                   duration: Int, withIcon: Boolean) = custom(this, message, icon, -1, duration, withIcon, false)
 
+@Suppress("SpellCheckingInspection", "unused")
 fun Context.custom(message: CharSequence, @DrawableRes iconRes: Int,
                    @ColorInt tintColor: Int, duration: Int,
                    withIcon: Boolean, shouldTint: Boolean) {
@@ -147,15 +163,16 @@ object ToastExt {
 private fun custom(context: Context, message: CharSequence, inIcon: Drawable?,
                    @ColorInt tintColor: Int, duration: Int,
                    withIcon: Boolean, shouldTint: Boolean) {
-    if (context is Activity){
+    if (context is Activity) {
         context.runOnUiThread {
             customImpl(context, message, inIcon, tintColor, duration, withIcon, shouldTint)?.show()
         }
-    }else{
+    } else {
         customImpl(context, message, inIcon, tintColor, duration, withIcon, shouldTint)?.show()
     }
 }
 
+@SuppressLint("InflateParams")
 private fun customImpl(context: Context, message: CharSequence, inIcon: Drawable?,
                        @ColorInt tintColor: Int, duration: Int,
                        withIcon: Boolean, shouldTint: Boolean): Toast? {
@@ -205,6 +222,7 @@ private fun customImpl(context: Context, message: CharSequence, inIcon: Drawable
     return currentToast
 }
 
+@Suppress("SpellCheckingInspection", "unused")
 class ToastConfig private constructor() {
     @ColorInt
     private var DEFAULT_TEXT_COLOR = ToastExt.DEFAULT_TEXT_COLOR

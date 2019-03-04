@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit
  * @version 1.0
  * @description
  */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class RxHandler {
 
     private val mCompositeDisposable: CompositeDisposable by lazy {

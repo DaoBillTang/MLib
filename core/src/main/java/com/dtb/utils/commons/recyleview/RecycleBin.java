@@ -1,4 +1,4 @@
-package com.dtb.utils.commons.view;
+package com.dtb.utils.commons.recyleview;
 
 import android.os.Build;
 import android.util.SparseArray;
