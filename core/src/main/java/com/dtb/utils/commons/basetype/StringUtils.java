@@ -1,13 +1,8 @@
-package com.dtb.utils.commons.utils;
+package com.dtb.utils.commons.basetype;
 
-import com.dtb.utils.commons.logger.LoggerKt;
-
-import java.math.BigDecimal;
 import java.security.MessageDigest;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -18,33 +13,6 @@ import java.util.Locale;
  */
 public class StringUtils {
 
-    /**
-     * 将数字转为 带小数的 string
-     *
-     * @param num        数字
-     * @param decimalNum 保留的小数的位数
-     * @return
-     */
-    public static String formatNumber(Integer num, int decimalNum) {
-        if (decimalNum <= 0) {
-            LoggerKt.Lerror("", "decimal 必须大于0");
-            return "";
-        }
-        StringBuilder format = new StringBuilder("0.");
-        int divide = 1;
-
-        for (int i = 0; i < decimalNum; i++) {
-            format.append("0");
-            divide *= 10;
-        }
-
-        if (num == null) {
-            return format.toString();
-        }
-        DecimalFormat df = new DecimalFormat(format.toString());
-        BigDecimal b = new BigDecimal(num).divide(new BigDecimal(divide), decimalNum);
-        return df.format(b);
-    }
 
     /**
      * 返回当前系统时间
@@ -54,22 +22,6 @@ public class StringUtils {
         return df.format(new Date());
     }
 
-    public static String listToString(List<String> stringList) {
-        if (stringList == null) {
-            return null;
-        }
-        StringBuilder result = new StringBuilder();
-        boolean flag = false;
-        for (String string : stringList) {
-            if (flag) {
-                result.append(",");
-            } else {
-                flag = true;
-            }
-            result.append(string);
-        }
-        return result.toString();
-    }
 
     /**
      * 进行MD5加密

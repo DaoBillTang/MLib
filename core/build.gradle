@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.compileSdkVersion
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["compileSdkVersion"]
         versionCode 6
         versionName "0.0.15"
     }
@@ -20,15 +20,21 @@ android {
 }
 
 dependencies {
-    compileOnly rootProject.ext.supportAppCompat
-    compileOnly rootProject.ext.kotlinStdlib
-    testImplementation rootProject.ext.junit
-    compileOnly rootProject.ext.supportRecyclerView
-    compileOnly rootProject.ext.rxJava
-    compileOnly rootProject.ext.rxAndroid
-    compileOnly rootProject.ext.glide
-    implementation rootProject.ext.jodaTime
-    compileOnly rootProject.ext.jsr305Annotations
+
+    compileOnly rootProject.ext.dependencies["supportAppCompat"]
+    compileOnly rootProject.ext.dependencies["kotlinStdlib"]
+    testImplementation rootProject.ext.dependencies["junit"]
+    compileOnly rootProject.ext.dependencies["supportRecyclerView"]
+    compileOnly rootProject.ext.dependencies["glide"]
+    implementation rootProject.ext.dependencies["jodaTime"]
+    compileOnly rootProject.ext.dependencies["jsr305Annotations"]
+
+
+
+    //   部分内容修改为强制依赖了
+    implementation rootProject.ext.dependencies["rxJava"]
+    implementation rootProject.ext.dependencies["rxAndroid"]
+    implementation rootProject.ext.dependencies["rxErrorhandler2"]
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

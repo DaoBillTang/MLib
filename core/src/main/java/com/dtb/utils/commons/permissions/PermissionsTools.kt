@@ -36,7 +36,7 @@ interface PermissionCallbacks : ActivityCompat.OnRequestPermissionsResultCallbac
  */
 fun Context?.hasPermissions(perms: Array<String>): Boolean {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-        this?.Linfo { "hasPermissions: API version < M, returning true by default" }
+        Linfo { "hasPermissions: API version < M, returning true by default" }
         return true
     }
 
@@ -58,7 +58,7 @@ fun Context?.hasPermissions(perms: Array<String>): Boolean {
 fun Context?.hasPermissions(perms: String): Boolean {
     // Always return true for SDK < M, let the system deal with the permissions
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-        this?.Linfo { "hasPermissions: API version < M, returning true by default" }
+        Linfo { "hasPermissions: API version < M, returning true by default" }
         return true
     }
 

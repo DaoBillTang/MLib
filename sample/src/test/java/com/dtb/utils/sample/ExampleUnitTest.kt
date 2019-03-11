@@ -1,6 +1,5 @@
 package com.dtb.utils.sample
 
-import com.dtb.utils.commons.utils.DateUtil
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.*

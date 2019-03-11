@@ -26,11 +26,13 @@ import io.reactivex.SingleTransformer;
  * @param <T>
  */
 @ParametersAreNonnullByDefault
-public final class LifecycleTransformer<T> implements ObservableTransformer<T, T>,
+public final class LifecycleTransformer<T> implements
+        ObservableTransformer<T, T>,
         FlowableTransformer<T, T>,
         SingleTransformer<T, T>,
         MaybeTransformer<T, T>,
         CompletableTransformer {
+
     final Observable<?> observable;
 
     LifecycleTransformer(Observable<?> observable) {
@@ -54,7 +56,7 @@ public final class LifecycleTransformer<T> implements ObservableTransformer<T, T
 
     @Override
     public MaybeSource<T> apply(Maybe<T> upstream) {
-            return upstream.takeUntil(observable.firstElement());
+        return upstream.takeUntil(observable.firstElement());
     }
 
     @Override

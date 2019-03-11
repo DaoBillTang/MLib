@@ -11,7 +11,7 @@ import com.dtb.utils.commons.logger.Linfo
 import com.dtb.utils.commons.timer.CountDownImpl
 import com.dtb.utils.commons.timer.contract.CountDownContract
 import com.dtb.utils.commons.utils.safe
-import com.dtb.utils.ui.MultiStateView
+import com.dtb.utils.view.MultiStateView
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Response
 import java.io.Serializable

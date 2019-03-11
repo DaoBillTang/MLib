@@ -1,8 +1,8 @@
 package com.dtb.utils.commons.logger
 
 import android.util.Log
+import com.dtb.utils.commons.basetype.StringExtend
 import com.dtb.utils.commons.logger.LoggerPrinter.log
-import com.dtb.utils.commons.utils.StringExtend
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -19,53 +19,50 @@ const val JSON_INDENT = 2
 /**
  * 是否设置
  */
-fun Any.setLogOutPut(b: Boolean) {
+fun setLogOutPut(b: Boolean) {
     LoggerPrinter.outPut = b
 }
 
 /**
  *2..7
  */
-fun Any.setLoggerLevel(int: Int) {
+fun setLoggerLevel(int: Int) {
     LoggerPrinter.logLevel = int
 }
 
-fun Any.Lverbose(msg: String) {
+fun Lverbose(msg: String) {
     log(Log.VERBOSE, null, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun Any.Ldebug(msg: String) {
+fun Ldebug(msg: String) {
     log(Log.DEBUG, null, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun Any.Ldebug(thr: Throwable?, msg: String) {
+fun Ldebug(thr: Throwable?, msg: String) {
     log(Log.DEBUG, thr, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun Any.Linfo(msg: String) {
+fun Linfo(msg: String) {
     log(Log.INFO, null, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun Any.Lwarn(msg: String) {
+fun Lwarn(msg: String) {
     log(Log.WARN, null, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun Any.Lerror(msg: String) {
-    log(Log.ERROR, null, msg, { priority, thr, msg -> log(priority, thr, msg) })
-}
-
-fun Any.Lerror(thr: Throwable?, msg: String) {
+fun Lerror(msg: String, thr: Throwable? = null) {
     log(Log.ERROR, thr, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun Any.Lwtf(msg: String) {
+
+fun Lwtf(msg: String) {
     log(Log.ASSERT, null, msg, { priority, thr, msg -> log(priority, thr, msg) })
 }
 
-fun Any.Ljson(mjson: String) {
+fun Ljson(mjson: String) {
     var json = mjson
     if (json.isBlank()) {
-        this.Ldebug("Empty/Null json content")
+        Ldebug("Empty/Null json content")
         return
     }
     try {
@@ -73,24 +70,24 @@ fun Any.Ljson(mjson: String) {
         if (json.startsWith("{")) {
             val jsonObject = JSONObject(json)
             val message = jsonObject.toString(JSON_INDENT)
-            this.Ldebug(message)
+            Ldebug(message)
             return
         }
         if (json.startsWith("[")) {
             val jsonArray = JSONArray(json)
             val message = jsonArray.toString(JSON_INDENT)
-            this.Ldebug(message)
+            Ldebug(message)
             return
         }
-        this.Lerror("Invalid Json")
+        Lerror("Invalid Json")
     } catch (e: JSONException) {
-        this.Lerror("Invalid Json")
+        Lerror("Invalid Json")
     }
 }
 
-fun Any.Lxml(xml: String?) {
+fun Lxml(xml: String?) {
     if (xml != null && xml.isBlank()) {
-        this.Ldebug("Empty/Null xml content")
+        Ldebug("Empty/Null xml content")
         return
     }
     try {
@@ -100,40 +97,40 @@ fun Any.Lxml(xml: String?) {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes")
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2")
         transformer.transform(xmlInput, xmlOutput)
-        this.Ldebug(xmlOutput.writer.toString().replaceFirst(">".toRegex(), ">\n"))
+        Ldebug(xmlOutput.writer.toString().replaceFirst(">".toRegex(), ">\n"))
     } catch (e: TransformerException) {
-        this.Ldebug("Invalid xml")
+        Ldebug("Invalid xml")
     }
 }
 
-inline fun Any.Lverbose(msg: () -> Any?) {
+inline fun Lverbose(msg: () -> Any?) {
     log(Log.VERBOSE, null, msg()?.toString() ?: "null")
 }
 
-inline fun Any.Ldebug(msg: () -> Any?) {
+inline fun Ldebug(msg: () -> Any?) {
     log(Log.DEBUG, null, msg()?.toString() ?: "null")
 }
 
-inline fun Any.Linfo(msg: () -> Any?) {
+inline fun Linfo(msg: () -> Any?) {
     log(Log.INFO, null, msg()?.toString() ?: "null")
 }
 
-inline fun Any.Lwarn(msg: () -> Any?) {
+inline fun Lwarn(msg: () -> Any?) {
     log(Log.WARN, null, msg()?.toString() ?: "null")
 }
 
-inline fun Any.Lerror(msg: () -> Any?) {
+inline fun Lerror(msg: () -> Any?) {
     log(Log.ERROR, null, msg()?.toString() ?: "null")
 }
 
-inline fun Any.Lwtf(msg: () -> Any?) {
+inline fun Lwtf(msg: () -> Any?) {
     log(Log.ASSERT, null, msg()?.toString() ?: "null")
 }
 
-inline fun Any.Ljson(mjson: () -> Any?) {
+inline fun Ljson(mjson: () -> Any?) {
     var json = mjson()?.toString()
     if (json == null || json.isBlank()) {
-        this.Ldebug("Empty/Null json content")
+        Ldebug("Empty/Null json content")
         return
     }
     try {
@@ -141,25 +138,25 @@ inline fun Any.Ljson(mjson: () -> Any?) {
         if (json.startsWith("{")) {
             val jsonObject = JSONObject(json)
             val message = jsonObject.toString(JSON_INDENT)
-            this.Ldebug(message)
+            Ldebug(message)
             return
         }
         if (json.startsWith("[")) {
             val jsonArray = JSONArray(json)
             val message = jsonArray.toString(JSON_INDENT)
-            this.Ldebug(message)
+            Ldebug(message)
             return
         }
-        this.Lerror("Invalid Json")
+        Lerror("Invalid Json")
     } catch (e: JSONException) {
-        this.Lerror("Invalid Json")
+        Lerror("Invalid Json")
     }
 }
 
-inline fun Any.Lxml(mxml: () -> Any?) {
+inline fun Lxml(mxml: () -> Any?) {
     val xml = mxml()?.toString()
     if (xml == null || xml.isBlank()) {
-        this.Ldebug("Empty/Null xml content")
+        Ldebug("Empty/Null xml content")
         return
     }
     try {
@@ -169,9 +166,9 @@ inline fun Any.Lxml(mxml: () -> Any?) {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes")
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2")
         transformer.transform(xmlInput, xmlOutput)
-        this.Ldebug(xmlOutput.writer.toString().replaceFirst(">".toRegex(), ">\n"))
+        Ldebug(xmlOutput.writer.toString().replaceFirst(">".toRegex(), ">\n"))
     } catch (e: TransformerException) {
-        this.Ldebug("Invalid xml")
+        Ldebug("Invalid xml")
     }
 }
 
@@ -180,12 +177,13 @@ private inline fun log(priority: Int, thr: Throwable?, msg: String,
     f(priority, thr, msg)
 }
 
+
 object LoggerPrinter {
     var outPut = true
     var logLevel = 1
 
     private val localTag = ThreadLocal<String>()
-    private val androidLogger: PrettyFormatStrategy =PrettyFormatStrategy.newBuilder().build()
+    private val androidLogger: PrettyFormatStrategy = PrettyFormatStrategy.newBuilder().build()
 
     @Synchronized
     fun log(priority: Int, tag: String?, msg: String?, throwable: Throwable?) {

@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.compileSdkVersion
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android['compileSdkVersion']
         applicationId "com.daotangbill.exlib.sample"
         versionCode 1
         versionName "1.0"
@@ -24,25 +24,23 @@ android {
 }
 
 dependencies {
-    implementation rootProject.ext.supportAppCompat
-    implementation rootProject.ext.kotlinStdlib
-    implementation rootProject.ext.anko
-    implementation rootProject.ext.ankoLyoaut
-    testImplementation rootProject.ext.junit
-    implementation rootProject.ext.supportRecyclerView
-    implementation rootProject.ext.rxJava
-    implementation rootProject.ext.rxAndroid
-    implementation rootProject.ext.glide
-    compileOnly rootProject.ext.jsr305Annotations
-
-    implementation rootProject.ext.retrofit
-    implementation rootProject.ext.retrofitGson
-    implementation rootProject.ext.retrofitInterceptor
-    implementation rootProject.ext.retrofitRxjavaAdapter
-
+    implementation rootProject.ext.dependencies["supportAppCompat"]
+    implementation rootProject.ext.dependencies["kotlinStdlib"]
+    implementation rootProject.ext.dependencies["anko"]
+    implementation rootProject.ext.dependencies["ankoLyoaut"]
+    implementation rootProject.ext.dependencies["supportRecyclerView"]
+    implementation rootProject.ext.dependencies["rxJava"]
+    implementation rootProject.ext.dependencies["rxAndroid"]
+    implementation rootProject.ext.dependencies["glide"]
+    implementation rootProject.ext.dependencies["retrofit"]
+    implementation rootProject.ext.dependencies["retrofitGson"]
+    implementation rootProject.ext.dependencies["retrofitInterceptor"]
+    implementation rootProject.ext.dependencies["retrofitRxjavaAdapter"]
+    compileOnly rootProject.ext.dependencies["jsr305Annotations"]
     //    implementation project("sample")
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
+
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':core')

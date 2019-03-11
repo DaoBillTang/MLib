@@ -1,7 +1,5 @@
 package com.dtb.utils.sample;
 
-import com.dtb.utils.commons.utils.DateUtil;
-
 import org.junit.Test;
 
 import java.util.Date;

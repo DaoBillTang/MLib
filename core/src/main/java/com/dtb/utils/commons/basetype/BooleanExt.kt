@@ -1,4 +1,4 @@
-package com.dtb.utils.commons.utils
+package com.dtb.utils.commons.basetype
 
 /**
  * project com.hyhs.hschefu.staff.base
@@ -16,7 +16,7 @@ class WithData<out T>(val data: T): BooleanExt<T>(false)
 
 inline fun <T> Boolean.yes(block: () -> T): BooleanExt<T> = when {
     this -> {
-            WithData(block())
+        WithData(block())
     }
     else -> Otherwise
 }

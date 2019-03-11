@@ -1,4 +1,4 @@
-package com.dtb.utils.commons.utils
+package com.dtb.utils.commons.img
 
 import android.content.Context
 import android.graphics.PorterDuff
@@ -18,12 +18,6 @@ import com.dtb.utils.exlib.R
  * @version: 1.0
  * @description:处理图片 的方法合集
  */
-
-fun s(){
-    "".let {  }
-
-
-}
 
 /**
  * 染色 图标

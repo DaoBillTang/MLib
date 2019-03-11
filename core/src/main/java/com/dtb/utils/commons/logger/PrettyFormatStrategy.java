@@ -1,6 +1,6 @@
 package com.dtb.utils.commons.logger;
 
-import com.dtb.utils.commons.utils.StringExtend;
+import com.dtb.utils.commons.basetype.StringExtend;
 
 import java.util.logging.Logger;
 

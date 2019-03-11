@@ -3,8 +3,6 @@ package com.dtb.utils.commons.utils;
 import android.content.Context;
 import android.os.Environment;
 
-import com.dtb.utils.commons.logger.LoggerKt;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,6 +10,8 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import static com.dtb.utils.commons.logger.LoggerKt.Lerror;
 
 public class FileUtils {
 
@@ -124,7 +124,7 @@ public class FileUtils {
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         if (!storageDir.exists()) {
             if (!storageDir.mkdir()) {
-                LoggerKt.Lerror("createImageFile", "Throwing Errors....");
+                Lerror("createImageFile:Throwing Errors....", null);
                 throw new IOException();
             }
         }

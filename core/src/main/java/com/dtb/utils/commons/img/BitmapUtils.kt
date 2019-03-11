@@ -1,4 +1,4 @@
-package com.dtb.utils.commons.utils
+package com.dtb.utils.commons.img
 
 import android.content.Context
 import android.graphics.Bitmap

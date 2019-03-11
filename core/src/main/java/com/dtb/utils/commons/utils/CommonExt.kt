@@ -29,7 +29,7 @@ fun <T> T.safe(block: (T) -> Unit) {
     try {
         block(this)
     } catch (e: Exception) {
-        "safe".Lerror { e.toString() }
+        Lerror { e.toString() }
     }
 }
 

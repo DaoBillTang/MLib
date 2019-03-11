@@ -1,9 +1,12 @@
-package com.dtb.utils.commons.utils
+package com.dtb.utils.commons.basetype
 
 import android.text.Editable
+import com.dtb.utils.commons.logger.Lerror
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.math.BigDecimal
 import java.net.UnknownHostException
+import java.text.DecimalFormat
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
 
@@ -64,9 +67,7 @@ object StringExtend {
  *对于 输入小数的时候 ，保留两位小数，并且判断小数点等等
  * 已知bug:小数点数量过多
  */
-fun String.formatTime(): String = this.substring(0, 7).
-        replaceFirst("-", "年").
-        replaceFirst("-", "月")
+fun String.formatTime(): String = this.substring(0, 7).replaceFirst("-", "年").replaceFirst("-", "月")
 
 fun Editable?.judgeNumber(intNum: Int, decimalNum: Int): String? {
     if (this == null) return null
@@ -113,4 +114,74 @@ fun String?.stringFilter(regEx: String): String? {
     val p = Pattern.compile(regEx)
     val m = p.matcher(this)
     return m?.replaceAll("")?.trim()
+}
+
+/**
+ * 将数字转为 带小数的 string
+ *
+ * @param num        数字
+ * @param decimalNum 保留的小数的位数
+ * @return
+ */
+fun Int?.formatNumber(decimalNum: Int = 2, default: String = ""): String {
+    if (this == null) {
+        return default
+    }
+
+    if (decimalNum <= 0) {
+        Lerror("decimal 必须大于0")
+        return default
+    }
+
+    val format = StringBuilder("0.")
+    var divide = 1
+
+    for (i in 0 until decimalNum) {
+        format.append("0")
+        divide *= 10
+    }
+
+
+    val df = DecimalFormat(format.toString())
+    val b = BigDecimal(this).divide(BigDecimal(divide), decimalNum)
+    return df.format(b)
+}
+
+/**
+ * Description:
+ * @author: dtb
+ * @date: 19-3-4 下午4:40
+ * @param:
+ * @return:
+ */
+fun List<String>?.listToString(default: String = ""): String? {
+    if (this == null || this.size == 0) {
+        return default
+    }
+    val result = StringBuilder()
+    var flag = false
+    for (string in this) {
+        if (flag) {
+            result.append(",")
+        } else {
+            flag = true
+        }
+        result.append(string)
+    }
+    return result.toString()
+}
+
+
+/**
+ * Description:
+ * @author: dtb
+ * @date: 19-3-4 下午4:41
+ * @param:
+ * @return:
+ */
+fun String?.str2MD5(default: String = ""): String? {
+    if (this == null) {
+        return default
+    }
+    return StringUtils.str2MD5(this)
 }

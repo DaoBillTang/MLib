@@ -23,10 +23,10 @@ import com.dtb.utils.commons.toast.ToastExt.DEFAULT_TEXT_COLOR
 import com.dtb.utils.commons.toast.ToastExt.currentTypeface
 import com.dtb.utils.commons.toast.ToastExt.textSize
 import com.dtb.utils.commons.toast.ToastExt.tintIcon
-import com.dtb.utils.commons.utils.getDrawableBySdk
-import com.dtb.utils.commons.utils.getTintIcon
-import com.dtb.utils.commons.utils.setBackground
-import com.dtb.utils.commons.utils.tint9PatchDrawableFrame
+import com.dtb.utils.commons.img.getDrawableBySdk
+import com.dtb.utils.commons.img.getTintIcon
+import com.dtb.utils.commons.img.setBackground
+import com.dtb.utils.commons.img.tint9PatchDrawableFrame
 import com.dtb.utils.exlib.R
 
 /**
@@ -177,12 +177,12 @@ private fun customImpl(context: Context, message: CharSequence, inIcon: Drawable
                        @ColorInt tintColor: Int, duration: Int,
                        withIcon: Boolean, shouldTint: Boolean): Toast? {
     if (message.isBlank()) {
-        context.Lwarn { "===显示空白内容===" }
+        Lwarn { "===显示空白内容===" }
         return null
     }
     if (toastTime != null && message == toastStr) {
         if (System.currentTimeMillis() - (toastTime ?: 0L) <= 3000) {
-            context.Lwarn { "连续显示相同的内容===$toastStr" }
+            Lwarn { "连续显示相同的内容===$toastStr" }
             return null
         }
     }
