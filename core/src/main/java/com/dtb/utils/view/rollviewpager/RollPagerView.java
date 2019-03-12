@@ -19,10 +19,10 @@ import android.view.animation.Interpolator;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
-import com.daotangbill.exlib.commons.utils.DensityUtilsKt;
-import com.daotangbill.exlib.exlib.R;
-import com.daotangbill.exlib.ui.rollviewpager.adapter.LoopPagerAdapter;
-import com.daotangbill.exlib.ui.rollviewpager.hintview.ColorPointHintView;
+import com.dtb.utils.commons.utils.DensityUtilsKt;
+import com.dtb.utils.exlib.R;
+import com.dtb.utils.view.rollviewpager.adapter.LoopPagerAdapter;
+import com.dtb.utils.view.rollviewpager.hintview.ColorPointHintView;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
