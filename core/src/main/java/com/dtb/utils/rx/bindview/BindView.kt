@@ -6,9 +6,13 @@ import android.support.annotation.MainThread
 import android.support.v4.app.Fragment
 import android.view.MotionEvent
 import android.view.View
+import android.widget.RadioGroup
 import com.dtb.utils.base.DtbBaseActivity
+import com.dtb.utils.base.DtbBaseFragment
 import com.dtb.utils.commons.logger.Lerror
 import com.dtb.utils.rx.lifecycle.ActivityEvent
+import com.dtb.utils.rx.lifecycle.FragmentEvent
+import io.reactivex.Observable
 import io.reactivex.functions.Predicate
 import java.util.concurrent.TimeUnit
 
@@ -29,25 +33,59 @@ import java.util.concurrent.TimeUnit
  *@param event 需要限制 当前事件最后的生命周期
  *@warning 同时，一个View 有且只应该有一个 事件绑定进去
  */
-@MainThread
-fun View.bindClick(listener: () -> Unit, time: Long, act: Activity?,
-                   event: ActivityEvent = ActivityEvent.DESTROY) {
+
+
+fun Observable<Any>?.bindActLife(act: Activity?,
+                                 event: ActivityEvent = ActivityEvent.DESTROY)
+        : Observable<Any> {
     if (act is DtbBaseActivity) {
-        ViewClickObservable(this)
-                .compose(act.bindUntilEvent(event))
-                .throttleFirst(time, TimeUnit.SECONDS)
-                .subscribe { listener.invoke() }
+        return this?.compose(act.bindUntilEvent(event))!!
     } else {
         throw  IllegalAccessException("需要Activity继承自DtBaseActivity")
     }
 }
 
+fun Observable<Any>?.bindFraLife(fra: Fragment?, event: FragmentEvent = FragmentEvent.DESTROY)
+        : Observable<Any> {
+    if (fra is DtbBaseFragment) {
+        return this?.compose(fra.bindUntilEvent(event))!!
+    } else {
+        throw  IllegalAccessException("需要Activity继承自DtBaseActivity")
+    }
+}
+
+
+@MainThread
+fun View.bindClick(listener: () -> Unit, time: Long, act: Activity?,
+                   event: ActivityEvent = ActivityEvent.DESTROY) {
+    ViewClickObservable(this)
+            .bindActLife(act, event)
+            .throttleFirst(time, TimeUnit.SECONDS)
+            .subscribe { listener.invoke() }
+}
+
 @MainThread
 fun View.bindClick(listener: () -> Unit, time: Long, fra: Fragment,
-                   event: ActivityEvent = ActivityEvent.DESTROY) {
-    val act = fra.activity
-    this.bindClick(listener, time, act, event)
+                   event: FragmentEvent = FragmentEvent.DESTROY) {
+    ViewClickObservable(this)
+            .bindFraLife(fra, event)
+            .throttleFirst(time, TimeUnit.SECONDS)
+            .subscribe { listener.invoke() }
 }
+
+
+fun RadioGroup.bindOnCheckChange(listener: (group: RadioGroup?, checkedId: Int) -> Boolean,
+                                 time: Long,
+                                 act: Activity?,
+                                 event: ActivityEvent = ActivityEvent.DESTROY) {
+    if (act is DtbBaseActivity) {
+        RadioGroupCheckedChangeObservable(this)
+                .compose(act.bindUntilEvent(event))
+                .throttleFirst(time, TimeUnit.SECONDS)
+                .subscribe { listener.invoke(this, it) }
+    }
+}
+
 
 /**
  *@param listener 需要实现的功能

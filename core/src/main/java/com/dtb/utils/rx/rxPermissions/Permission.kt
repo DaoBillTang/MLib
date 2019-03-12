@@ -2,8 +2,7 @@ package com.dtb.utils.rx.rxPermissions
 
 import io.reactivex.Observable
 
-class
-Permission {
+class Permission {
     val name: String
     val granted: Boolean
     val shouldShowRequestPermissionRationale: Boolean
@@ -15,7 +14,7 @@ Permission {
         this.shouldShowRequestPermissionRationale = shouldShowRequestPermissionRationale
     }
 
-    constructor(permissions: List<Permission>) {
+    constructor(permissions: List< Permission >) {
         name = combineName(permissions)
         granted = combineGranted(permissions)!!
         shouldShowRequestPermissionRationale = combineShouldShowRequestPermissionRationale(permissions)!!
