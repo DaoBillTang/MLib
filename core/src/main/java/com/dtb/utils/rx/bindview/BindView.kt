@@ -74,7 +74,7 @@ fun View.bindClick(listener: () -> Unit, time: Long, fra: Fragment,
 }
 
 
-fun RadioGroup.bindOnCheckChange(listener: (group: RadioGroup?, checkedId: Int) -> Boolean,
+fun RadioGroup.bindOnCheckChange(listener: (checkedId: Int) -> Boolean,
                                  time: Long,
                                  act: Activity?,
                                  event: ActivityEvent = ActivityEvent.DESTROY) {
@@ -82,7 +82,7 @@ fun RadioGroup.bindOnCheckChange(listener: (group: RadioGroup?, checkedId: Int) 
         RadioGroupCheckedChangeObservable(this)
                 .compose(act.bindUntilEvent(event))
                 .throttleFirst(time, TimeUnit.SECONDS)
-                .subscribe { listener.invoke(this, it) }
+                .subscribe { listener.invoke(it) }
     }
 }
 
