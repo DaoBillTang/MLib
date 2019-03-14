@@ -164,6 +164,12 @@ abstract class DtbBaseActivity :
         }
     }
 
+    override fun showErr(msgList: Array<String>?) {
+        msgList?.mapNotNull {
+            Terror(it)
+        }
+    }
+
 
     override fun onPause() {
         lifecycleSubject.onNext(ActivityEvent.PAUSE)

@@ -154,4 +154,10 @@ abstract class DtbBaseFragment :
             this.activity?.Terror(it)
         }
     }
+
+    override fun showErr(msgList: Array<String>?) {
+        msgList?.mapNotNull {
+            this.activity?.Terror(it)
+        }
+    }
 }

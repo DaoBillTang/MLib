@@ -7,5 +7,7 @@ package com.dtb.utils.base.contract
  * @createTime: 19-3-14下午3:09
  */
 interface HintView {
+    fun showErr(msgList: Array<String>?)
+
     fun showErr(msgList: ArrayList<String>?)
 }
