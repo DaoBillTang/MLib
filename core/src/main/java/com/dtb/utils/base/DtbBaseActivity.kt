@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.support.annotation.CheckResult
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewTreeObserver
-import com.dtb.utils.base.contract.DialogView
+import com.dtb.utils.base.contract.HintView
 import com.dtb.utils.base.contract.ProgressView
 import com.dtb.utils.commons.permissions.PermissionCallbacks
 import com.dtb.utils.commons.permissions.PermissionsResult
@@ -30,7 +30,7 @@ abstract class DtbBaseActivity :
         LifecycleProvider<ActivityEvent>,
         PermissionCallbacks,
         ProgressView,
-        DialogView {
+        HintView {
     private var proDialog: ProgressDialog? = null
 
     open var mStatusBarHelper: StatusBarHelper? = null
@@ -158,7 +158,7 @@ abstract class DtbBaseActivity :
         proDialog = null
     }
 
-    override fun showErr(msgList: List<String>?) {
+    override fun showErr(msgList: ArrayList<String>?) {
         msgList?.mapNotNull {
             Terror(it)
         }

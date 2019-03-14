@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dtb.utils.base.contract.DialogView
+import com.dtb.utils.base.contract.HintView
 import com.dtb.utils.base.contract.ProgressView
 import com.dtb.utils.commons.logger.Ldebug
 import com.dtb.utils.commons.toast.Terror
@@ -22,7 +22,7 @@ abstract class DtbBaseFragment :
         Fragment(),
         LifecycleProvider<FragmentEvent>,
         ProgressView,
-        DialogView {
+        HintView {
 
     private var proDialg: ProgressDialog? = null
     private var isFristVisibile = false
@@ -149,7 +149,7 @@ abstract class DtbBaseFragment :
         super.onDetach()
     }
 
-    override fun showErr(msgList: List<String>?) {
+    override fun showErr(msgList: ArrayList<String>?) {
         msgList?.mapNotNull {
             this.activity?.Terror(it)
         }
