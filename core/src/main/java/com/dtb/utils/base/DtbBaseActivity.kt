@@ -8,9 +8,12 @@ import android.os.Bundle
 import android.support.annotation.CheckResult
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewTreeObserver
+import com.dtb.utils.base.contract.DialogView
+import com.dtb.utils.base.contract.ProgressView
 import com.dtb.utils.commons.permissions.PermissionCallbacks
 import com.dtb.utils.commons.permissions.PermissionsResult
 import com.dtb.utils.commons.statusbar.StatusBarHelper
+import com.dtb.utils.commons.toast.Terror
 import com.dtb.utils.commons.utils.screenH
 import com.dtb.utils.exlib.R
 import com.dtb.utils.rx.lifecycle.*
@@ -25,7 +28,9 @@ import io.reactivex.subjects.BehaviorSubject
 abstract class DtbBaseActivity :
         AppCompatActivity(),
         LifecycleProvider<ActivityEvent>,
-        PermissionCallbacks {
+        PermissionCallbacks,
+        ProgressView,
+        DialogView {
     private var proDialog: ProgressDialog? = null
 
     open var mStatusBarHelper: StatusBarHelper? = null
@@ -136,21 +141,29 @@ abstract class DtbBaseActivity :
     /**
      * 显示[.proDialog],附带文字
      */
-    fun showProgressDialog(message: String? = "正在处理中请稍后……") {
+    override fun showProgressDialog(message: String?) {
+        val msg = message ?: "正在处理中请稍后……"
         if (proDialog == null) {
             proDialog = ProgressDialog(this)
         }
-        proDialog!!.setMessage(message)
+        proDialog!!.setMessage(msg)
         proDialog!!.show()
     }
 
     /**
      * 隐藏 progress dialog
      */
-    fun proDialogDismiss() {
+    override fun proDialogDismiss() {
         if (proDialog != null) proDialog!!.dismiss()
         proDialog = null
     }
+
+    override fun showErr(msgList: List<String>?) {
+        msgList?.mapNotNull {
+            Terror(it)
+        }
+    }
+
 
     override fun onPause() {
         lifecycleSubject.onNext(ActivityEvent.PAUSE)

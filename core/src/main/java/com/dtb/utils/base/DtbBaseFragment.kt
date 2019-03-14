@@ -6,7 +6,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.dtb.utils.base.contract.DialogView
+import com.dtb.utils.base.contract.ProgressView
 import com.dtb.utils.commons.logger.Ldebug
+import com.dtb.utils.commons.toast.Terror
 import com.dtb.utils.rx.lifecycle.*
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
@@ -15,7 +18,12 @@ import io.reactivex.subjects.BehaviorSubject
  * Created by Bill on 2016/9/18 11:32.
  * emal:1750352866@qq.com
  */
-abstract class DtbBaseFragment : Fragment(), LifecycleProvider<FragmentEvent> {
+abstract class DtbBaseFragment :
+        Fragment(),
+        LifecycleProvider<FragmentEvent>,
+        ProgressView,
+        DialogView {
+
     private var proDialg: ProgressDialog? = null
     private var isFristVisibile = false
 
@@ -67,16 +75,16 @@ abstract class DtbBaseFragment : Fragment(), LifecycleProvider<FragmentEvent> {
         Ldebug { "onFragmentVisible" }
     }
 
-    @JvmOverloads
-    fun showProgressDialog(message: String = "正在处理中请稍后……") {
+    override fun showProgressDialog(message: String?) {
+        val msg = message ?: "正在处理中请稍后……"
         if (proDialg == null) {
             proDialg = ProgressDialog(this.activity)
         }
-        proDialg!!.setMessage(message)
+        proDialg!!.setMessage(msg)
         proDialg!!.show()
     }
 
-    fun proDialogDismiss() {
+    override fun proDialogDismiss() {
         if (proDialg != null) proDialg!!.dismiss()
         proDialg = null
     }
@@ -139,5 +147,11 @@ abstract class DtbBaseFragment : Fragment(), LifecycleProvider<FragmentEvent> {
     override fun onDetach() {
         lifecycleSubject.onNext(FragmentEvent.DETACH)
         super.onDetach()
+    }
+
+    override fun showErr(msgList: List<String>?) {
+        msgList?.mapNotNull {
+            this.activity?.Terror(it)
+        }
     }
 }
