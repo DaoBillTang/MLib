@@ -9,7 +9,7 @@ android {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["compileSdkVersion"]
         versionCode 6
-        versionName "0.4.1"
+        versionName "0.4.2"
     }
     buildTypes {
         release {
