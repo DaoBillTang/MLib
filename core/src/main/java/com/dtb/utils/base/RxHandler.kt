@@ -221,15 +221,21 @@ class RxHandler {
             const val TYPE_REPLACE = 1
         }
 
+        var isEnd = false
+
         var key: String? = null
         var type: Int = TYPE_REFUSING_SECOND
         var subscribeOnScheduler: Scheduler = Schedulers.io()
         var observeOnScheduler: Scheduler = AndroidSchedulers.mainThread()
         var disposable: DisposableObserver<T>? = null
         var observable: Observable<T>? = null
+        var beforeStart: (() -> Unit)? = null
+        var afterEnd: (() -> Unit)? = null
 
         fun start() {
+            if (isEnd) return
             val k = key ?: return
+            beforeStart?.invoke()
             when (type) {
                 TYPE_REFUSING_SECOND -> {
                     if (weakReference.get()?.checkKey(k) == true) {
@@ -246,19 +252,28 @@ class RxHandler {
                 weakReference.get()?.put(k, disp)
                 obs.subscribeOn(subscribeOnScheduler)
                         .observeOn(observeOnScheduler)
+                        .doFinally { afterEnd?.invoke() }
                         .subscribe(disp)
             }
+        }
+
+        fun end() {
+            isEnd = true
+            afterEnd?.invoke()
         }
     }
 
     fun <T> createNetWork(key: String): NetWorkContext<T>? {
+        val c = NetWorkContext<T>(WeakReference(this), key)
         if (key.isBlank()) {
+            c.end()
             return null
         }
         if (checkKey(key)) {
+            c.end()
             return null
         }
-        return NetWorkContext(WeakReference(this), key)
+        return c
     }
 
     fun <T> createNetWork(init: NetWorkContext<T>.() -> Unit) {
