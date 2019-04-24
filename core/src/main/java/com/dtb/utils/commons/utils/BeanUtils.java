@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
  * @createTime: 19-3-25下午5:28
  * 对于 一个 普通的 po 进行的操作
  */
+@SuppressWarnings("all")
 public class BeanUtils {
 
     /**
