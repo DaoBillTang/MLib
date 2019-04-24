@@ -65,7 +65,7 @@ public class BeanUtils {
         }
         return true;
     }
-    
+
     public static <T> boolean putObjectInPre(T origin, Context context, String dictName) {
         if (origin == null) {
             return false;
@@ -81,7 +81,9 @@ public class BeanUtils {
         Field[] fields = origin.getClass().getDeclaredFields();
         for (Field field : fields) {
             try {
+                field.setAccessible(true);
                 pre.put(field.getName(), field.get(origin));
+                field.setAccessible(false);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
