@@ -26,7 +26,7 @@ dependencies {
     testImplementation rootProject.ext.dependencies["junit"]
     compileOnly rootProject.ext.dependencies["supportRecyclerView"]
     compileOnly rootProject.ext.dependencies["glide"]
-//    implementation rootProject.ext.dependencies["jodaTime"]
+    implementation rootProject.ext.dependencies["jodaTime"]
     compileOnly rootProject.ext.dependencies["jsr305Annotations"]
 
     //   部分内容修改为强制依赖了
