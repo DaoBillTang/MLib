@@ -9,6 +9,7 @@ import android.content.SharedPreferences
  * @email: wendaoyuqin1@gmail.com
  * @createTime: 19-3-14下午5:18
  */
+@SuppressWarnings("all")
 class PreTools {
     private val prefs: SharedPreferences
 
@@ -20,8 +21,18 @@ class PreTools {
         prefs = context.getSharedPreferences(nameTable ?: "config", Context.MODE_PRIVATE)
     }
 
+    fun editor(): SharedPreferences.Editor {
+        return prefs.edit()
+    }
+
     fun put(name: String, value: Any?) {
         val editor = prefs.edit()
+        put(editor, name, value)
+        editor.apply()
+    }
+
+
+    fun put(editor: SharedPreferences.Editor, name: String, value: Any?) {
         with(editor) {
             when (value) {
                 is Long -> putLong(name, value)
@@ -30,7 +41,7 @@ class PreTools {
                 is Boolean -> putBoolean(name, value)
                 is Float -> putFloat(name, value)
                 else -> return
-            }.apply()
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.dtb.utils.commons.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.lang.reflect.Field;
 
@@ -80,15 +81,17 @@ public class BeanUtils {
             return false;
         }
         Field[] fields = origin.getClass().getDeclaredFields();
+        SharedPreferences.Editor editor = pre.editor();
         for (Field field : fields) {
             try {
                 field.setAccessible(true);
-                pre.put(field.getName(), field.get(origin));
+                pre.put(editor, field.getName(), field.get(origin));
                 field.setAccessible(false);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
+        editor.apply();
         return true;
     }
 

@@ -6,9 +6,11 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.support.annotation.CallSuper
+import android.support.annotation.ColorRes
 import com.dtb.utils.commons.logger.Ldebug
 import com.dtb.utils.commons.toast.Tnormal
 
@@ -20,6 +22,7 @@ import com.dtb.utils.commons.toast.Tnormal
  * @version: 1.0
  * @description:
  */
+@SuppressWarnings("all")
 abstract class DtbBaseApp : Application() {
 
     private var life: LifeListener? = null
@@ -43,7 +46,7 @@ abstract class DtbBaseApp : Application() {
     }
 
     fun startStrictMode(b: Boolean) {
-        if (b){
+        if (b) {
             // 针对线程的相关策略
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                     .detectAll()
@@ -54,6 +57,14 @@ abstract class DtbBaseApp : Application() {
                     .detectAll()
                     .penaltyLog()
                     .build())
+        }
+    }
+
+    fun findColor(@ColorRes id: Int): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            resources.getColor(id, theme)
+        } else {
+            resources.getColor(id)
         }
     }
 

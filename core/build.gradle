@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["compileSdkVersion"]
-        versionCode 6
-        versionName "0.4.3"
+        versionCode 7
+        versionName "0.4.4"
     }
     buildTypes {
         release {
@@ -26,10 +26,8 @@ dependencies {
     testImplementation rootProject.ext.dependencies["junit"]
     compileOnly rootProject.ext.dependencies["supportRecyclerView"]
     compileOnly rootProject.ext.dependencies["glide"]
-    implementation rootProject.ext.dependencies["jodaTime"]
+//    implementation rootProject.ext.dependencies["jodaTime"]
     compileOnly rootProject.ext.dependencies["jsr305Annotations"]
-
-
 
     //   部分内容修改为强制依赖了
     implementation rootProject.ext.dependencies["rxJava"]
