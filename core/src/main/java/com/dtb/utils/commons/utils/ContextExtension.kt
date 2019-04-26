@@ -193,6 +193,16 @@ fun Fragment.hideKeyboard(editText: EditText) {
     this.activity?.hideKeyboard(editText)
 }
 
+fun Activity.showKeyBoard(editText: EditText) {
+    val inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE)
+            as InputMethodManager?
+    inputMethodManager?.showSoftInput(editText, 0)
+}
+
+fun Fragment.showKeyBoard(editText: EditText) {
+    this.activity?.showKeyBoard(editText)
+}
+
 fun Context.getScreenWith(): Int {
     val manager = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     val dm = DisplayMetrics()

@@ -22,7 +22,6 @@ import com.dtb.utils.commons.toast.Tnormal
  * @version: 1.0
  * @description:
  */
-@SuppressWarnings("all")
 abstract class DtbBaseApp : Application() {
 
     private var life: LifeListener? = null
