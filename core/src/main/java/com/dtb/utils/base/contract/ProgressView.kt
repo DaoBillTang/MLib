@@ -8,5 +8,6 @@ package com.dtb.utils.base.contract
 interface ProgressView {
 
     fun showProgressDialog(message: String?)
+    fun showProgressDialog(message: String?, cancel: Boolean)
     fun proDialogDismiss()
 }

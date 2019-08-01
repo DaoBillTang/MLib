@@ -1,15 +1,15 @@
 package com.dtb.utils.base
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.dtb.utils.base.contract.HintView
+import com.dtb.utils.base.contract.HintViewImpl
 import com.dtb.utils.base.contract.ProgressView
+import com.dtb.utils.base.contract.ProgressViewImpl
 import com.dtb.utils.commons.logger.Ldebug
-import com.dtb.utils.commons.toast.Terror
 import com.dtb.utils.rx.lifecycle.*
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
@@ -24,7 +24,15 @@ abstract class DtbBaseFragment :
         ProgressView,
         HintView {
 
-    private var proDialg: ProgressDialog? = null
+
+    open val progressViewImpl: ProgressView by lazy {
+        ProgressViewImpl(this.activity)
+    }
+
+    open val hintViewImpl: HintView by lazy {
+        HintViewImpl(this.activity)
+    }
+
     private var isFristVisibile = false
 
     open val handler: RxHandler by lazy {
@@ -76,18 +84,31 @@ abstract class DtbBaseFragment :
     }
 
     override fun showProgressDialog(message: String?) {
-        val msg = message ?: "正在处理中请稍后……"
-        if (proDialg == null) {
-            proDialg = ProgressDialog(this.activity)
-        }
-        proDialg!!.setMessage(msg)
-        proDialg!!.show()
+        progressViewImpl.showProgressDialog(message)
+    }
+
+
+    override fun showProgressDialog(message: String?, candel: Boolean) {
+        progressViewImpl.showProgressDialog(message, candel)
     }
 
     override fun proDialogDismiss() {
-        if (proDialg != null) proDialg!!.dismiss()
-        proDialg = null
+        progressViewImpl.proDialogDismiss()
     }
+
+
+    override fun showErr(msg: String?) {
+        hintViewImpl.showErr(msg)
+    }
+
+    override fun showErr(msgList: ArrayList<String>?) {
+        hintViewImpl.showErr(msgList)
+    }
+
+    override fun showErr(msgList: Array<String>?) {
+        hintViewImpl.showErr(msgList)
+    }
+
 
     override fun onDestroy() {
         lifecycleSubject.onNext(FragmentEvent.DESTROY)
@@ -147,17 +168,5 @@ abstract class DtbBaseFragment :
     override fun onDetach() {
         lifecycleSubject.onNext(FragmentEvent.DETACH)
         super.onDetach()
-    }
-
-    override fun showErr(msgList: ArrayList<String>?) {
-        msgList?.mapNotNull {
-            this.activity?.Terror(it)
-        }
-    }
-
-    override fun showErr(msgList: Array<String>?) {
-        msgList?.mapNotNull {
-            this.activity?.Terror(it)
-        }
     }
 }

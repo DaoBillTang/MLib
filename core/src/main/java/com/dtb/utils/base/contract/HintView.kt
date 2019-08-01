@@ -8,6 +8,6 @@ package com.dtb.utils.base.contract
  */
 interface HintView {
     fun showErr(msgList: Array<String>?)
-
+    fun showErr(msg: String?)
     fun showErr(msgList: ArrayList<String>?)
 }

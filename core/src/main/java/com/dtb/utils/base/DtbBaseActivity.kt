@@ -1,7 +1,6 @@
 package com.dtb.utils.base
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
@@ -9,11 +8,12 @@ import android.support.annotation.CheckResult
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewTreeObserver
 import com.dtb.utils.base.contract.HintView
+import com.dtb.utils.base.contract.HintViewImpl
 import com.dtb.utils.base.contract.ProgressView
+import com.dtb.utils.base.contract.ProgressViewImpl
 import com.dtb.utils.commons.permissions.PermissionCallbacks
 import com.dtb.utils.commons.permissions.PermissionsResult
 import com.dtb.utils.commons.statusbar.StatusBarHelper
-import com.dtb.utils.commons.toast.Terror
 import com.dtb.utils.commons.utils.screenH
 import com.dtb.utils.exlib.R
 import com.dtb.utils.rx.lifecycle.*
@@ -31,7 +31,16 @@ abstract class DtbBaseActivity :
         PermissionCallbacks,
         ProgressView,
         HintView {
-    private var proDialog: ProgressDialog? = null
+
+
+    open val progressViewImpl: ProgressViewImpl by lazy {
+        ProgressViewImpl(this)
+    }
+
+    open val hintViewImpl: HintView by lazy {
+        HintViewImpl(this)
+    }
+
 
     open var mStatusBarHelper: StatusBarHelper? = null
 
@@ -138,36 +147,30 @@ abstract class DtbBaseActivity :
         window.decorView.viewTreeObserver.addOnGlobalLayoutListener(mLayoutChangeListener)
     }
 
-    /**
-     * 显示[.proDialog],附带文字
-     */
     override fun showProgressDialog(message: String?) {
-        val msg = message ?: "正在处理中请稍后……"
-        if (proDialog == null) {
-            proDialog = ProgressDialog(this)
-        }
-        proDialog!!.setMessage(msg)
-        proDialog!!.show()
+        progressViewImpl.showProgressDialog(message)
     }
 
-    /**
-     * 隐藏 progress dialog
-     */
+
+    override fun showProgressDialog(message: String?, cancel: Boolean) {
+        progressViewImpl.showProgressDialog(message, cancel)
+    }
+
     override fun proDialogDismiss() {
-        if (proDialog != null) proDialog!!.dismiss()
-        proDialog = null
+        progressViewImpl.proDialogDismiss()
+    }
+
+
+    override fun showErr(msg: String?) {
+        hintViewImpl.showErr(msg)
     }
 
     override fun showErr(msgList: ArrayList<String>?) {
-        msgList?.mapNotNull {
-            Terror(it)
-        }
+        hintViewImpl.showErr(msgList)
     }
 
     override fun showErr(msgList: Array<String>?) {
-        msgList?.mapNotNull {
-            Terror(it)
-        }
+        hintViewImpl.showErr(msgList)
     }
 
 
@@ -175,7 +178,7 @@ abstract class DtbBaseActivity :
         lifecycleSubject.onNext(ActivityEvent.PAUSE)
         super.onPause()
         //清理痕迹
-        proDialog = null
+        progressViewImpl.proDialogDismiss()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
