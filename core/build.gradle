@@ -1,15 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'com.github.dcendents.android-maven'
 
 android {
-    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
-    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
     defaultConfig {
-        minSdkVersion rootProject.ext.android["minSdkVersion"]
-        targetSdkVersion rootProject.ext.android["compileSdkVersion"]
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
         versionCode 7
-        versionName "0.4.5"
+        versionName "2.4.6"
     }
     buildTypes {
         release {
@@ -17,24 +17,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
-
-    compileOnly rootProject.ext.dependencies["supportAppCompat"]
-    compileOnly rootProject.ext.dependencies["kotlinStdlib"]
-    testImplementation rootProject.ext.dependencies["junit"]
-    compileOnly rootProject.ext.dependencies["supportRecyclerView"]
-    compileOnly rootProject.ext.dependencies["glide"]
-    implementation rootProject.ext.dependencies["jodaTime"]
-    compileOnly rootProject.ext.dependencies["jsr305Annotations"]
+    compileOnly deps.app_compat
+    compileOnly deps.kotlin.stdlib
+    compileOnly deps.recyclerview
+    compileOnly deps.glide.runtime
+//    implementation rootProject.ext.dependencies["jodaTime"]
+//    compileOnly rootProject.ext.dependencies["jsr305Annotations"]
 
     //   部分内容修改为强制依赖了
-    implementation rootProject.ext.dependencies["rxJava"]
-    implementation rootProject.ext.dependencies["rxAndroid"]
-    implementation rootProject.ext.dependencies["rxErrorhandler2"]
+    implementation deps.rxjava3
+    implementation deps.rx_android
+    implementation deps.rxErrorhandler2
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation deps.junit
+    testImplementation deps.arch_core.testing
+
+    androidTestImplementation deps.atsl.runner
+    androidTestImplementation deps.atsl.rules
+    androidTestImplementation deps.atsl.ext_junit
+    androidTestImplementation deps.espresso.core
+    androidTestImplementation deps.espresso.contrib
+    androidTestImplementation deps.arch_core.testing
 }

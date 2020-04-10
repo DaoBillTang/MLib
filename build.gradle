@@ -1,33 +1,29 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    repositories {
-        jcenter()
-        maven { url "https://dl.google.com/dl/android/maven2/" }
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
-        google()
+    apply from: 'versions.gradle'
+    addRepos(repositories)
+
+    configurations.all {
+        //每隔24小时检查远程依赖是否存在更新
+        resolutionStrategy.cacheChangingModulesFor 24, 'hours'
+        //每隔10分钟..
+        //resolutionStrategy.cacheChangingModulesFor 10, 'minutes'
+        // 采用动态版本声明的依赖缓存10分钟
+        resolutionStrategy.cacheDynamicVersionsFor 24, 'hours'
     }
+
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.21"
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+        classpath deps.android_gradle_plugin
+        classpath deps.kotlin.plugin
+        classpath deps.kotlin.allopen
+//        classpath deps.maven_gradel_plugin
     }
 }
 
 allprojects {
-    repositories {
-        maven { url 'https://jitpack.io' }
-        maven { url "https://dl.google.com/dl/android/maven2/" }
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
-        mavenCentral()
-        jcenter()
-    }
+    addRepos(repositories)
 }
 
 task clean(type: Delete) {

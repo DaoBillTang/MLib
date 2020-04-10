@@ -32,7 +32,6 @@ abstract class DtbBaseActivity :
         ProgressView,
         HintView {
 
-
     open val progressViewImpl: ProgressViewImpl by lazy {
         ProgressViewImpl(this)
     }
@@ -40,7 +39,6 @@ abstract class DtbBaseActivity :
     open val hintViewImpl: HintView by lazy {
         HintViewImpl(this)
     }
-
 
     open var mStatusBarHelper: StatusBarHelper? = null
 
@@ -87,7 +85,6 @@ abstract class DtbBaseActivity :
         lifecycleSubject.onNext(ActivityEvent.STOP)
         super.onStop()
     }
-
 
     protected abstract fun getLayoutResource(): Int
     /********************对状态栏进行修改******************/
