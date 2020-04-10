@@ -2,29 +2,29 @@
 
 buildscript {
     repositories {
-        jcenter()
-        maven { url "https://dl.google.com/dl/android/maven2/" }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
+        jcenter()
+        maven { url "https://dl.google.com/dl/android/maven2/" }
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.21"
+        classpath 'com.android.tools.build:gradle:3.6.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
     }
 }
 
 allprojects {
     repositories {
-        maven { url 'https://jitpack.io' }
-        maven { url "https://dl.google.com/dl/android/maven2/" }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
+        maven { url 'https://jitpack.io' }
+        maven { url "https://dl.google.com/dl/android/maven2/" }
         mavenCentral()
         jcenter()
     }
