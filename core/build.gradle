@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-//apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion build_versions.compile_sdk
@@ -9,7 +10,7 @@ android {
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 7
-        versionName "2.4.6"
+        versionName "2.0.1"
     }
     buildTypes {
         release {
@@ -17,31 +18,34 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    viewBinding {
+    dataBinding {
         enabled = true
     }
-    configurations.all {
-        //每隔24小时检查远程依赖是否存在更新
-        resolutionStrategy.cacheChangingModulesFor 24, 'hours'
-        //每隔10分钟..
-        //resolutionStrategy.cacheChangingModulesFor 10, 'minutes'
-        // 采用动态版本声明的依赖缓存10分钟
-        resolutionStrategy.cacheDynamicVersionsFor 24, 'hours'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
-    compileOnly deps.app_compat
-    compileOnly deps.kotlin.stdlib
-    compileOnly deps.recyclerview
-    compileOnly deps.glide.runtime
-//    implementation rootProject.ext.dependencies["jodaTime"]
-//    compileOnly rootProject.ext.dependencies["jsr305Annotations"]
+    implementation deps.app_compat
+    implementation deps.material
+    implementation deps.core_ktx
+    implementation deps.lifecycle.runtime
+    implementation deps.lifecycle.viewmodel_ktx
+    implementation deps.lifecycle.livedata_ktx
+    implementation deps.activity.activity_ktx
 
-    //   部分内容修改为强制依赖了
-    implementation deps.rxjava3
+    implementation deps.rxjava2
     implementation deps.rx_android
-    implementation deps.rxErrorhandler2
+
+    implementation deps.kotlin.stdlib
+    implementation deps.work.runtime_ktx
+    implementation deps.findBugs
 
     testImplementation deps.junit
     testImplementation deps.arch_core.testing
@@ -52,4 +56,6 @@ dependencies {
     androidTestImplementation deps.espresso.core
     androidTestImplementation deps.espresso.contrib
     androidTestImplementation deps.arch_core.testing
+
+    testImplementation deps.coroutines.test
 }
