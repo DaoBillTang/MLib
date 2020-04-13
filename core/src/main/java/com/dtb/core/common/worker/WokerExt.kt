@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit
  *  workerClass :ListenableWorker,
  */
 
-
 class WorkContext() {
     /**
      * 如果有尚未完成的前提性工作，则工作处于 BLOCKED State。
@@ -30,8 +29,14 @@ class WorkContext() {
      * 只有 OneTimeWorkRequest 可以进入这种 State。所有依赖工作也会被标记为 FAILED，并且不会运行。
      * 当您明确取消尚未终止的 WorkRequest 时，它会进入 CANCELLED State。所有依赖工作也会被标记为 CANCELLED，并且不会运行。
      */
-    var workerClass: Class<out ListenableWorker?>? = null
 
+    companion object {
+        const val ONE_TIME = 0
+        const val PERIODIC = 1
+    }
+
+    var workerClass: Class<out ListenableWorker?>? = null
+    var workType = ONE_TIME
     var context: Context? = null
     var repeatInterval: Long = 15
     var repeatIntervalTimeUnit: TimeUnit = TimeUnit.MINUTES
@@ -56,7 +61,7 @@ class WorkContext() {
     private var mConstraints: Constraints = Constraints.NONE
 
     fun constraints(init: ConstraintsContext.() -> Unit) {
-        mConstraints = ConstraintsContext().apply(init).build()
+        mConstraints = createWorkConstrains(init)
     }
 
     // 测试的时候用于 延迟启动的方案
@@ -65,14 +70,26 @@ class WorkContext() {
     //runAttemptCount test only
     var testInitialRunAttemptCount: Int? = null
 
-    fun build() {
-        val builder = PeriodicWorkRequest.Builder(
-            workerClass!!,
-            repeatInterval,
-            repeatIntervalTimeUnit
-        ).setInputData(inputData)
+    fun build(): WorkRequest {
+        val builder = when (workType) {
+            ONE_TIME -> {
+                OneTimeWorkRequest.Builder(
+                    workerClass!!
+                )
+            }
+            PERIODIC -> {
+                PeriodicWorkRequest.Builder(
+                    workerClass!!,
+                    repeatInterval,
+                    repeatIntervalTimeUnit
+                )
+            }
+            else -> {
+                throw RuntimeException("错误的 workType")
+            }
+        }
+        builder.setInputData(inputData)
             .setConstraints(mConstraints)
-
         keepResultsForAtLeast?.apply {
             builder.keepResultsForAtLeast(this.first, this.second)
         }
@@ -86,92 +103,101 @@ class WorkContext() {
         tag?.apply {
             builder.addTag(this)
         }
+        return builder.build()
+    }
 
-        val request = builder.build()
-
-        val manager = if (context != null) {
-            WorkManager.getInstance(context!!)
-        } else {
-            WorkManager.getInstance()
-        }
+    fun enqueue(request: WorkRequest): WorkManager {
+        val manager = createWorkManager(context)
         manager.enqueue(request)
+        return manager
     }
+}
 
+class ConstraintsContext {
+    /**
+     * 需要注意的是setRequiredNetworkType, setRequiresCharging 和
+     * setRequiresDeviceIdle这几个方法可能会使得你的任务无法执行，
+     * 除非调用setOverrideDeadline(long time)设置了最大延迟时间，
+     * 使得你的任务在为满足条件的情况下也会被执行
 
-    class ConstraintsContext {
-        /**
-         * 需要注意的是setRequiredNetworkType, setRequiresCharging 和
-         * setRequiresDeviceIdle这几个方法可能会使得你的任务无法执行，
-         * 除非调用setOverrideDeadline(long time)设置了最大延迟时间，
-         * 使得你的任务在为满足条件的情况下也会被执行
-
-         */
-        val context = Constraints.Builder()
-        var requiresCharging = false  //这个方法告诉你的应用，只有当设备在充电时这个任务才会被执行。
-            set(value) {
-                field = value
-                context.setRequiresCharging(field)
-            }
-        var requiresDeviceIdle = false // 这个方法告诉你的任务只有当用户没有在使用该设备且有一段时间没有使用时才会启动该任务。
-            set(value) {
-                field = value
-                context.setRequiresDeviceIdle(field)
-            }
-        var requiredNetworkType = NetworkType.NOT_REQUIRED
-            set(value) {
-                field = value
-                context.setRequiredNetworkType(value)
-            }
-        var requiresBatteryNotLow = false  //是否要求不是低电量
-            set(value) {
-                field = value
-                context.setRequiresBatteryNotLow(field)
-            }
-        var requiresStorageNotLow = false   // 是否要求不是低 存储
-            set(value) {
-                field = value
-                context.setRequiresStorageNotLow(field)
-            }
-
-        // Same defaults as JobInfo
-        //设置从content变化到任务被执行中间的延迟。如果在延迟期间content发生了变化，延迟会重新计算
-        var triggerContentUpdateDelay: Pair<Long, TimeUnit>? = null
-            set(value) {
-                value?.apply {
-                    field = value
-                    context.setTriggerContentUpdateDelay(value.first, value.second)
-                }
-            }
-
-        // 最大延迟 sdk>=24
-        var triggerContentMaxDelay: Pair<Long, TimeUnit>? = null
-            set(value) {
-                value?.apply {
-                    field = value
-                    context.setTriggerContentMaxDelay(value.first, value.second)
-                }
-            }
-
-        /**
-         * 该Uri将利用ContentObserver来监控一个Content Uri，
-         * 当且仅当其发生变化时将触发任务的执行。
-         * 为了持续监控content的变化，你需要在最近的任务触发后再调度一个新的任务
-         * （需要注意的是触发器URI不能与setPeriodic(long)或setPersisted(boolean)组合使用。
-         * 要持续监控内容更改，需要在完成JobService处理最近的更改之前，调度新的JobInfo，观察相同的URI。
-         * 因为设置此属性与定期或持久化Job不兼容，这样做会在调用build()时抛出IllegalArgumentException异常。)
-         */
-        var mContentUriTriggers: Pair<Uri, Boolean>? = null
-            set(value) {
-                value?.apply {
-                    context.addContentUriTrigger(value.first, value.second)
-                }
-                field = value
-            }
-
-        fun build(): Constraints {
-            return context.build()
+     */
+    val context = Constraints.Builder()
+    var requiresCharging = false  //这个方法告诉你的应用，只有当设备在充电时这个任务才会被执行。
+        set(value) {
+            field = value
+            context.setRequiresCharging(field)
         }
+    var requiresDeviceIdle = false // 这个方法告诉你的任务只有当用户没有在使用该设备且有一段时间没有使用时才会启动该任务。
+        set(value) {
+            field = value
+            context.setRequiresDeviceIdle(field)
+        }
+    var requiredNetworkType = NetworkType.NOT_REQUIRED
+        set(value) {
+            field = value
+            context.setRequiredNetworkType(value)
+        }
+    var requiresBatteryNotLow = false  //是否要求不是低电量
+        set(value) {
+            field = value
+            context.setRequiresBatteryNotLow(field)
+        }
+    var requiresStorageNotLow = false   // 是否要求不是低 存储
+        set(value) {
+            field = value
+            context.setRequiresStorageNotLow(field)
+        }
+
+    // Same defaults as JobInfo
+    //设置从content变化到任务被执行中间的延迟。如果在延迟期间content发生了变化，延迟会重新计算
+    var triggerContentUpdateDelay: Pair<Long, TimeUnit>? = null
+        set(value) {
+            value?.apply {
+                field = value
+                context.setTriggerContentUpdateDelay(value.first, value.second)
+            }
+        }
+
+    // 最大延迟 sdk>=24
+    var triggerContentMaxDelay: Pair<Long, TimeUnit>? = null
+        set(value) {
+            value?.apply {
+                field = value
+                context.setTriggerContentMaxDelay(value.first, value.second)
+            }
+        }
+
+    /**
+     * 该Uri将利用ContentObserver来监控一个Content Uri，
+     * 当且仅当其发生变化时将触发任务的执行。
+     * 为了持续监控content的变化，你需要在最近的任务触发后再调度一个新的任务
+     * （需要注意的是触发器URI不能与setPeriodic(long)或setPersisted(boolean)组合使用。
+     * 要持续监控内容更改，需要在完成JobService处理最近的更改之前，调度新的JobInfo，观察相同的URI。
+     * 因为设置此属性与定期或持久化Job不兼容，这样做会在调用build()时抛出IllegalArgumentException异常。)
+     */
+    var mContentUriTriggers: Pair<Uri, Boolean>? = null
+        set(value) {
+            value?.apply {
+                context.addContentUriTrigger(value.first, value.second)
+            }
+            field = value
+        }
+
+    fun build(): Constraints {
+        return context.build()
     }
+}
+
+fun createWorkManager(context: Context? = null): WorkManager {
+    return if (context != null) {
+        WorkManager.getInstance(context)
+    } else {
+        WorkManager.getInstance()
+    }
+}
+
+fun createWorkConstrains(init: ConstraintsContext.() -> Unit): Constraints {
+    return ConstraintsContext().apply(init).build()
 }
 
 class WorkerTest(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
@@ -180,21 +206,11 @@ class WorkerTest(context: Context, workerParams: WorkerParameters) : Worker(cont
     }
 }
 
-fun createWork(ctx: Context) {
-//    DSL 方案才行
-
-//    WorkManager.getInstance(ctx).enqueue(request);
+fun createWork(init: WorkContext.() -> Unit): WorkRequest? {
+    return WorkContext().apply(init).build()
 }
 
-fun createWork(init: WorkContext.() -> Unit) {
-    val c = WorkContext().apply(init)
-
-}
-
-fun t1() {
-
-    createWork {
-        constraints {
-        }
-    }
+fun createWorkAndEnqueue(init: WorkContext.() -> Unit): WorkManager {
+    val w = WorkContext().apply(init)
+    return w.enqueue(w.build())
 }
