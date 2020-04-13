@@ -20,6 +20,14 @@ android {
     viewBinding {
         enabled = true
     }
+    configurations.all {
+        //每隔24小时检查远程依赖是否存在更新
+        resolutionStrategy.cacheChangingModulesFor 24, 'hours'
+        //每隔10分钟..
+        //resolutionStrategy.cacheChangingModulesFor 10, 'minutes'
+        // 采用动态版本声明的依赖缓存10分钟
+        resolutionStrategy.cacheDynamicVersionsFor 24, 'hours'
+    }
 }
 
 dependencies {
