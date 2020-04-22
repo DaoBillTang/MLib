@@ -28,11 +28,12 @@ import java.util.concurrent.TimeUnit
 class RxHandler {
 
     private val mCompositeDisposable: CompositeDisposable by lazy {
+
         CompositeDisposable()
     }
 
     private val disposableMap: HashMap<String, Disposable> by lazy {
-        HashMap()
+        HashMap<String, Disposable>()
     }
 
     /**
@@ -72,8 +73,8 @@ class RxHandler {
         }
 
         Observable.timer(time, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(disposableObserver)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(disposableObserver)
         mCompositeDisposable.add(disposableObserver)
     }
 
@@ -112,17 +113,19 @@ class RxHandler {
 //                .subscribe(disposableObserver)
 
         Observable.intervalRange(0, timeLimit, 0, 1000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(disposableObserver)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(disposableObserver)
         mCompositeDisposable.add(disposableObserver)
     }
 
 
-    fun retry(key: String,
-              waitTime: Long,
-              block: () -> Boolean,
-              success: (() -> Unit)? = null,
-              error: (() -> Unit)? = null) {
+    fun retry(
+        key: String,
+        waitTime: Long,
+        block: () -> Boolean,
+        success: (() -> Unit)? = null,
+        error: (() -> Unit)? = null
+    ) {
         retry(key, 0, waitTime, block, success, error)
     }
 
@@ -134,12 +137,14 @@ class RxHandler {
      * @param success : 成功之后的 操作
      * @param error : 失败之后的 操作
      */
-    fun retry(key: String,
-              limitime: Int,
-              waitTime: Long,
-              block: () -> Boolean,
-              success: (() -> Unit)? = null,
-              error: (() -> Unit)? = null) {
+    fun retry(
+        key: String,
+        limitime: Int,
+        waitTime: Long,
+        block: () -> Boolean,
+        success: (() -> Unit)? = null,
+        error: (() -> Unit)? = null
+    ) {
         if (checkKey(key)) {
             return
         }
@@ -163,49 +168,51 @@ class RxHandler {
         }
 
         Observable
-                .create(ObservableOnSubscribe<String> { e ->
-                    val b = block()
-                    if (b) {
-                        time++
-                        if (limitime <= 0) {
-                            Linfo { "失败进行第${time}次重试" }
-                            e.onError(Throwable("retry"))
-                        } else if (limitime > 0 && limitime >= time) {
-                            Linfo { "失败进行第${time}次重试" }
-                            e.onError(Throwable("retry"))
-                        } else {
-                            Linfo { "失败，重试次数超限 limit=$limitime , time = $time" }
-                            e.onError(Throwable("More retry times"))
-                        }
+            .create(ObservableOnSubscribe<String> { e ->
+                val b = block()
+                if (b) {
+                    time++
+                    if (limitime <= 0) {
+                        Linfo { "失败进行第${time}次重试" }
+                        e.onError(Throwable("retry"))
+                    } else if (limitime > 0 && limitime >= time) {
+                        Linfo { "失败进行第${time}次重试" }
+                        e.onError(Throwable("retry"))
                     } else {
-                        Linfo { "成功" }
-                        e.onNext("Work Success")
-                        e.onComplete()
+                        Linfo { "失败，重试次数超限 limit=$limitime , time = $time" }
+                        e.onError(Throwable("More retry times"))
                     }
-                })
-                .retryWhen { it ->
-                    it.flatMap {
-                        val msg = it.message
-                        return@flatMap if (msg == "retry") {
-                            Observable.timer(waitTime, TimeUnit.MILLISECONDS)
-                        } else {
+                } else {
+                    Linfo { "成功" }
+                    e.onNext("Work Success")
+                    e.onComplete()
+                }
+            })
+            .retryWhen { it ->
+                it.flatMap {
+                    val msg = it.message
+                    return@flatMap if (msg == "retry") {
+                        Observable.timer(waitTime, TimeUnit.MILLISECONDS)
+                    } else {
 //                            这两个都是可以 取消 重试机制
-                            Observable.error(it)
+                        Observable.error(it)
 //                            Observable.empty()
-                        }
                     }
                 }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(disposableObserver)
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(disposableObserver)
         disposableMap[key] = disposableObserver
         mCompositeDisposable.add(disposableObserver)
     }
 
     class NetWorkContext<T>(private val weakReference: WeakReference<RxHandler>) {
 
-        constructor(weakReference: WeakReference<RxHandler>,
-                    key: String?) : this(weakReference) {
+        constructor(
+            weakReference: WeakReference<RxHandler>,
+            key: String?
+        ) : this(weakReference) {
             this.key = key
         }
 
@@ -251,9 +258,9 @@ class RxHandler {
             if (obs != null && disp != null) {
                 weakReference.get()?.put(k, disp)
                 obs.subscribeOn(subscribeOnScheduler)
-                        .observeOn(observeOnScheduler)
-                        .doFinally { afterEnd?.invoke() }
-                        .subscribe(disp)
+                    .observeOn(observeOnScheduler)
+                    .doFinally { afterEnd?.invoke() }
+                    .subscribe(disp)
             }
         }
 
@@ -301,13 +308,13 @@ class RxHandler {
             val t = disposableMap[key]
             t?.let {
                 mCompositeDisposable.remove(it)
-                        .isTrue {
-                            disposableMap.remove(key)
-                            block?.invoke(true)
-                        }.isFalse {
-                            Lerror { "停止指定 disposable 失败==key =$key" }
-                            block?.invoke(false)
-                        }
+                    .isTrue {
+                        disposableMap.remove(key)
+                        block?.invoke(true)
+                    }.isFalse {
+                        Lerror { "停止指定 disposable 失败==key =$key" }
+                        block?.invoke(false)
+                    }
             }
         }
     }

@@ -11,7 +11,6 @@ import android.util.Log
 import androidx.annotation.RequiresPermission
 import androidx.lifecycle.AndroidViewModel
 import com.dtb.core.base.contract.NetWatchContract
-import com.dtb.core.base.listener.NetWatchdog
 import com.dtb.core.common.utils.safe
 
 /**
@@ -74,7 +73,7 @@ class NetWatchViewModel(application: Application) :
     }
 
     companion object {
-        private val TAG = NetWatchdog::class.java.simpleName
+        private val TAG = NetWatchViewModel::class.java.simpleName
 
         /**
          * 静态方法获取是否有网络连接

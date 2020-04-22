@@ -47,6 +47,9 @@ dependencies {
     implementation deps.work.runtime_ktx
     implementation deps.findBugs
 
+    implementation deps.retrofit.runtime
+    implementation deps.retrofit.gson
+
     testImplementation deps.junit
     testImplementation deps.arch_core.testing
 
