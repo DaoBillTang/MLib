@@ -50,7 +50,7 @@ versions.findBugs = "3.0.2"
 ext.versions = versions
 
 def build_versions = [:]
-build_versions.min_sdk = 14
+build_versions.min_sdk = 16
 build_versions.compile_sdk = 29
 build_versions.target_sdk = 29
 build_versions.build_tools = "29.0.3"
@@ -201,6 +201,10 @@ work.firebase = "androidx.work:work-firebase:$versions.work"
 work.runtime_ktx = "androidx.work:work-runtime-ktx:$versions.work"
 deps.work = work
 
+def tencent = [:]
+tencent.mmkv = 'com.tencent:mmkv-static:1.1.1'
+
+deps.tencent = tencent
 
 ext.deps = deps
 

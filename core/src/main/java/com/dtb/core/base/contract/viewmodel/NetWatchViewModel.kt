@@ -10,6 +10,7 @@ import android.net.NetworkInfo
 import android.util.Log
 import androidx.annotation.RequiresPermission
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.dtb.core.base.contract.NetWatchContract
 import com.dtb.core.common.utils.safe
 
@@ -22,6 +23,13 @@ import com.dtb.core.common.utils.safe
 class NetWatchViewModel(application: Application) :
     AndroidViewModel(application), NetWatchContract {
 
+
+    val data: MutableLiveData<Int> by lazy {
+        val d = MutableLiveData<Int>()
+        d.postValue(UNKNOW)
+        return@lazy d
+    }
+
     //网络变化监听
     private var mNetChangeListener: NetChangeListener? = null
     private var mNetConnectedListener: NetConnectedListener? = null
@@ -30,6 +38,7 @@ class NetWatchViewModel(application: Application) :
     private val mNetIntentFilter = IntentFilter()
 
     private var isReconnect = false
+
     /**
      * 网络变化监听事件
      */
@@ -74,6 +83,10 @@ class NetWatchViewModel(application: Application) :
 
     companion object {
         private val TAG = NetWatchViewModel::class.java.simpleName
+        const val UNKNOW = 0
+        const val DISCONNECTED = 1
+        const val PHONE4G = 2
+        const val WIFI = 3
 
         /**
          * 静态方法获取是否有网络连接
@@ -160,14 +173,17 @@ class NetWatchViewModel(application: Application) :
                     Log.d(TAG, "onWifiTo4G()")
                     if (mNetChangeListener != null) {
                         mNetChangeListener!!.onWifiTo4G()
+                        data.postValue(PHONE4G)
                     }
                 } else if (NetworkInfo.State.CONNECTED == wifiState && NetworkInfo.State.CONNECTED != mobileState) {
                     if (mNetChangeListener != null) {
                         mNetChangeListener!!.on4GToWifi()
+                        data.postValue(WIFI)
                     }
                 } else if (NetworkInfo.State.CONNECTED != wifiState && NetworkInfo.State.CONNECTED != mobileState) {
                     if (mNetChangeListener != null) {
                         mNetChangeListener!!.onNetDisconnected()
+                        data.postValue(DISCONNECTED)
                     }
                 }
             }

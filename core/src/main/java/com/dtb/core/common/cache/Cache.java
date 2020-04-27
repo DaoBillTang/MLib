@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author bill
- *         文件缓存的方案
+ * 文件缓存的方案
  */
 public class Cache {
 

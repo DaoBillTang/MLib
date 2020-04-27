@@ -1,21 +1,26 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+
     compileSdkVersion build_versions.compile_sdk
     buildToolsVersion build_versions.build_tools
     defaultConfig {
+        applicationId "com.dtb.example"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode 7
-        versionName "2.0.1"
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     dataBinding {
@@ -32,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.app_compat
     implementation deps.material
     implementation deps.core_ktx
@@ -39,19 +45,10 @@ dependencies {
     implementation deps.lifecycle.viewmodel_ktx
     implementation deps.lifecycle.livedata_ktx
     implementation deps.activity.activity_ktx
-
-    implementation deps.rxjava2
-    implementation deps.rx_android
+    implementation deps.fragment.runtime
+    implementation project(':core')
 
     implementation deps.kotlin.stdlib
-    implementation deps.work.runtime_ktx
-    implementation deps.findBugs
-
-    implementation deps.tencent.mmkv
-
-    implementation deps.retrofit.runtime
-    implementation deps.retrofit.gson
-
     testImplementation deps.junit
     testImplementation deps.arch_core.testing
 
