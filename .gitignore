@@ -3,7 +3,5 @@
 /local.properties
 .DS_Store
 /build
-/captures
 .externalNativeBuild
-/mrouter-compiler/build/
 /.idea
