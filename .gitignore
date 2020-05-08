@@ -11,3 +11,12 @@
 /build
 /captures
 .externalNativeBuild
+/mrouter-compiler/build/
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/gradle.xml
+/core/src/main/java/com/dtb/core/common/cache/contract/ICache.kt
+/core/src/main/java/com/dtb/core/common/cache/contract/ISerialize.kt
+/.idea/misc.xml
+/.idea/codeStyles/Project.xml
+/.idea/runConfigurations.xml
+/.idea/vcs.xml
