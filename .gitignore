@@ -7,5 +7,3 @@
 .externalNativeBuild
 /mrouter-compiler/build/
 /.idea
-/core/src/main/java/com/dtb/core/common/cache/contract/ICache.kt
-/core/src/main/java/com/dtb/core/common/cache/contract/ISerialize.kt
