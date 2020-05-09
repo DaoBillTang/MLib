@@ -1,90 +1,31 @@
+@file:Suppress("NOTHING_TO_INLINE", "unused")
+
 package com.dtb.core.common.basetype
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.*
-import com.aplus.ppsq.base.R
-import com.aplus.ppsq.base.core.AppManager
+import android.view.View
+import androidx.annotation.DrawableRes
 import com.dtb.core.common.utils.px2sp
 
 /**
- * project com.ecentm.customer.utils
+ * project mlib
  * Created by Bill on 2017/11/13.
- * emal: tangbakzi@daotangbill.uu.me
+ * email: tangbakzi@daotangbill.uu.me
  * @author Bill
  * @version 1.0
  * @description
  */
-/**
- *对一个文字添加样式
- * @param string :需要的文字
- * @param proportion :缩放倍数
- * @param color :需要改变的颜色
- * @param isBold :是否缩放
- */
-
-
-fun getSplanString(string: String, proportion: Float, color: String = "#CFAF78")
-        : SpannableString? {
-    return newSpan(string).addSize(proportion).addColor(color)
-}
-
-fun getSplanString(string: String, proportion: Float, color: Int = 0)
-        : SpannableString? {
-    return newSpan(string).addSize(proportion).addColor(color)
-}
-
-fun newSpan(string: String): SpannableString {
-    return SpannableString(string)
-}
-
-fun SpannableString.setNormalSpan(what: Any): SpannableString {
-    this.setSpan(what, 0, this.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-    return this
-}
-
-fun SpannableString.addColor(color: Int = 0): SpannableString {
-    this.setNormalSpan(ForegroundColorSpan(color))
-    return this
-}
-
-fun SpannableString.addColor(color: String): SpannableString {
-    this.setNormalSpan(ForegroundColorSpan(Color.parseColor(color)))
-    return this
-}
-
-fun SpannableString.addColorId(color: Int): SpannableString {
-    this.setNormalSpan(ForegroundColorSpan(AppManager.instance.findColor(color)))
-    return this
-}
-
-fun SpannableString.addSize(proportion: Float): SpannableString {
-    this.setNormalSpan(RelativeSizeSpan(proportion))
-    return this
-}
-
-/**
- *    public static final Typeface DEFAULT_BOLD;
-/** The NORMAL style of the default sans serif typeface. */
-public static final Typeface SANS_SERIF;
-/** The NORMAL style of the default serif typeface. */
-public static final Typeface SERIF;
-/** The NORMAL style of the default monospace typeface. */
-public static final Typeface MONOSPACE;
- */
-fun SpannableString.addStringStyle(style: Int): SpannableString {
-    this.setNormalSpan(StyleSpan(style))
-    return this
-}
-
+@SuppressLint("SupportAnnotationUsage")
 class SpannableContext(private val str: CharSequence) {
     /**
      * Spannable. SPAN_INCLUSIVE_EXCLUSIVE 前面包括，后面不包括，意思就是在这段文本前部插入新的文本会应用该样式，而在文本后部插入新文本则不会应用该样式
@@ -147,6 +88,13 @@ class SpannableContext(private val str: CharSequence) {
 
     /**
      * Typeface
+     *    public static final Typeface DEFAULT_BOLD;
+    /** The NORMAL style of the default sans serif typeface. */
+    public static final Typeface SANS_SERIF;
+    /** The NORMAL style of the default serif typeface. */
+    public static final Typeface SERIF;
+    /** The NORMAL style of the default monospace typeface. */
+    public static final Typeface MONOSPACE;
      */
     fun style(s: Int) {
         Typeface.BOLD
@@ -159,10 +107,6 @@ class SpannableContext(private val str: CharSequence) {
 
     fun subscript() {
         setSpan(SubscriptSpan())
-    }
-
-    fun img(drawable: Drawable, verticalAlignment: Int) {
-        setSpan(ImageSpan(drawable, verticalAlignment))
     }
 
     /**
@@ -192,15 +136,7 @@ class SpannableContext(private val str: CharSequence) {
         bitmap: Bitmap,
         verticalAlignment: Int
     ) {
-        super(verticalAlignment)
-        mContext = context
-        mDrawable =
-            if (context != null) BitmapDrawable(context.resources, bitmap) else BitmapDrawable(
-                bitmap
-            )
-        val width: Int = mDrawable.getIntrinsicWidth()
-        val height: Int = mDrawable.getIntrinsicHeight()
-        mDrawable.setBounds(0, 0, if (width > 0) width else 0, if (height > 0) height else 0)
+        setSpan(ImageSpan(context, bitmap, verticalAlignment))
     }
 
     /**
@@ -210,7 +146,7 @@ class SpannableContext(private val str: CharSequence) {
      * @param drawable drawable to be rendered
      */
     fun img(drawable: Drawable) {
-        this(drawable, DynamicDrawableSpan.ALIGN_BOTTOM)
+        setSpan(ImageSpan(drawable, DynamicDrawableSpan.ALIGN_BOTTOM))
     }
 
     /**
@@ -221,8 +157,7 @@ class SpannableContext(private val str: CharSequence) {
      * [DynamicDrawableSpan.ALIGN_BASELINE]
      */
     fun img(drawable: Drawable, verticalAlignment: Int) {
-        super(verticalAlignment)
-        mDrawable = drawable
+        setSpan(ImageSpan(drawable, verticalAlignment))
     }
 
     /**
@@ -233,7 +168,7 @@ class SpannableContext(private val str: CharSequence) {
      * @param source   drawable's Uri source
      */
     fun img(drawable: Drawable, source: String) {
-        this(drawable, source, DynamicDrawableSpan.ALIGN_BOTTOM)
+        setSpan(ImageSpan(drawable, source))
     }
 
     /**
@@ -249,9 +184,7 @@ class SpannableContext(private val str: CharSequence) {
         source: String,
         verticalAlignment: Int
     ) {
-        super(verticalAlignment)
-        mDrawable = drawable
-        mSource = source
+        setSpan(ImageSpan(drawable, source, verticalAlignment))
     }
 
     /**
@@ -264,7 +197,7 @@ class SpannableContext(private val str: CharSequence) {
      * @param uri     [Uri] used to construct the drawable that will be rendered
      */
     fun img(context: Context, uri: Uri) {
-        this(context, uri, DynamicDrawableSpan.ALIGN_BOTTOM)
+        setSpan(ImageSpan(context, uri))
     }
 
     /**
@@ -283,10 +216,7 @@ class SpannableContext(private val str: CharSequence) {
         uri: Uri,
         verticalAlignment: Int
     ) {
-        super(verticalAlignment)
-        mContext = context
-        mContentUri = uri
-        mSource = uri.toString()
+        setSpan(ImageSpan(context, uri, verticalAlignment))
     }
 
     /**
@@ -300,7 +230,7 @@ class SpannableContext(private val str: CharSequence) {
         context: Context,
         @DrawableRes resourceId: Int
     ) {
-        this(context, resourceId, DynamicDrawableSpan.ALIGN_BOTTOM)
+        setSpan(ImageSpan(context, resourceId))
     }
 
     /**
@@ -313,17 +243,19 @@ class SpannableContext(private val str: CharSequence) {
      * [DynamicDrawableSpan.ALIGN_BASELINE]
      */
     fun img(
-        context: Context, @DrawableRes resourceId: Int,
-        verticalAlignment: Int
+        context: Context, @DrawableRes resourceId: Int, verticalAlignment: Int
     ) {
-        super(verticalAlignment)
-        mContext = context
-        mResourceId = resourceId
+        setSpan(ImageSpan(context, resourceId, verticalAlignment))
     }
 
-
+    fun click(click: (view: View) -> Unit) {
+        setSpan(object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                click.invoke(widget)
+            }
+        })
+    }
 }
-
 
 fun createSpannableString(str: CharSequence): SpannableStringBuilder {
     return SpannableStringBuilder(str)
@@ -338,10 +270,3 @@ fun SpannableStringBuilder.append(
     return this
 }
 
-
-fun t1() {
-
-    createSpannableString("a")
-
-
-}

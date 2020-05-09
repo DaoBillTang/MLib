@@ -3,7 +3,7 @@ package com.dtb.core.base.contract.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dtb.core.base.contract.TimerContract
-import com.dtb.core.base.contract.model.CountDownEntity
+import com.dtb.core.base.contract.model.CountDownBean
 import com.dtb.core.common.logger.Linfo
 import io.reactivex.Observable
 import io.reactivex.observers.DisposableObserver
@@ -23,21 +23,18 @@ import java.util.concurrent.TimeUnit
  */
 class TimerViewModel : ViewModel(), TimerContract {
 
-    val data: MutableLiveData<CountDownEntity> by lazy {
-        val v = CountDownEntity()
-        val d = MutableLiveData<CountDownEntity>()
-        d.postValue(v)
+    val data: MutableLiveData<CountDownBean> by lazy {
+        val d = MutableLiveData<CountDownBean>()
+        d.postValue(CountDownBean())
         return@lazy d
     }
-
 
     private var timer: DisposableObserver<Long>? = null
 
     private fun postTime(time: Long, show: Boolean) {
-        val v: CountDownEntity? = data.value
+        val v: CountDownBean? = data.value
         v?.show = show
         v?.time = time
-        data.postValue(v)
     }
 
     override fun startCountDown(timeLimit: Long) {

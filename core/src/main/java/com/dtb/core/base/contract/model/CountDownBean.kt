@@ -11,7 +11,7 @@ package com.dtb.core.base.contract.model
  * *
  * @description:
  */
-class CountDownEntity {
+class CountDownBean {
     var time = -1L
     var show = false
 }

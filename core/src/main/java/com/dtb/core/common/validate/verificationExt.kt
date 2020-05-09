@@ -1,7 +1,5 @@
 package com.dtb.core.common.validate;
 
-import com.dtb.core.common.validate.IValidate
-
 fun createVerification(parameter: Any?, def_func: (() -> Unit)?): IValidate<out Any?> {
     return when (parameter) {
         is Int -> ValidateInt(parameter, def_func)

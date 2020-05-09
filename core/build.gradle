@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'com.github.dcendents.android-maven'
 android {
     compileSdkVersion build_versions.compile_sdk
     buildToolsVersion build_versions.build_tools
@@ -46,6 +46,11 @@ dependencies {
     implementation deps.kotlin.stdlib
     implementation deps.work.runtime_ktx
     implementation deps.findBugs
+
+    implementation deps.tencent.mmkv
+
+    implementation deps.retrofit.runtime
+    implementation deps.retrofit.gson
 
     testImplementation deps.junit
     testImplementation deps.arch_core.testing
