@@ -24,7 +24,7 @@ import static com.dtb.mrouter.utils.Consts.TAG;
  * @version 1.0
  * @since 2017/2/23 下午2:09
  */
-@Route(path = "/arouter/service/interceptor")
+@Route(path = "/router/service/interceptor")
 public class InterceptorServiceImpl implements InterceptorService {
     private static boolean interceptorHasInit;
     private static final Object interceptorInitLock = new Object();

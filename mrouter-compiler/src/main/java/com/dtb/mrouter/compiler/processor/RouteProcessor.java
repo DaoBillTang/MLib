@@ -85,7 +85,7 @@ public class RouteProcessor extends BaseProcessor {
                 docWriter = mFiler.createResource(
                         StandardLocation.SOURCE_OUTPUT,
                         PACKAGE_OF_GENERATE_DOCS,
-                        "arouter-map-of-" + moduleName + ".json"
+                        "mrouter-map-of-" + moduleName + ".json"
                 ).openWriter();
             } catch (IOException e) {
                 logger.error("Create doc writer failed, because " + e.getMessage());
