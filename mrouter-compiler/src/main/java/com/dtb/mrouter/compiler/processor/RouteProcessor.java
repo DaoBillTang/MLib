@@ -1,14 +1,14 @@
 package com.dtb.mrouter.compiler.processor;
 
-import com.dtb.mrouter.compiler.entity.RouteDoc;
 import com.dtb.mrouter.compiler.utils.Consts;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.dtb.mrouter.compiler.entity.RouteDoc;
 import com.dtb.mrouter.facade.annotation.Autowired;
 import com.dtb.mrouter.facade.annotation.Route;
 import com.dtb.mrouter.facade.enums.RouteType;
 import com.dtb.mrouter.facade.enums.TypeKind;
 import com.dtb.mrouter.facade.model.RouteMeta;
-import com.dtb.fastjson.JSON;
-import com.dtb.fastjson.serializer.SerializerFeature;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -45,7 +45,7 @@ import javax.tools.StandardLocation;
 import static com.dtb.mrouter.compiler.utils.Consts.ACTIVITY;
 import static com.dtb.mrouter.compiler.utils.Consts.ANNOTATION_TYPE_AUTOWIRED;
 import static com.dtb.mrouter.compiler.utils.Consts.ANNOTATION_TYPE_ROUTE;
-import static com.dtb.mrouter.compiler.utils.Consts.FRAGMENT;
+import static com.dtb.mrouter.compiler.utils.Consts.FRAGMENT_X;
 import static com.dtb.mrouter.compiler.utils.Consts.IPROVIDER_GROUP;
 import static com.dtb.mrouter.compiler.utils.Consts.IROUTE_GROUP;
 import static com.dtb.mrouter.compiler.utils.Consts.ITROUTE_ROOT;
@@ -207,7 +207,7 @@ public class RouteProcessor extends BaseProcessor {
                     routeMeta = new RouteMeta(route, element, RouteType.parse(SERVICE), null);
                 } else if (types.isSubtype(tm, fragmentTmX)) {
                     logger.info(">>> Found fragmentX route: " + tm.toString() + " <<<");
-                    routeMeta = new RouteMeta(route, element, RouteType.parse(FRAGMENT), null);
+                    routeMeta = new RouteMeta(route, element, RouteType.parse(FRAGMENT_X), null);
                 } else {
                     throw new RuntimeException("ARouter::Compiler >>> Found unsupported class type, type = [" + types.toString() + "].");
                 }

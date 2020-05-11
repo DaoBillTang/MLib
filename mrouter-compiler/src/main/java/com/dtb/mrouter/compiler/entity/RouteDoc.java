@@ -30,7 +30,8 @@ public class RouteDoc {
     private int mark;
     @JSONField(ordinal = 8)
     private List<Param> params;
-
+    @JSONField(ordinal = 9)
+    private int resID;
     public String getGroup() {
         return group;
     }
@@ -45,6 +46,14 @@ public class RouteDoc {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public int getResID() {
+        return resID;
+    }
+
+    public void setResID(int resID) {
+        this.resID = resID;
     }
 
     public String getPrototype() {

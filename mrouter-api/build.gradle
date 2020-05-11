@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
@@ -33,8 +34,8 @@ android {
 
 dependencies {
     annotationProcessor project(':mrouter-compiler')
-//    annotationProcessor 'com.alibaba:arouter-compiler:1.2.0'
-    api 'com.alibaba:arouter-annotation:1.0.6'
+    api 'com.github.DaoBillTang.MLib:mrouter-annotation:2.0.1B2'
     implementation deps.app_compat
+    implementation deps.kotlin.stdlib
 }
 

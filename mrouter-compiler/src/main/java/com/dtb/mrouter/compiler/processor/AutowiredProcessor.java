@@ -1,8 +1,8 @@
 package com.dtb.mrouter.compiler.processor;
 
-import com.alibaba.android.arouter.compiler.utils.Consts;
-import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.alibaba.android.arouter.facade.enums.TypeKind;
+import com.dtb.mrouter.compiler.utils.Consts;
+import com.dtb.mrouter.facade.annotation.Autowired;
+import com.dtb.mrouter.facade.enums.TypeKind;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -33,13 +33,14 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
-import static com.alibaba.android.arouter.compiler.utils.Consts.ANNOTATION_TYPE_AUTOWIRED;
-import static com.alibaba.android.arouter.compiler.utils.Consts.ISYRINGE;
-import static com.alibaba.android.arouter.compiler.utils.Consts.JSON_SERVICE;
-import static com.alibaba.android.arouter.compiler.utils.Consts.NAME_OF_AUTOWIRED;
-import static com.alibaba.android.arouter.compiler.utils.Consts.PACKAGE_OF_ROOT;
-import static com.alibaba.android.arouter.compiler.utils.Consts.TYPE_WRAPPER;
-import static com.alibaba.android.arouter.compiler.utils.Consts.WARNING_TIPS;
+import static com.dtb.mrouter.compiler.utils.Consts.ANNOTATION_TYPE_AUTOWIRED;
+import static com.dtb.mrouter.compiler.utils.Consts.ISYRINGE;
+import static com.dtb.mrouter.compiler.utils.Consts.JSON_SERVICE;
+import static com.dtb.mrouter.compiler.utils.Consts.METHOD_INJECT;
+import static com.dtb.mrouter.compiler.utils.Consts.NAME_OF_AUTOWIRED;
+import static com.dtb.mrouter.compiler.utils.Consts.PACKAGE_OF_ROOT;
+import static com.dtb.mrouter.compiler.utils.Consts.TYPE_WRAPPER;
+import static com.dtb.mrouter.compiler.utils.Consts.WARNING_TIPS;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
 /**
@@ -85,8 +86,7 @@ public class AutowiredProcessor extends BaseProcessor {
         TypeElement type_JsonService = elementUtils.getTypeElement(JSON_SERVICE);
         TypeMirror iProvider = elementUtils.getTypeElement(Consts.IPROVIDER).asType();
         TypeMirror activityTm = elementUtils.getTypeElement(Consts.ACTIVITY).asType();
-        TypeMirror fragmentTm = elementUtils.getTypeElement(Consts.FRAGMENT).asType();
-        TypeMirror fragmentTmV4 = elementUtils.getTypeElement(Consts.FRAGMENT_V4).asType();
+        TypeMirror fragmentTm = elementUtils.getTypeElement(Consts.FRAGMENT_X).asType();
 
         // Build input param name.
         ParameterSpec objectParamSpec = ParameterSpec.builder(TypeName.OBJECT, "target").build();
@@ -156,7 +156,7 @@ public class AutowiredProcessor extends BaseProcessor {
                         if (types.isSubtype(parent.asType(), activityTm)) {  // Activity, then use getIntent()
                             isActivity = true;
                             statement += "getIntent().";
-                        } else if (types.isSubtype(parent.asType(), fragmentTm) || types.isSubtype(parent.asType(), fragmentTmV4)) {   // Fragment, then use getArguments()
+                        } else if (types.isSubtype(parent.asType(), fragmentTm)) {   // Fragment, then use getArguments()
                             statement += "getArguments().";
                         } else {
                             throw new IllegalAccessException("The field [" + fieldName + "] need autowired from intent, its parent must be activity or fragment!");

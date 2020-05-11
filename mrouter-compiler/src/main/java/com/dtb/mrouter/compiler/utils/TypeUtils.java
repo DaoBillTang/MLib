@@ -7,14 +7,14 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 
-import static com.dtb.mrouter.compiler.utils.Consts.BOOLEAN;
 import static com.dtb.mrouter.compiler.utils.Consts.BYTE;
+import static com.dtb.mrouter.compiler.utils.Consts.SERIALIZABLE;
+import static com.dtb.mrouter.compiler.utils.Consts.BOOLEAN;
 import static com.dtb.mrouter.compiler.utils.Consts.DOUBEL;
 import static com.dtb.mrouter.compiler.utils.Consts.FLOAT;
 import static com.dtb.mrouter.compiler.utils.Consts.INTEGER;
 import static com.dtb.mrouter.compiler.utils.Consts.LONG;
 import static com.dtb.mrouter.compiler.utils.Consts.PARCELABLE;
-import static com.dtb.mrouter.compiler.utils.Consts.SERIALIZABLE;
 import static com.dtb.mrouter.compiler.utils.Consts.SHORT;
 import static com.dtb.mrouter.compiler.utils.Consts.STRING;
 import static com.dtb.mrouter.compiler.utils.Consts.CHAR;

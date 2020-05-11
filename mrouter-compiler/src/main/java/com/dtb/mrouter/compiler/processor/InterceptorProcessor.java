@@ -23,14 +23,18 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.annotation.processing.SupportedOptions;
-import javax.annotation.processing.SupportedSourceVersion;
-import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
-import static com.dtb.mrouter.compiler.utils.Consts.*;
+import static com.dtb.mrouter.compiler.utils.Consts.ANNOTATION_TYPE_INTECEPTOR;
+import static com.dtb.mrouter.compiler.utils.Consts.IINTERCEPTOR;
+import static com.dtb.mrouter.compiler.utils.Consts.IINTERCEPTOR_GROUP;
+import static com.dtb.mrouter.compiler.utils.Consts.METHOD_LOAD_INTO;
+import static com.dtb.mrouter.compiler.utils.Consts.NAME_OF_INTERCEPTOR;
+import static com.dtb.mrouter.compiler.utils.Consts.PACKAGE_OF_GENERATE_FILE;
+import static com.dtb.mrouter.compiler.utils.Consts.SEPARATOR;
+import static com.dtb.mrouter.compiler.utils.Consts.WARNING_TIPS;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
 /**

@@ -1,4 +1,4 @@
-package com.alibaba.android.arouter.compiler.utils
+package com.dtb.mrouter.compiler.utils
 
 /**
  * Some consts used in processors
