@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -53,6 +54,14 @@ public abstract class BaseProcessor extends AbstractProcessor {
 
         // Attempt to get user configuration [moduleName]
         Map<String, String> options = processingEnv.getOptions();
+        Set<String> k = options.keySet();
+        k.forEach(new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+                logger.error(s + options.get(s));
+            }
+        });
+
         if (MapUtils.isNotEmpty(options)) {
             moduleName = options.get(KEY_MODULE_NAME);
             generateDoc = VALUE_ENABLE.equals(options.get(KEY_GENERATE_DOC_NAME));
