@@ -1,21 +1,17 @@
-package com.dtb.router.compiler.processor;
+package com.dtb.validate.precessor;
 
-import com.dtb.router.compiler.utils.Logger;
-import com.dtb.router.compiler.utils.TypeUtils;
+
 import com.dtb.router.compiler.utils.Consts;
+import com.dtb.validate.utils.Logger;
 
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
-import javax.lang.model.SourceVersion;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 
@@ -32,7 +28,6 @@ public abstract class BaseProcessor extends AbstractProcessor {
     Logger logger;
     Types types;
     Elements elementUtils;
-    TypeUtils typeUtils;
     // Module name, maybe its 'app' or others
     String moduleName = null;
     // If need generate router doc
@@ -45,7 +40,6 @@ public abstract class BaseProcessor extends AbstractProcessor {
         mFiler = processingEnv.getFiler();
         types = processingEnv.getTypeUtils();
         elementUtils = processingEnv.getElementUtils();
-        typeUtils = new TypeUtils(types, elementUtils);
         logger = new Logger(processingEnv.getMessager());
 
         // Attempt to get user configuration [moduleName]
@@ -66,16 +60,4 @@ public abstract class BaseProcessor extends AbstractProcessor {
         }
     }
 
-    @Override
-    public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latestSupported();
-    }
-
-    @Override
-    public Set<String> getSupportedOptions() {
-        return new HashSet<String>() {{
-            this.add(Consts.KEY_MODULE_NAME);
-            this.add(Consts.KEY_GENERATE_DOC_NAME);
-        }};
-    }
 }

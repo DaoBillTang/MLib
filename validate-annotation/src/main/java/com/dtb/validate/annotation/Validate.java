@@ -1,6 +1,5 @@
 package com.dtb.validate.annotation;
 
-import com.dtb.validate.contract.ToValidate;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,5 +9,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.CLASS)
 public @interface Validate {
-
+    ValidateRule[] rules();
 }
