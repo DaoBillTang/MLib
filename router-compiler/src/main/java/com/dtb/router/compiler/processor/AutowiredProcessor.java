@@ -1,8 +1,8 @@
 package com.dtb.router.compiler.processor;
 
 import com.dtb.router.compiler.utils.Consts;
-import com.dtb.mrouter.facade.annotation.Autowired;
-import com.dtb.mrouter.facade.enums.TypeKind;
+import com.dtb.router.facade.annotation.Autowired;
+import com.dtb.router.facade.enums.TypeKind;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -46,7 +46,7 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 @SupportedAnnotationTypes({Consts.ANNOTATION_TYPE_AUTOWIRED})
 public class AutowiredProcessor extends BaseProcessor {
     private Map<TypeElement, List<Element>> parentAndChild = new HashMap<>();   // Contain field need autowired and his super class.
-    private static final ClassName ARouterClass = ClassName.get(Consts.PACKAGE_OF_ROOT + ".launcher", "ARouter");
+    private static final ClassName RouterClass = ClassName.get(Consts.PACKAGE_OF_ROOT + ".launcher", Consts.PROJECT);
     private static final ClassName AndroidLog = ClassName.get("android.util", "Log");
 
     @Override
@@ -108,7 +108,7 @@ public class AutowiredProcessor extends BaseProcessor {
                 FieldSpec jsonServiceField = FieldSpec.builder(TypeName.get(type_JsonService.asType()), "serializationService", Modifier.PRIVATE).build();
                 helper.addField(jsonServiceField);
 
-                injectMethodBuilder.addStatement("serializationService = $T.getInstance().navigation($T.class)", ARouterClass, ClassName.get(type_JsonService));
+                injectMethodBuilder.addStatement("serializationService = $T.getInstance().navigation($T.class)", RouterClass, ClassName.get(type_JsonService));
                 injectMethodBuilder.addStatement("$T substitute = ($T)target", ClassName.get(parent), ClassName.get(parent));
 
                 // Generate method body, start inject.
@@ -121,7 +121,7 @@ public class AutowiredProcessor extends BaseProcessor {
                             // Getter
                             injectMethodBuilder.addStatement(
                                     "substitute." + fieldName + " = $T.getInstance().navigation($T.class)",
-                                    ARouterClass,
+                                    RouterClass,
                                     ClassName.get(element.asType())
                             );
                         } else {    // use byName
@@ -129,7 +129,7 @@ public class AutowiredProcessor extends BaseProcessor {
                             injectMethodBuilder.addStatement(
                                     "substitute." + fieldName + " = ($T)$T.getInstance().build($S).navigation()",
                                     ClassName.get(element.asType()),
-                                    ARouterClass,
+                                    RouterClass,
                                     fieldConfig.name()
                             );
                         }

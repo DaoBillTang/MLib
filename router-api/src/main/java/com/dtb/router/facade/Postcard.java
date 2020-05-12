@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityOptionsCompat;
 
 import com.dtb.router.facade.callback.NavigationCallback;
-import com.dtb.mrouter.facade.model.RouteMeta;
+import com.dtb.router.facade.model.RouteMeta;
 import com.dtb.router.facade.service.SerializationService;
 import com.dtb.router.facade.template.IProvider;
 import com.dtb.router.launcher.Router;

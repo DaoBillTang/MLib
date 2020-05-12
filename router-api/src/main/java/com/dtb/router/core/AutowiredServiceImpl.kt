@@ -2,7 +2,7 @@ package com.dtb.router.core
 
 import android.content.Context
 import android.util.LruCache
-import com.dtb.mrouter.facade.annotation.Route
+import com.dtb.router.facade.annotation.Route
 import com.dtb.router.facade.service.AutowiredService
 import com.dtb.router.facade.template.ISyringe
 import com.dtb.router.utils.Consts

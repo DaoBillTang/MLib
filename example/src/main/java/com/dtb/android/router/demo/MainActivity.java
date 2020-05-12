@@ -18,7 +18,6 @@ import com.dtb.android.router.demo.testinject.TestParcelable;
 import com.dtb.android.router.demo.testinject.TestSerializable;
 import com.dtb.android.router.demo.testservice.HelloService;
 import com.dtb.android.router.demo.testservice.SingleService;
-import com.dtb.android.router.demo.R;
 import com.dtb.router.facade.Postcard;
 import com.dtb.router.facade.callback.NavCallback;
 import com.dtb.router.launcher.Router;

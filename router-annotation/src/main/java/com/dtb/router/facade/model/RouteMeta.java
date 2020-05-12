@@ -13,7 +13,7 @@ import javax.lang.model.element.Element;
  * It contains basic route information.
  *
  * @author Alex <a href="mailto:zhilong.liu@aliyun.com">Contact me.</a>
- *          dtb
+ * dtb
  * @version 1.0
  * @since 16/8/24 09:45
  */
@@ -22,7 +22,7 @@ public class RouteMeta {
     private Element rawType;        // Raw type of route
     private Class<?> destination;   // Destination
     private String path;            // Path of route
-    private int resID;
+    private int resID = -1;         // res id of route
     private String group;           // Group of route
     private int priority = -1;      // The smaller the number, the higher the priority
     private int extra;              // Extra data

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.dtb.android.router.demo.testinject.TestObj;
-import com.dtb.mrouter.facade.annotation.Route;
 import com.dtb.router.facade.annotation.Autowired;
 import com.dtb.router.facade.annotation.Route;
 

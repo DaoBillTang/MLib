@@ -1,7 +1,7 @@
 package com.dtb.router.compiler.processor;
 
 import com.dtb.router.compiler.utils.Consts;
-import com.dtb.mrouter.facade.annotation.Interceptor;
+import com.dtb.router.facade.annotation.Interceptor;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;

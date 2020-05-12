@@ -1,14 +1,14 @@
 package com.dtb.router.compiler.processor;
 
-import com.dtb.router.compiler.utils.Consts;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.dtb.router.compiler.entity.RouteDoc;
-import com.dtb.mrouter.facade.annotation.Autowired;
-import com.dtb.mrouter.facade.annotation.Route;
-import com.dtb.mrouter.facade.enums.RouteType;
-import com.dtb.mrouter.facade.enums.TypeKind;
-import com.dtb.mrouter.facade.model.RouteMeta;
+import com.dtb.router.compiler.utils.Consts;
+import com.dtb.router.facade.annotation.Autowired;
+import com.dtb.router.facade.annotation.Route;
+import com.dtb.router.facade.enums.RouteType;
+import com.dtb.router.facade.enums.TypeKind;
+import com.dtb.router.facade.model.RouteMeta;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -233,7 +233,7 @@ public class RouteProcessor extends BaseProcessor {
                                 if (types.isSameType(tm, iProvider)) {   // Its implements iProvider interface himself.
                                     // This interface extend the IProvider, so it can be used for mark provider
                                     loadIntoMethodOfProviderBuilder.addStatement(
-                                            "providers.put($S, $T.build($T." + routeMeta.getType() + ", $T.class, $S, $S, null, " + routeMeta.getPriority() + ", " + routeMeta.getExtra() + "))",
+                                            "providers.put($S, $T.build($T." + routeMeta.getType() + ", $T.class, $S," + routeMeta.getResID() + ", $S, null, " + routeMeta.getPriority() + ", " + routeMeta.getExtra() + "))",
                                             (routeMeta.getRawType()).toString(),
                                             routeMetaCn,
                                             routeTypeCn,
@@ -243,7 +243,7 @@ public class RouteProcessor extends BaseProcessor {
                                 } else if (types.isSubtype(tm, iProvider)) {
                                     // This interface extend the IProvider, so it can be used for mark provider
                                     loadIntoMethodOfProviderBuilder.addStatement(
-                                            "providers.put($S, $T.build($T." + routeMeta.getType() + ", $T.class, $S, $S, null, " + routeMeta.getPriority() + ", " + routeMeta.getExtra() + "))",
+                                            "providers.put($S, $T.build($T." + routeMeta.getType() + ", $T.class, $S," + routeMeta.getResID() + ", $S, null, " + routeMeta.getPriority() + ", " + routeMeta.getExtra() + "))",
                                             tm.toString(),    // So stupid, will duplicate only save class name.
                                             routeMetaCn,
                                             routeTypeCn,
@@ -281,8 +281,9 @@ public class RouteProcessor extends BaseProcessor {
                     }
                     String mapBody = mapBodyBuilder.toString();
 
+
                     loadIntoMethodOfGroupBuilder.addStatement(
-                            "atlas.put($S, $T.build($T." + routeMeta.getType() + ", $T.class, $S, $S, " + (StringUtils.isEmpty(mapBody) ? null : ("new java.util.HashMap<String, Integer>(){{" + mapBodyBuilder.toString() + "}}")) + ", " + routeMeta.getPriority() + ", " + routeMeta.getExtra() + "))",
+                            "atlas.put($S, $T.build($T." + routeMeta.getType() + ", $T.class, $S," + routeMeta.getResID() + ", $S, " + (StringUtils.isEmpty(mapBody) ? null : ("new java.util.HashMap<String, Integer>(){{" + mapBodyBuilder.toString() + "}}")) + ", " + routeMeta.getPriority() + ", " + routeMeta.getExtra() + "))",
                             routeMeta.getPath(),
                             routeMetaCn,
                             routeTypeCn,
@@ -316,7 +317,6 @@ public class RouteProcessor extends BaseProcessor {
                     loadIntoMethodOfRootBuilder.addStatement("routes.put($S, $T.class)", entry.getKey(), ClassName.get(Consts.PACKAGE_OF_GENERATE_FILE, entry.getValue()));
                 }
             }
-
             // Output route doc
             if (generateDoc) {
                 docWriter.append(JSON.toJSONString(docSource, SerializerFeature.PrettyFormat));

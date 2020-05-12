@@ -2,7 +2,7 @@ package com.dtb.android.router.demo.testservice;
 
 import android.content.Context;
 
-import com.dtb.mrouter.facade.annotation.Route;
+import com.dtb.router.facade.annotation.Route;
 import com.dtb.router.facade.service.SerializationService;
 import com.google.gson.Gson;
 

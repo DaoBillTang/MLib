@@ -35,7 +35,8 @@ android {
 
 dependencies {
     kapt project(':router-compiler')
-    api 'com.github.DaoBillTang.MLib:router-annotation:2.0.1B4'
+//    api 'com.github.DaoBillTang.MLib:router-annotation:2.0.1B5'
+    api project(':router-annotation')
     implementation deps.app_compat
     implementation deps.kotlin.stdlib
 }

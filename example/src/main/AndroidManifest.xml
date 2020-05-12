@@ -45,14 +45,11 @@
         </activity>
         <activity android:name="com.dtb.android.router.demo.TestWebview">
         </activity>
-        <activity android:name="com.dtb.android.router.demo.testactivity.Test1Activity">
-        </activity>
-        <activity android:name="com.dtb.android.router.demo.testactivity.Test2Activity">
-        </activity>
-        <activity android:name="com.dtb.android.router.demo.testactivity.Test3Activity">
-        </activity>
-        <activity android:name="com.dtb.android.router.demo.testactivity.Test4Activity">
-        </activity>
+        <activity android:name="com.dtb.android.router.demo.testactivity.Test1Activity" />
+        <activity android:name="com.dtb.android.router.demo.testactivity.Test2Activity" />
+        <activity android:name="com.dtb.android.router.demo.testactivity.Test3Activity" />
+        <activity android:name="com.dtb.android.router.demo.testactivity.Test4Activity" />
+        <activity android:name=".testactivity.ErrActivity" />
     </application>
 
 </manifest>

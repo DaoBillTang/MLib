@@ -1,6 +1,6 @@
 package com.dtb.router.facade.template;
 
-import com.dtb.mrouter.facade.model.RouteMeta;
+import com.dtb.router.facade.model.RouteMeta;
 
 import java.util.Map;
 

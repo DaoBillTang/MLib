@@ -8,7 +8,7 @@ android {
     compileSdkVersion build_versions.compile_sdk
     buildToolsVersion build_versions.build_tools
     defaultConfig {
-        applicationId "com.dtb.example"
+        applicationId "com.dtb.android.router.demo"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1
@@ -53,9 +53,11 @@ dependencies {
     implementation deps.lifecycle.livedata_ktx
     implementation deps.activity.activity_ktx
     implementation deps.fragment.runtime
+
     implementation project(':core')
     implementation project(':router-api')
-
+    implementation project(':module-kotlin')
+    kapt project(':router-compiler')
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation deps.kotlin.stdlib
     testImplementation deps.junit

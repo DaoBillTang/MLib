@@ -1,7 +1,7 @@
 package com.dtb.router.core;
 
 import com.dtb.router.base.UniqueKeyTreeMap;
-import com.dtb.mrouter.facade.model.RouteMeta;
+import com.dtb.router.facade.model.RouteMeta;
 import com.dtb.router.facade.template.IInterceptor;
 import com.dtb.router.facade.template.IProvider;
 import com.dtb.router.facade.template.IRouteGroup;
