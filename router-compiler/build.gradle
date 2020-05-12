@@ -7,7 +7,7 @@ compileJava {
 }
 
 dependencies {
-    implementation 'com.github.DaoBillTang.MLib:mrouter-annotation:2.0.1B2'
+    implementation 'com.github.DaoBillTang.MLib:router-annotation:2.0.1B4'
 
     implementation 'com.google.auto.service:auto-service:1.0-rc6'
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'

@@ -1,5 +1,5 @@
 include ':core'
-//include ':example'
+include ':example'
 include ':router-annotation'
 include ':router-compiler'
 include ':router-api'
