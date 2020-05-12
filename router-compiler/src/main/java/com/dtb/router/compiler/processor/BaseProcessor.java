@@ -51,12 +51,7 @@ public abstract class BaseProcessor extends AbstractProcessor {
         // Attempt to get user configuration [moduleName]
         Map<String, String> options = processingEnv.getOptions();
         Set<String> k = options.keySet();
-        k.forEach(new Consumer<String>() {
-            @Override
-            public void accept(String s) {
-                logger.error(s + options.get(s));
-            }
-        });
+        k.forEach(s -> logger.info(s + options.get(s)));
 
         if (MapUtils.isNotEmpty(options)) {
             moduleName = options.get(Consts.KEY_MODULE_NAME);

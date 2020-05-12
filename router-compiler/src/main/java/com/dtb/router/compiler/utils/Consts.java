@@ -59,7 +59,7 @@ public class Consts {
             "        ...\n" +
             "        javaCompileOptions {\n" +
             "            annotationProcessorOptions {\n" +
-            "                arguments = [ROUTER_MODULE_NAME: project.getName()]\n" +
+            "                arguments = [\"ROUTER_MODULE_NAME\": project.getName()]\n" +
             "            }\n" +
             "        }\n" +
             "    }\n" +

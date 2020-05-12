@@ -13,7 +13,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ROUTER_MODULE_NAME: project.getName()]
+                arguments = ["ROUTER_MODULE_NAME": project.getName()]
             }
         }
     }

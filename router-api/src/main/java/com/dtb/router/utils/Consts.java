@@ -8,7 +8,7 @@ package com.dtb.router.utils;
  * @since 16/8/23 9:38
  */
 public final class Consts {
-    public static final String SDK_NAME = "MRouter";
+    public static final String SDK_NAME = "Router";
     public static final String TAG = SDK_NAME + "::";
     public static final String SEPARATOR = "$$";
     public static final String SUFFIX_ROOT = "Root";
@@ -16,7 +16,7 @@ public final class Consts {
     public static final String SUFFIX_PROVIDERS = "Providers";
     public static final String SUFFIX_AUTOWIRED = SEPARATOR + SDK_NAME + SEPARATOR + "Autowired";
     public static final String DOT = ".";
-    public static final String ROUTE_ROOT_PAKCAGE = "com.dtb.mrouter.routes";
+    public static final String ROUTE_ROOT_PAKCAGE = "com.dtb.router.routes";
 
     public static final String Router_SP_CACHE_KEY = "SP_Router_CACHE";
     public static final String Router_SP_KEY_MAP = "ROUTER_MAP";
