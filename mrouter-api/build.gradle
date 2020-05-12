@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.dcendents.android-maven'
 
 android {
@@ -33,7 +34,7 @@ android {
 }
 
 dependencies {
-    annotationProcessor project(':mrouter-compiler')
+    kapt project(':router-compiler')
     api 'com.github.DaoBillTang.MLib:mrouter-annotation:2.0.1B2'
     implementation deps.app_compat
     implementation deps.kotlin.stdlib

@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.alibaba.android.arouter.demo.testactivity.Test1Activity">
+    tools:context="com.alibaba.android.arouter.demo.com.dtb.android.arouter.demo.testactivity.Test1Activity">
 
     <TextView
         android:id="@+id/test"
