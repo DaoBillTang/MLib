@@ -1,8 +1,8 @@
 package com.dtb.example.ui
 
 import android.os.Bundle
+import com.dtb.android.router.demo.R
 import com.dtb.core.base.DtbBaseActivity
-import com.dtb.example.R
 
 
 /**

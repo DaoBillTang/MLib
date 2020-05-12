@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.github.dcendents.android-maven'
+
+android {
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["ROUTER_MODULE_NAME": project.getName()]
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled false
+        }
+
+        lintOptions { abortOnError false }
+    }
+}
+
+dependencies {
+    kapt project(':router-compiler')
+//    api 'com.github.DaoBillTang.MLib:router-annotation:2.0.1B5'
+    api project(':router-annotation')
+    implementation deps.app_compat
+    implementation deps.kotlin.stdlib
+}
+

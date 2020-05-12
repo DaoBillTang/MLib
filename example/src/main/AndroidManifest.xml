@@ -1,21 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dtb.example">
+          package="com.dtb.android.router.demo">
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:label="ARouter demo"
+        android:theme="@style/Base.Theme.AppCompat">
+        <activity android:name="com.dtb.android.router.demo.SchemeFilterActivity">
 
-                <category android:name="android.intent.category.LAUNCHER" />
+            <!-- Scheme -->
+            <intent-filter>
+                <data
+                    android:host="m.aliyun.com"
+                    android:scheme="arouter"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+
+            <!-- App Links -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="m.aliyun.com"
+                    android:scheme="http"/>
+                <data
+                    android:host="m.aliyun.com"
+                    android:scheme="https"/>
             </intent-filter>
         </activity>
+        <activity android:name="com.dtb.android.router.demo.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.dtb.android.router.demo.TestWebview">
+        </activity>
+        <activity android:name="com.dtb.android.router.demo.testactivity.Test1Activity" />
+        <activity android:name="com.dtb.android.router.demo.testactivity.Test2Activity" />
+        <activity android:name="com.dtb.android.router.demo.testactivity.Test3Activity" />
+        <activity android:name="com.dtb.android.router.demo.testactivity.Test4Activity" />
+        <activity android:name=".testactivity.ErrActivity" />
     </application>
 
 </manifest>

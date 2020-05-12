@@ -1,0 +1,21 @@
+apply plugin: 'java'
+apply plugin: 'com.github.dcendents.android-maven'
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+dependencies {
+//    implementation 'com.github.DaoBillTang.MLib:router-annotation:2.0.1B5'
+    implementation project(':router-annotation')
+
+    implementation 'com.google.auto.service:auto-service:1.0-rc6'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
+    implementation 'com.squareup:javapoet:1.10.0'
+
+    implementation 'org.apache.commons:commons-lang3:3.5'
+    implementation 'org.apache.commons:commons-collections4:4.1'
+
+    implementation 'com.alibaba:fastjson:1.2.61'
+}
