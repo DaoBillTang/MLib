@@ -34,7 +34,6 @@ abstract class DtbBaseActivity :
     ProgressView,
     HintView {
 
-
     open val progressViewImpl: ProgressViewImpl by lazy {
         val v = ProgressViewImpl(this)
         lifecycle.addObserver(v)
@@ -56,7 +55,7 @@ abstract class DtbBaseActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addObserver()
-        setContentView(getLayoutResource())
+        onInitContentView()
         onTintStatusBar()
         onInitToolBar()
         if (addSoftInputListener()) {
@@ -65,9 +64,11 @@ abstract class DtbBaseActivity :
         }
     }
 
-    open fun addObserver(){
+    open fun addObserver() {
         lifecycle.addObserver(lifecycleSubject)
     }
+
+    abstract fun onInitContentView()
 
     @CheckResult
     override fun lifecycle(): Observable<Lifecycle.Event> = lifecycleSubject.lifecycle()
@@ -80,7 +81,6 @@ abstract class DtbBaseActivity :
     override fun <T> bindToLifecycle(): LifecycleTransformer<T> = lifecycleSubject.bindToLifecycle()
 
 
-    protected abstract fun getLayoutResource(): Int
     /********************对状态栏进行修改******************/
     /**
      * 对状态栏进行修改
