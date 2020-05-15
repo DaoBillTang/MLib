@@ -10,4 +10,7 @@
     <item name="sRightSwitchId" type="id" />
     <!--自动轮滑的viewpager-->
     <item name="viewpager_inner" type="id" />
+    <!--    状态栏的变更-->
+    <item name="statusbarutil_fake_status_bar_view" type="id" />
+    <item name="statusbarutil_translucent_view" type="id" />
 </resources>

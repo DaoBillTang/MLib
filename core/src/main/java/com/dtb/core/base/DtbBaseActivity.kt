@@ -8,14 +8,12 @@ import android.view.ViewTreeObserver
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
-import com.dtb.core.R
 import com.dtb.core.base.contract.HintView
 import com.dtb.core.base.contract.HintViewImpl
 import com.dtb.core.base.contract.ProgressView
 import com.dtb.core.base.contract.ProgressViewImpl
 import com.dtb.core.common.permissions.PermissionCallbacks
 import com.dtb.core.common.permissions.PermissionsResult
-import com.dtb.core.common.statusbar.StatusBarHelper
 import com.dtb.core.common.utils.screenH
 import com.dtb.core.rx.lifecycle.LifecycleEventSubject
 import com.dtb.core.rx.lifecycle.LifecycleProvider
@@ -43,8 +41,6 @@ abstract class DtbBaseActivity :
     open val hintViewImpl: HintView by lazy {
         HintViewImpl(this)
     }
-
-    open var mStatusBarHelper: StatusBarHelper? = null
 
     open val handler: RxHandler by lazy {
         RxHandler()
@@ -80,19 +76,12 @@ abstract class DtbBaseActivity :
     @CheckResult
     override fun <T> bindToLifecycle(): LifecycleTransformer<T> = lifecycleSubject.bindToLifecycle()
 
-
     /********************对状态栏进行修改******************/
     /**
      * 对状态栏进行修改
      */
     open fun onTintStatusBar() {
-        if (mStatusBarHelper == null) {
-            mStatusBarHelper = StatusBarHelper(
-                this, StatusBarHelper.LEVEL_19_TRANSLUCENT,
-                StatusBarHelper.LEVEL_21_VIEW
-            )
-        }
-        mStatusBarHelper!!.setColor(resources.getColor(R.color.colorPrimaryDark))
+
     }
     /********************对toolbar 进行修改******************/
     /**
