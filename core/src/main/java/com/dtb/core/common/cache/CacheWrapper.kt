@@ -2,9 +2,8 @@ package com.dtb.core.common.cache
 
 import com.dtb.core.common.cache.contract.ICache
 import com.dtb.core.common.cache.contract.ISerialize
-import java.lang.NullPointerException
 
-abstract class CacheWrapper(val cache: ICache) : ICache {
+open class CacheWrapper(val cache: ICache) : ICache {
     var jsonImpl: ISerialize? = null
         get() {
             if (field == null) {
@@ -13,7 +12,7 @@ abstract class CacheWrapper(val cache: ICache) : ICache {
             return field
         }
 
-    constructor(cache: ICache, jsonImpl: DefSerializeImpl) : this(cache) {
+    constructor(cache: ICache, jsonImpl: ISerialize) : this(cache) {
         this.jsonImpl = jsonImpl
     }
 

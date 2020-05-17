@@ -13,6 +13,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.util.DisplayMetrics
 import android.util.SparseArray
+import android.util.TypedValue
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -22,6 +23,8 @@ import androidx.annotation.StringRes
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.dtb.core.common.logger.Lerror
+import com.dtb.core.common.statusbar.StatusBarUtil
 
 
 /**
@@ -64,10 +67,12 @@ inline fun <reified T : View>
  * @param title 标题
  */
 @UiThread
-fun Activity.showResultDialog(title: String?, msg: String?
-                              , button: String = "我知道了") {
+fun Activity.showResultDialog(
+    title: String?, msg: String?
+    , button: String = "我知道了"
+) {
     AlertDialog.Builder(this).setTitle(title).setMessage(msg)
-            .setNegativeButton(button, null).create().show()
+        .setNegativeButton(button, null).create().show()
 }
 
 /**
@@ -77,38 +82,44 @@ fun Activity.showResultDialog(title: String?, msg: String?
  * @param title 标题
  */
 @UiThread
-fun Fragment.showResultDialog(msg: String?, title: String?
-                              , button: String = "我知道了") {
+fun Fragment.showResultDialog(
+    msg: String?, title: String?
+    , button: String = "我知道了"
+) {
     this.activity?.let {
         AlertDialog.Builder(it).setTitle(title).setMessage(msg)
-                .setNegativeButton(button, null).create().show()
+            .setNegativeButton(button, null).create().show()
     }
 }
 
 @UiThread
-fun Activity.showConfirmCancelDialog(title: String?, message: String?
-                                     , posListener: DialogInterface.OnClickListener?
-                                     , cancelListener: DialogInterface.OnClickListener?)
+fun Activity.showConfirmCancelDialog(
+    title: String?, message: String?
+    , posListener: DialogInterface.OnClickListener?
+    , cancelListener: DialogInterface.OnClickListener?
+)
         : AlertDialog {
     val dlg = AlertDialog.Builder(this).setMessage(message).setTitle(title)
-            .setPositiveButton("确认", posListener)
-            .setNegativeButton("取消", cancelListener).create()
+        .setPositiveButton("确认", posListener)
+        .setNegativeButton("取消", cancelListener).create()
     dlg.setCanceledOnTouchOutside(false)
     dlg.show()
     return dlg
 }
 
 @UiThread
-fun Fragment.showConfirmCancelDialog(title: String, message: String
-                                     , posListener: DialogInterface.OnClickListener
-                                     , cancelListener: DialogInterface.OnClickListener)
+fun Fragment.showConfirmCancelDialog(
+    title: String, message: String
+    , posListener: DialogInterface.OnClickListener
+    , cancelListener: DialogInterface.OnClickListener
+)
         : AlertDialog? {
     val ctx = this.activity
 
     if (ctx != null) {
         val dlg = AlertDialog.Builder(ctx).setMessage(message).setTitle(title)
-                .setPositiveButton("确认", posListener)
-                .setNegativeButton("取消", cancelListener).create()
+            .setPositiveButton("确认", posListener)
+            .setNegativeButton("取消", cancelListener).create()
         dlg.setCanceledOnTouchOutside(false)
         dlg.show()
         return dlg
@@ -120,7 +131,8 @@ fun Fragment.showConfirmCancelDialog(title: String, message: String
 @Deprecated(" 改到 systemUtils")
 @SuppressLint("MissingPermission")
 fun Context.isNetworkConnected(): Boolean {
-    val mConnectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val mConnectivityManager =
+        this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val ni = mConnectivityManager.activeNetworkInfo
     return ni != null && ni.isConnectedOrConnecting
 }
@@ -131,7 +143,7 @@ fun Context.isWifiConnected(): Boolean {
     val mConnectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE)
             as ConnectivityManager
     val mWiFiNetworkInfo = mConnectivityManager
-            .getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+        .getNetworkInfo(ConnectivityManager.TYPE_WIFI)
     if (mWiFiNetworkInfo != null) {
         return mWiFiNetworkInfo.isAvailable
     }
@@ -161,8 +173,10 @@ fun Context.IsGpsOPen(): Boolean {
  */
 fun Context.openGPS() {
     val GPSIntent = Intent()
-    GPSIntent.setClassName("com.android.settings",
-            "com.android.settings.widget.SettingsAppWidgetProvider")
+    GPSIntent.setClassName(
+        "com.android.settings",
+        "com.android.settings.widget.SettingsAppWidgetProvider"
+    )
     GPSIntent.addCategory("android.intent.category.ALTERNATIVE")
     GPSIntent.data = Uri.parse("custom:3")
     try {
@@ -176,8 +190,10 @@ fun Context.openGPS() {
 fun Activity.hideKeyboard() {
     val inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE)
             as InputMethodManager?
-    inputMethodManager?.hideSoftInputFromWindow(window.decorView.windowToken
-            , InputMethodManager.HIDE_NOT_ALWAYS)
+    inputMethodManager?.hideSoftInputFromWindow(
+        window.decorView.windowToken
+        , InputMethodManager.HIDE_NOT_ALWAYS
+    )
 }
 
 fun Activity.hideKeyboard(editText: EditText) {
@@ -219,3 +235,10 @@ fun Context.getScreenHeight(): Int {
 }
 
 fun Context?.getResString(@StringRes msgRes: Int): String? = this?.resources?.getString(msgRes)
+
+
+fun Context?.getThemeData(resid: Int): Int {
+    val typedValue = TypedValue()
+    this?.theme?.resolveAttribute(resid, typedValue, true)
+    return typedValue.data
+}
