@@ -12,3 +12,6 @@ fun createVerification(parameter: Any?, def_func: (() -> Unit)?): IValidate<out 
 }
 
 
+fun Any?.createValidate(def_func: (() -> Unit)?): IValidate<out Any?> {
+    return createVerification(this, def_func)
+}
